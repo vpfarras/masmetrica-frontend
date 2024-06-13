@@ -1,0 +1,25 @@
+
+<h1 mat-dialog-title>{{data?.title}}</h1>
+<div mat-dialog-content>
+  <p>{{data?.description}}</p>
+</div>
+<div mat-dialog-actions>
+  <button
+          mat-raised-button
+          color="primary"
+          (click)="onNoClick()"
+        >
+          Cancelar
+        </button>
+        <span>
+        <button 
+        mat-raised-button
+        mat-dialog-close="data.irPerfil"
+        color="primary"
+        (click)="myMethod(data.method)"
+      >
+        {{data.irPerfil}}
+      </button>
+      
+    </span>
+</div>

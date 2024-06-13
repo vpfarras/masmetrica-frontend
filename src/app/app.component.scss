@@ -1,0 +1,36 @@
+mat-sidenav {
+  width: 200px;
+}
+
+mat-sidenav-content {
+  background-color: #f9fbfb;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+mat-sidenav-container {
+  height: 100%;
+}
+
+.contentBody{
+  padding: 10px;
+  width:100%;
+  max-width:850px;
+  margin: 0 auto;
+  height: 100%;
+  display: table;
+}
+
+.disp-flex {
+  display: flex;
+}
+
+.txt-field {
+  padding: 4px;
+    margin-top: -0.0625em;
+    line-height: 1.8em;
+    background-color: lavender;
+    border: 0px;
+    width: 100%;
+}

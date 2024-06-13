@@ -1,0 +1,512 @@
+
+<!--<div class="spaceContent">
+  <button
+      mat-raised-button
+      [mat-dialog-close]="true"
+      [color]="perfil.isPerfil? 'secondary' : 'primary'"
+      (click)="showPerfil()"
+      ckdFocusInitial
+    >
+    
+      ver perfil
+  </button>
+  <button
+    mat-raised-button
+    [mat-dialog-close]="true"
+    [color]="perfil.isChangePass? 'secondary' : 'primary'"
+    (click)="showChangePass()"
+    ckdFocusInitial
+  >
+  
+    Cambiar contraseña
+  </button>
+  <button
+      mat-raised-button
+      [mat-dialog-close]="true"
+      [color]="perfil.isInviteFriends? 'secondary' : 'primary'"
+      (click)="showInvitations()"
+      ckdFocusInitial
+    >
+    
+      Invitar a amigos
+  </button>
+<button
+    mat-raised-button
+    [mat-dialog-close]="true"
+    color="primary"
+    (click)="onOpenModal()"
+    ckdFocusInitial
+  >
+  
+    Dar de baja usuairo
+  </button>
+  <button
+    mat-raised-button
+    [mat-dialog-close]="true"
+    [color]="perfil.isReward? 'secondary' : 'primary'"
+    (click)="showRewards()"
+    ckdFocusInitial
+  >
+  
+    Recompensas
+  </button>
+  <button
+    mat-raised-button
+    [mat-dialog-close]="true"
+    [color]="isPay? 'secondary' : 'primary'"
+    (click)="showPays()"
+    ckdFocusInitial
+  >
+  
+    Actualizar archivo de pagos
+  </button>
+  
+  
+</div> -->
+
+<div *ngIf="perfil.isPerfil" class="spaceContent login-form">
+  <mat-card>
+    <mat-card-content *ngIf="!isChangePhone">
+      <h2>
+        {{titleTxt}}
+      </h2>
+      <p *ngIf="isSaved">Datos guardados correctamente</p>
+      <form [formGroup]="userForm.baseFormPatch" *ngIf="dataLoaded">
+        <div>
+          <label>Usuario: {{ userData.username }} <a>Cambiar email</a></label>
+          <label>Teléfono: {{ userData.telefono }} <a (click)="changePhone()">Cambiar teléfono</a></label>
+          <!--<mat-form-field class="full-width-input">
+            <input
+              formControlName="username"
+              matInput
+              [placeholder]="userData.username"
+              required
+            />
+            <mat-error *ngIf="checkField('username')">
+              {{ userForm.errorMessage }}
+            </mat-error>
+          </mat-form-field> -->
+        </div>
+        <div>
+          <mat-form-field class="full-width-input">
+            <input
+              formControlName="name"
+              [disabled] = true
+              matInput
+              placeholder="Nombre"
+              required
+              [readonly]="isDisabled"
+            />
+            <mat-error *ngIf="checkField('name')">
+              {{ userForm.errorMessage }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field class="full-width-input">
+            <input
+              formControlName="apellidos"
+              matInput
+              placeholder="Apellidos"
+              required
+              [readonly]="isDisabled"
+            />
+            <mat-error *ngIf="checkField('apellido1')">
+              {{ userForm.errorMessage }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <!--<div>
+          <mat-form-field class="full-width-input">
+            <input
+              formControlName="telefono"
+              matInput
+              placeholder="Teléfono"
+              required
+              [readonly]="isDisabled"
+            />
+            <mat-error *ngIf="checkField('telefono')">
+              {{ userForm.errorMessage }}
+            </mat-error>
+          </mat-form-field>
+        </div> -->
+        <div>
+          <mat-form-field class="full-width-input">
+            <input
+              formControlName="apellido1"
+              matInput
+              placeholder="Primer apellido"
+              required
+              [readonly]="isDisabled"
+            />
+            <mat-error *ngIf="checkField('apellido1')">
+              {{ userForm.errorMessage }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field class="full-width-input">
+            <input
+              formControlName="apellido2"
+              matInput
+              placeholder="Segundo apellido"
+              [value]="userData.apellido2"
+              required
+              [readonly]="isDisabled"
+            />
+            <mat-error *ngIf="checkField('apellido2')">
+              {{ userForm.errorMessage }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field class="full-width-input">
+            <input
+              formControlName="municipio"
+              matInput
+              placeholder="Municipio"
+              required
+              [readonly]="isDisabled"
+            />
+            <mat-error *ngIf="checkField('municipio')">
+              {{ userForm.errorMessage }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field class="full-width-input">
+            <input
+              formControlName="provincia"
+              matInput
+              placeholder="Provincia"
+              required
+              [readonly]="isDisabled"
+            />
+            <mat-error *ngIf="checkField('provincia')">
+              {{ userForm.errorMessage }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field class="full-width-input">
+            <input
+              formControlName="codigo_postal"
+              matInput
+              placeholder="Código postal"
+              required
+              [readonly]="isDisabled"
+            />
+            <mat-error *ngIf="checkField('codigo_postal')">
+              {{ userForm.errorMessage }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field class="full-width-input">
+            <mat-label>Número de hijos </mat-label>
+            <mat-select formControlName="numero_hijos" [readonly]="isDisabled">
+              <mat-option value="0">0</mat-option>
+              <mat-option value="1">1</mat-option>
+              <mat-option value="2">2</mat-option>
+              <mat-option value="3">3</mat-option>
+              <mat-option value="4">4</mat-option>
+              <mat-option value="5">5</mat-option>
+              <mat-option value="6">6</mat-option>
+              <mat-option value="7">7</mat-option>
+              <mat-option value="8">8</mat-option>
+              <mat-option value="9">9</mat-option>
+              <mat-option value="10">10</mat-option>
+              <mat-option value="11">11</mat-option>
+              <mat-option value="12">12</mat-option>
+            </mat-select>
+            <mat-error *ngIf="checkField('numero_hijos')">
+              {{ userForm.errorMessage }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field class="full-width-input">
+            <mat-label>Sexo </mat-label>
+            <mat-select formControlName="sexo" [readonly]="isDisabled">
+              <mat-option value="Hombre">Hombre</mat-option>
+              <mat-option value="Mujer">Mujer</mat-option>
+            </mat-select>
+            <mat-error *ngIf="checkField('sexo')">
+              {{ userForm.errorMessage }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field class="full-width-input">
+            <input
+              formControlName="ingresos_mensuales"
+              matInput
+              placeholder="Ingresos mensuales"
+              required
+              [readonly]="isDisabled" 
+            />
+            <mat-error *ngIf="checkField('ingresos_mensuales')">
+              {{ userForm.errorMessage }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <button
+          mat-raised-button
+          [mat-dialog-close]="true"
+          color="primary"
+          (click)="onSave()"
+          ckdFocusInitial
+          [disabled]="userForm.baseFormPatch.valid"
+          *ngIf="!isDisabled"
+        >
+        
+          Guardar
+        </button>
+
+        <button
+          mat-raised-button
+          [mat-dialog-close]="true"
+          color="primary"
+          (click)="enableForm()"
+          ckdFocusInitial
+          class="pdl-5"
+        >
+          {{modifyTxt}}
+        </button>
+      </form>
+    </mat-card-content>
+    <mat-card-content *ngIf="isChangePhone">
+      <h2>
+        Cambiar teléfono
+      </h2>
+      <div *ngIf="showPhoneCodeLab">
+        <form [formGroup]="userForm.validateCodeForm" (ngSubmit)="validateSmsCode()">
+          <div>
+            <label>Código</label>
+            <mat-form-field class="full-width-input">
+              <input
+                text="text"
+                formControlName="pin"
+                matInput
+                placeholder="1234"
+                required
+              />
+              <!--<mat-error *ngIf="checkField('username')">
+                {{ loginForm.errorMessage }}
+              </mat-error> -->
+            </mat-form-field>
+          </div>
+          <button
+            
+            type="submit"
+            mat-raised-button
+            color="primary"
+          >
+            Enviar código
+          </button>
+        </form>
+      </div>
+      <form [formGroup]="userForm.baseFormPatchTelefono" *ngIf="!showPhoneCodeLab">
+        <div>
+          <mat-form-field class="full-width-input">
+            <input
+              formControlName="telefono"
+              matInput
+              placeholder="Teléfono"
+              required
+            />
+            <mat-error *ngIf="checkField('telefono')">
+              {{ userForm.errorMessage }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <button
+          mat-raised-button
+          [mat-dialog-close]="true"
+          color="primary"
+          (click)="requestPhoneCode()"
+          ckdFocusInitial
+        >
+        
+          Cambiar Teléfono
+        </button>
+        <button
+          mat-raised-button
+          [mat-dialog-close]="true"
+          color="primary"
+          (click)="isChangePhone()"
+          ckdFocusInitial
+        >
+        
+          Cancelar
+        </button>
+      </form>
+    </mat-card-content>
+  </mat-card>
+<!-- <div class="spaceContent">
+  <button
+    mat-raised-button
+    [mat-dialog-close]="true"
+    color="primary"
+    (click)="showChangePass()"
+    ckdFocusInitial
+  >
+  
+    Cambiar contraseña
+  </button>
+
+<button
+    mat-raised-button
+    [mat-dialog-close]="true"
+    color="primary"
+    (click)="onOpenModal()"
+    ckdFocusInitial
+  >
+  
+    Dar de baja usuairo
+  </button>
+</div> -->
+
+</div>
+<div *ngIf="perfil.isChangePass" class="spaceContent login-form">
+  <mat-card>
+    <mat-card-content>
+      <h2>Cambiar contraseña</h2>
+      <form [formGroup]="userForm.passwordForm" *ngIf="dataLoaded">
+        <div>
+          <label>Contraseña</label>
+          <mat-form-field class="full-width-input">
+            <input
+              formControlName="password"
+              matInput
+              placeholder="Contraseña"
+              required 
+            />
+            <mat-error *ngIf="checkFieldPassword('password')">
+              {{ userForm.errorMessage }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div>
+          <label>Nueva Contraseña</label>
+          <mat-form-field class="full-width-input">
+            <input
+              formControlName="newPassword"
+              matInput
+              placeholder="Nueva Contraseña"
+              required 
+            />
+            <mat-error *ngIf="checkFieldPassword('newPassword')">
+              {{ userForm.errorMessage }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div>
+          <label>Confirmar Contraseña</label>
+          <mat-form-field class="full-width-input">
+            <input
+              formControlName="userNewPassword"
+              matInput
+              placeholder="Confirmar Contraseña"
+              required 
+            />
+            <mat-error *ngIf="checkFieldPassword('newPassword')">
+              {{ userForm.errorMessage }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <button
+          mat-raised-button
+          [mat-dialog-close]="true"
+          color="primary"
+          (click)="savePassword()"
+          ckdFocusInitial
+        >
+        
+          Cambiar Contraseña
+        </button>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>
+
+<div *ngIf="perfil.isInviteFriends" class="spaceContent login-form">
+  <mat-card>
+    <mat-card-content>
+      <h2>Invitar amigos</h2>
+      <form (ngSubmit)="invitarAmigos()">
+        <div class="form-group">
+          <label for="userId">Tus comentarios:</label>
+          <input type="text" class="form-control txt-field" id="coments" [(ngModel)]="coments" name="coments" required>
+        </div>
+      
+        <div class="form-group">
+          <label for="friendIds">Los emails de tus amigos:</label>
+          <input type="email" class="form-control txt-field" id="friend1" [(ngModel)]="friendIds[0]" name="friend1" required>
+          <input type="email" class="form-control txt-field" id="friend2" [(ngModel)]="friendIds[1]" name="friend2">
+          <input type="email" class="form-control txt-field" id="friend3" [(ngModel)]="friendIds[2]" name="friend3">
+          <input type="email" class="form-control txt-field" id="friend4" [(ngModel)]="friendIds[3]" name="friend4">
+          <input type="email" class="form-control txt-field" id="friend5" [(ngModel)]="friendIds[4]" name="friend5">
+        </div>
+      
+        <button type="submit"  mat-raised-button
+        [mat-dialog-close]="true"
+        color="primary" class="btn btn-primary">Invitar</button>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>
+<div *ngIf="perfil.isReward">
+  <h2>Mis recompensas</h2>
+  <table class="rewards-table">
+
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Fecha de pago</th>
+        <th>Nombre Encuesta</th>
+        <th>Incentivo pagado</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let reward of perfil.rewards">
+        <td>{{this.reward.IdPago}}</td>
+        <td>{{this.reward.FechaPago}}</td>
+        <td>{{this.reward.NombreEncuesta}}</td>
+        <td>{{this.reward.Dinero}}</td>
+      </tr>
+      <tr class="total">
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>{{perfil.totalRewards}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div *ngIf="perfil.isPay">
+  <input type="file" (change)="onFileSelected($event)">
+<button (click)="onUpload()">Subir archivo</button>
+<button (click)="onDownload()">descargar archivo</button>
+<!--<button (click)="onDownload()">Descargar archivo</button>-->
+</div>
+
+<ng-template #dialogTemplate>
+  <h1 mat-dialog-title>Perfil Modificado</h1>
+  <div mat-dialog-content>
+    <p>Su perfil se ha modificado correctamente.</p>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-button mat-dialog-close>Cerrar</button>
+  </div>
+</ng-template>
+
+<ng-template #dialogTemplate>
+  <h1 mat-dialog-title>Modificación del teléfono</h1>
+  <div mat-dialog-content>
+    <p>El número de teléfono se ha modificado correctamente</p>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-button (click)="closeDialog()">Cerrar</button>
+  </div>
+</ng-template>

@@ -1,0 +1,35 @@
+/* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+.mat-toolbar.mat-primary {
+    background: #fff;
+    color: #2493D4;
+}
+
+.mat-flat-button.mat-primary, .mat-raised-button.mat-primary, .mat-fab.mat-primary, .mat-mini-fab.mat-primary {
+    background-color: #2493D4;
+}
+
+.logo{
+    width: 48%;
+    max-width: 450px;
+}
+
+.mat-icon-button{
+    color: #2493D4;
+}
+
+input.mat-input-element {
+    padding: 4px;
+    margin-top: -0.0625em;
+    line-height: 1.8em;
+    background-color: lavender;
+}  
+
+.mat-form-field {
+    display: inline-block;
+    position: relative;
+    text-align: left;
+    width: 100%;
+}

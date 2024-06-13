@@ -1,0 +1,39 @@
+<div class="container">
+  <h2>{{title}}</h2>
+  <p>{{firstP}}</p>
+  <p>{{secondP}}</p>
+  <form [formGroup]="userForm.validateCodeForm" (ngSubmit)="validateSmsCode()">
+    <div>
+      <label>Código</label>
+      <mat-form-field class="full-width-input">
+        <input
+          text="text"
+          formControlName="pin"
+          matInput
+          placeholder="1234"
+          required
+        />
+        <!--<mat-error *ngIf="checkField('username')">
+          {{ loginForm.errorMessage }}
+        </mat-error> -->
+      </mat-form-field>
+    </div>
+    <button
+      
+      type="submit"
+      mat-raised-button
+      color="primary"
+    >
+      Enviar código
+    </button>
+  </form>
+  
+  <button
+    mat-raised-button
+    color="primary"
+    (click)="goToLogin()"
+    ckdFocusInitial
+  >
+  Ir a login
+  </button>
+</div>

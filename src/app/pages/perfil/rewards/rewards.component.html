@@ -1,0 +1,28 @@
+<p>
+  Recompensas Recibidas
+</p>
+<table class="rewards-table">
+
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Fecha de pago</th>
+      <th>Nombre Encuesta</th>
+      <th>Incentivo pagado</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let reward of rewards">
+      <td>{{this.reward.IdPago}}</td>
+      <td>{{this.reward.FechaPago}}</td>
+      <td>{{this.reward.NombreEncuesta}}</td>
+      <td>{{this.reward.Dinero}}</td>
+    </tr>
+    <tr class="total">
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>{{this.totalRewards}}</td>
+    </tr>
+  </tbody>
+</table>

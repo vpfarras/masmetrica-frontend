@@ -1,0 +1,18 @@
+<h1 *ngIf="(authSvc.user$ | async) as user" class="saludo">
+  Bienvenido, <strong>{{ user?.name || 'User' }}.</strong>
+</h1>
+
+<div class="grid-cols">
+  <div class="containerGrid">
+    <mat-card (click)="goToPerfil()" class="disp-flex">
+      <mat-icon>person</mat-icon>
+      <p class="txt-icon">ir a mi perfil</p>
+    </mat-card>
+  </div>
+  <div class="containerGrid" *ngIf="userData?.role === 'admin'">
+    <mat-card routerLink="/admin/users" class="disp-flex">
+      <mat-icon>people</mat-icon>
+    <span class="nav-link">Usuarios</span>
+    </mat-card>
+  </div>  
+</div>

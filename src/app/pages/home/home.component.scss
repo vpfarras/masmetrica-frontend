@@ -1,0 +1,39 @@
+
+.txt-icon{
+    padding-top: 3px;
+    padding-left: 8px;
+}
+
+.mat-icon {
+    color: #2493D4;
+}
+
+.flexbox-container {
+    display: flex;
+    flex-direction: row;
+    margin-top    : 1rem;
+}
+
+.flexbox-container > div {
+    display: grid;
+    grid-template-columns: auto auto;
+}
+
+.grid-cols {
+    display: grid;
+    grid-template-columns: auto auto;
+}
+.text-content {
+    margin: 1rem auto;
+    width : 80%;
+}
+
+mat-card.mat-card.mat-focus-indicator.disp-flex {
+    width: 75%;
+    margin-bottom: 15px;
+    display: flex
+}
+
+.saludo{
+    font-size: 14px;
+}

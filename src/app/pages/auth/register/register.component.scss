@@ -1,0 +1,41 @@
+label {display: block}
+.login-form{
+    max-width: 450px;
+    margin: 0 auto;
+    text-align: center;
+    label {
+        display: block;
+        text-align: left;
+    }
+    @media (min-width: 768px) {
+        max-width: 750px;
+    }
+} 
+
+/* Estilos base para el formulario */
+.registration-form .form-row {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+  }
+  
+  .registration-form .form-column {
+    flex: 0 0 100%; /* Ocupa todo el ancho en dispositivos móviles */
+    max-width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+  }
+  
+  /* Estilos para tablets y desktops */
+  @media (min-width: 768px) {
+    .registration-form .form-column {
+      flex: 0 0 45%; /* Ocupa la mitad del ancho en pantallas más grandes */
+      max-width: 45%;
+    }
+  }
+  
+  /* Ajustes adicionales para garantizar que los campos de formulario se vean bien */
+  .mat-form-field {
+    width: 100%; /* Asegura que los campos de Material ocupen todo el ancho disponible */
+  }
+  

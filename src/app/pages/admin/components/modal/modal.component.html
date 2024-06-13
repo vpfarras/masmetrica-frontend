@@ -1,0 +1,329 @@
+<h2 mat-dialog-title>{{ data?.title }} {{actionTODO}}</h2>
+<mat-dialog-content>
+  <div class="modal-form">
+    <form [formGroup]="userForm.baseForm" *ngIf="actionTODO == action.NEW">
+      <mat-form-field class="full-width-input">
+        <input
+          formControlName="username"
+          matInput
+          placeholder="Nombre"
+          required
+        />
+        <mat-error *ngIf="checkField('username')">
+          {{ userForm.errorMessage }}
+        </mat-error>
+      </mat-form-field> 
+      <mat-form-field class="full-width-input" *ngIf="showPasswordField">
+        <label>Password</label>
+        <input
+          [type]="hide ? 'password' : 'text'"
+          formControlName="password"
+          matInput
+          placeholder="Password"
+          required
+        />
+        <button mat-icon-button matSuffix (click)="hide = !hide">
+          <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+        </button>
+       
+      </mat-form-field>
+      <mat-form-field class="full-width-input">
+        <mat-label>Rol </mat-label>
+        <mat-select formControlName="role">
+          <mat-option value="suscriptor">Suscriptor</mat-option>
+          <mat-option value="admin">Admin</mat-option>
+        </mat-select>
+        <mat-error *ngIf="checkField('role')">
+          {{ userForm.errorMessage }}
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="full-width-input">
+        <input
+          formControlName="name"
+          [disabled] = true
+          matInput
+          placeholder="Nombre"
+          required
+        />
+        <mat-error *ngIf="checkField('name')">
+          {{ userForm.errorMessage }}
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="full-width-input">
+        <input
+          appAutoFormatDate
+          formControlName="fecha_nacimiento"
+          matInput
+          placeholder="Fecha de nacimiento"
+          required
+          id="fecha_nacimiento"              
+        />
+        <mat-error *ngIf="checkField('fecha_nacimiento')">
+          {{ userForm.errorMessage }}
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="full-width-input">
+        <input
+          formControlName="apellidos"
+          matInput
+          placeholder="Apellidos"
+          required
+        />
+        <mat-error *ngIf="checkField('apellidos')">
+          {{ userForm.errorMessage }}
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="full-width-input">
+        <input
+          formControlName="apellido1"
+          matInput
+          placeholder="Primer apellido"
+          required
+        />
+        <mat-error *ngIf="checkField('apellido1')">
+          {{ userForm.errorMessage }}
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="full-width-input">
+        <input
+          formControlName="apellido2"
+          matInput
+          placeholder="Segundo apellido"
+          required
+        />
+        <mat-error *ngIf="checkField('apellido2')">
+          {{ userForm.errorMessage }}
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="full-width-input">
+        <input
+          formControlName="municipio"
+          matInput
+          placeholder="Municipio"
+          required
+        />
+        <mat-error *ngIf="checkField('municipio')">
+          {{ userForm.errorMessage }}
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="full-width-input">
+        <input
+          formControlName="provincia"
+          matInput
+          placeholder="Provincia"
+          required
+        />
+        <mat-error *ngIf="checkField('provincia')">
+          {{ userForm.errorMessage }}
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="full-width-input">
+        <input
+          formControlName="codigo_postal"
+          matInput
+          placeholder="Código postal"
+          required
+        />
+        <mat-error *ngIf="checkField('codigo_postal')">
+          {{ userForm.errorMessage }}
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="full-width-input">
+        <mat-label>Número de hijos </mat-label>
+        <mat-select formControlName="numero_hijos">
+          <mat-option value="1">1</mat-option>
+          <mat-option value="2">2</mat-option>
+          <mat-option value="3">3</mat-option>
+          <mat-option value="4">4</mat-option>
+          <mat-option value="5">5</mat-option>
+          <mat-option value="6">6</mat-option>
+          <mat-option value="7">7</mat-option>
+          <mat-option value="8">8</mat-option>
+          <mat-option value="9">9</mat-option>
+          <mat-option value="10">10</mat-option>
+          <mat-option value="11">11</mat-option>
+          <mat-option value="12">12</mat-option>
+        </mat-select>
+        <mat-error *ngIf="checkField('numero_hijos')">
+          {{ userForm.errorMessage }}
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="full-width-input">
+        <mat-label>Sexo </mat-label>
+        <mat-select formControlName="sexo">
+          <mat-option value="Hombre">Hombre</mat-option>
+          <mat-option value="Mujer">Mujer</mat-option>
+        </mat-select>
+        <mat-error *ngIf="checkField('sexo')">
+          {{ userForm.errorMessage }}
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="full-width-input">
+        <input
+          formControlName="ingresos_mensuales"
+          matInput
+          placeholder="Ingresos mensuales"
+          required 
+        />
+        <mat-error *ngIf="checkField('ingresos_mensuales')">
+          {{ userForm.errorMessage }}
+        </mat-error>
+      </mat-form-field>
+    </form>
+    <form [formGroup]="userForm.baseFormModif" *ngIf="actionTODO == action.EDIT ">
+      <mat-form-field class="full-width-input">
+        <input
+          formControlName="username"
+          matInput
+          placeholder="Username"
+          required
+        />
+        <mat-error *ngIf="checkField('username')">
+          {{ userForm.errorMessage }}
+        </mat-error>
+      </mat-form-field> 
+     <mat-form-field class="full-width-input">
+        <mat-label>Rol </mat-label>
+        <mat-select formControlName="role">
+          <mat-option value="suscriptor">Suscriptor</mat-option>
+          <mat-option value="admin">Admin</mat-option>
+        </mat-select>
+        <mat-error *ngIf="checkField('role')">
+          {{ userForm.errorMessage }}
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="full-width-input">
+        <input
+          formControlName="name"
+          [disabled] = true
+          matInput
+          placeholder="Nombre"
+          required
+        />
+        <mat-error *ngIf="checkField('name')">
+          {{ userForm.errorMessage }}
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="full-width-input">
+        <input
+          formControlName="apellido1"
+          matInput
+          placeholder="Primer apellido"
+          required
+        />
+        <mat-error *ngIf="checkField('apellido1')">
+          {{ userForm.errorMessage }}
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="full-width-input">
+        <input
+          formControlName="apellido2"
+          matInput
+          placeholder="Segundo apellido"
+          required
+        />
+        <mat-error *ngIf="checkField('apellido2')">
+          {{ userForm.errorMessage }}
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="full-width-input">
+        <input
+          formControlName="municipio"
+          matInput
+          placeholder="Municipio"
+          required
+        />
+        <mat-error *ngIf="checkField('municipio')">
+          {{ userForm.errorMessage }}
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="full-width-input">
+        <input
+          formControlName="provincia"
+          matInput
+          placeholder="Provincia"
+          required
+        />
+        <mat-error *ngIf="checkField('provincia')">
+          {{ userForm.errorMessage }}
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="full-width-input">
+        <input
+          formControlName="codigo_postal"
+          matInput
+          placeholder="Código postal"
+          required
+        />
+        <mat-error *ngIf="checkField('codigo_postal')">
+          {{ userForm.errorMessage }}
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="full-width-input">
+        <input
+          formControlName="telefono"
+          matInput
+          placeholder="xxxxxxxxx"
+          required
+        />
+        <mat-error *ngIf="checkField('codigo_postal')">
+          {{ userForm.errorMessage }}
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="full-width-input">
+        <mat-label>Número de hijos </mat-label>
+        <mat-select formControlName="numero_hijos">
+          <mat-option value="1">1</mat-option>
+          <mat-option value="2">2</mat-option>
+          <mat-option value="3">3</mat-option>
+          <mat-option value="4">4</mat-option>
+          <mat-option value="5">5</mat-option>
+          <mat-option value="6">6</mat-option>
+          <mat-option value="7">7</mat-option>
+          <mat-option value="8">8</mat-option>
+          <mat-option value="9">9</mat-option>
+          <mat-option value="10">10</mat-option>
+          <mat-option value="11">11</mat-option>
+          <mat-option value="12">12</mat-option>
+        </mat-select>
+        <mat-error *ngIf="checkField('numero_hijos')">
+          {{ userForm.errorMessage }}
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="full-width-input">
+        <mat-label>Sexo </mat-label>
+        <mat-select formControlName="sexo">
+          <mat-option value="Hombre">Hombre</mat-option>
+          <mat-option value="Mujer">Mujer</mat-option>
+        </mat-select>
+        <mat-error *ngIf="checkField('sexo')">
+          {{ userForm.errorMessage }}
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="full-width-input">
+        <input
+          formControlName="ingresos_mensuales"
+          matInput
+          placeholder="Ingresos mensuales"
+          required 
+        />
+        <mat-error *ngIf="checkField('ingresos_mensuales')">
+          {{ userForm.errorMessage }}
+        </mat-error>
+      </mat-form-field>
+    </form>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>  
+  <button
+    mat-raised-button
+    [mat-dialog-close]="true"
+    color="primary"
+    (click)="onSave()" 
+    ckdFocusInitial 
+    [disabled]="!userForm.baseForm.valid"
+  >
+    Save 
+  </button>
+</mat-dialog-actions>

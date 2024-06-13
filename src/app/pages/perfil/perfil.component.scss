@@ -1,0 +1,55 @@
+label {display:block};
+.spaceContent {margin: 20px}
+button {
+    margin-right: 10px;
+    margin-bottom: 5px;
+}
+.txt-field {
+    padding: 4px;
+      margin-top: -0.0625em;
+      line-height: 1.8em;
+      background-color: lavender;
+      border: 0px;
+      width: 100%;
+      margin-bottom:10px;
+  }
+
+  .rewards-table {
+    width:100%
+}
+
+thead {
+    background-color: #2493D4;
+}
+thead th {
+    font-weight: normal;
+    color: white;
+}
+tbody tr {
+    border-bottom: 1px solid #673ab7;
+    text-align: center;
+}
+tbody td {
+    border-bottom:1px solid #673ab7;
+}
+.total td {
+    border-bottom: 0px;
+    font-weight: bold;
+}
+
+.login-form{
+    max-width: 450px;
+    margin: 0 auto;
+    text-align: center;
+    button {
+        margin: 0 auto;
+    }
+    label {
+        display: block;
+        text-align: left;
+    }
+    .pdl-5 {
+        margin-left: 5px;
+    }
+} 
+

@@ -1,0 +1,169 @@
+<div class="login-form" *ngIf="showForm">
+  <mat-card>
+    <mat-card-content>
+      <h1>Crea tu usuario</h1>
+      <p>Regístrate y disfruta todas las ventajas que te ofrece <b>MásMétrica</b></p>
+      <form [formGroup]="userForm.baseFormRegister" (ngSubmit)="onSave()" class="registration-form">
+        <div class="form-row">
+          <div class="form-column">
+            <label>Email</label>
+            <mat-form-field class="full-width-input">
+              <input
+                text="text"
+                formControlName="username"
+                matInput
+                placeholder="Username"
+                required
+              />
+              <mat-error *ngIf="checkField('username')">
+                {{ loginForm.errorMessage }}
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="form-column">
+            <label>Password</label>
+            <mat-form-field class="full-width-input separator">
+              <input
+                [type]="hide ? 'password' : 'text'"
+                formControlName="password"
+                matInput
+                placeholder="Password"
+                required
+              />
+              <button mat-icon-button matSuffix (click)="hide = !hide">
+                <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+              </button>
+              <mat-error *ngIf="checkField('password')">
+                {{ loginForm.errorMessage }}
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-column">
+            <label>Nombre</label>
+            <mat-form-field class="full-width-input">
+              <input
+                formControlName="name"
+                matInput
+                placeholder="Nombre"
+                required
+              />
+              <mat-error *ngIf="checkField('name')">
+                {{ userForm.errorMessage }}
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="form-column">
+            <label>Apellidos</label>
+            <mat-form-field class="full-width-input">
+              <input
+                formControlName="apellidos"
+                matInput
+                placeholder="Apellidos"
+                required
+              />
+              <mat-error *ngIf="checkField('apellidos')">
+                {{ userForm.errorMessage }}
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>    
+        <div class="form-row">   
+          <div class="form-column">
+            <label>Fecha de nacimiento</label>
+            <mat-form-field class="full-width-input">
+              <input
+                appAutoFormatDate
+                formControlName="fecha_nacimiento"
+                matInput
+                placeholder="Fecha de nacimiento"
+                required
+                id="fecha_nacimiento"              
+              />
+              <mat-error *ngIf="checkField('fecha_nacimiento')">
+                {{ userForm.errorMessage }}
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="form-column">
+            <label>Código postal</label>
+            <mat-form-field class="full-width-input">
+              <input type="text" placeholder="Código postal" matInput formControlName="codigo_postal" [formControl]="miControl" [matAutocomplete]="auto">
+              <mat-autocomplete #auto="matAutocomplete">
+                <mat-option *ngFor="let opcion of opcionesFiltradas | async" [value]="opcion">
+                  {{opcion}}
+                </mat-option>
+              </mat-autocomplete>
+              <mat-error *ngIf="miControl.hasError('valorNoPermitido')">
+                Por favor, selecciona un código postal de la lista.
+              </mat-error>
+            </mat-form-field>
+            
+          </div>
+        </div> 
+        <div class="form-row">
+          <div class="form-column">
+            <label>Sexo</label>
+            <mat-form-field class="full-width-input">
+              <mat-label>Sexo </mat-label>
+              <mat-select formControlName="sexo">
+                <mat-option value="Hombre">Hombre</mat-option>
+                <mat-option value="Mujer">Mujer</mat-option>
+              </mat-select>
+              <mat-error *ngIf="checkField('sexo')">
+                {{ userForm.errorMessage }}
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="form-column">
+            <label>Teléfono</label>
+            <mat-form-field class="full-width-input">
+              <input
+                text="text"
+                formControlName="phone"
+                matInput
+                placeholder="Teléfono"
+                required
+              />
+              <mat-error *ngIf="checkField('username')">
+                {{ loginForm.errorMessage }}
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <!-- <div>
+          <label>Rol</label>
+          <mat-form-field class="full-width-input">
+            <mat-label>Select </mat-label>
+            <mat-select formControlName="role">
+              <mat-option value="suscriptor">Suscriptor</mat-option>
+            </mat-select>
+            <mat-error *ngIf="checkField('role')">
+              {{ userForm.errorMessage }}
+            </mat-error>
+          </mat-form-field>
+      </div> -->
+        <button
+          [disabled]="userForm.baseFormRegister.invalid"
+          type="submit"
+          mat-raised-button
+          color="primary"
+        >
+          Registrarme
+        </button>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>
+
+<div class="login-form" *ngIf="showOkMessage">
+  <h2>Confirmación</h2>
+  <p>Hemos enviado un email de confirmación a tu correo electrónico con las instrucciones necesarias para completar tu proceso de alta. 
+    Por favor, sigue las instrucciones y pasarás a formar parte de nuestros usuarios</p>
+</div>
+
+<div class="login-form" *ngIf="showErrorMessage">
+  <h2>Error</h2>
+  <p>Se ha producido un error en el proceso de alta, por favor vuelve a intentarlo pasados unos minutos</p>
+</div>

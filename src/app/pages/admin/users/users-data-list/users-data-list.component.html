@@ -1,0 +1,122 @@
+
+<div class="table-button-row">
+  
+  <form [formGroup]="userForm.baseFormQuery">
+    <mat-form-field class="full-width-input" appearance="fill" style="width:100%;">
+      <textarea
+        formControlName="formQuery"
+        matInput
+        placeholder="userRepository.createBuilder('user')"
+      >
+      userRepository.createQueryBuilder("user").where("user.name = :name", { name: "Vicente" }).andWhere("user.username = :id", { id: "user@test.com" }).getMany()
+    </textarea>
+    </mat-form-field>    
+  </form>
+  <button
+    (click)="createQuery()"
+    mat-flat-button
+    color="primary"
+    class="btn-new"
+  >
+    mandar query
+  </button>
+</div>
+<table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8" id="tabla-listado-usuarios">
+  <!-- ID Column -->
+  <ng-container matColumnDef="id">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Id.</th>
+    <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+  </ng-container>
+
+  <!-- Role Column -->
+  <ng-container matColumnDef="role">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Rol</th>
+    <td mat-cell *matCellDef="let element">{{ element.role }}</td>
+  </ng-container>
+
+  <!-- Username Column -->
+  <ng-container matColumnDef="username">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Username</th>
+    <td mat-cell *matCellDef="let element">{{ element.username }}</td>
+  </ng-container>
+
+  <!-- name Column -->
+  <ng-container matColumnDef="name">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Nombre</th>
+    <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+  </ng-container>
+
+  <!-- apellido1 Column -->
+  <ng-container matColumnDef="apellido1">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Apellido 1</th>
+    <td mat-cell *matCellDef="let element">{{ element.apellido1 }}</td>
+  </ng-container>
+
+  <!-- apellido2 Column -->
+  <ng-container matColumnDef="apellido2">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Apellido 2</th>
+    <td mat-cell *matCellDef="let element">{{ element.apellido2 }}</td>
+  </ng-container>
+
+  <!-- sexo Column -->
+  <ng-container matColumnDef="sexo">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Sexo</th>
+    <td mat-cell *matCellDef="let element">{{ element.sexo }}</td>
+  </ng-container>
+
+  <!-- provincia Column -->
+  <ng-container matColumnDef="provincia">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Provincia</th>
+    <td mat-cell *matCellDef="let element">{{ element.provincia }}</td>
+  </ng-container>
+
+  <!-- municipio Column -->
+  <ng-container matColumnDef="municipio">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Municipio</th>
+    <td mat-cell *matCellDef="let element">{{ element.municipio }}</td>
+  </ng-container>
+
+  <!-- codigo_postal Column -->
+  <ng-container matColumnDef="codigo_postal">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Código postal</th>
+    <td mat-cell *matCellDef="let element">{{ element.codigo_postal }}</td>
+  </ng-container>
+
+  <!-- numero_hijos Column -->
+  <ng-container matColumnDef="numero_hijos">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Número de hijos</th>
+    <td mat-cell *matCellDef="let element">{{ element.numero_hijos }}</td>
+  </ng-container>
+
+  <!-- ingresos_mensuales Column -->
+  <ng-container matColumnDef="ingresos_mensuales">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Ingresos mensuales</th>
+    <td mat-cell *matCellDef="let element">{{ element.ingresos_mensuales }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="actions">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Actions</th>
+    <td mat-cell *matCellDef="let element">
+      <div class="table-button-row">
+        <button mat-flat-button color="accent" (click)="onOpenModal(element)">
+          Editar
+        </button>
+        <button mat-flat-button color="warn" (click)="onDelete(element.id)">
+          Eliminar
+        </button>
+      </div>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  
+</table>
+<button
+    (click)="exportToExcel()"
+    mat-flat-button
+    color="primary"
+    class="btn-new"
+  >
+    Exportar a excel
+  </button>
