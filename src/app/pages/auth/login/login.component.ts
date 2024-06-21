@@ -48,7 +48,8 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   goToRecoverPassword(): void {
-    this.router.navigate(['/perfil/recovery-password'])
+    console.log('goToRecoverPassword 2')
+    this.router.navigate(['/recoveryPassword'])
   }
 
   goToRegister(): void {

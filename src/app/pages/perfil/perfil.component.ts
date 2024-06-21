@@ -42,9 +42,7 @@ export class PerfilComponent implements OnInit {
 
   
   ngOnInit() {
-    console.log('onInit');
     this.userSvc.getActUser().subscribe((userData: any) => {
-      console.log('users', userData);
       this.userData = userData;
       this.dataLoaded = true;
       this.isDisabled = true;
@@ -89,9 +87,7 @@ export class PerfilComponent implements OnInit {
   onSave(): void {
     //document.getElementById('capaInfo').style.display = 'block';
     const formValue = this.userForm.baseFormPatch.value;
-    console.log('formValue');
     this.userSvc.updateActUser(formValue).subscribe((res) => {
-      console.log('Update', formValue);
       this.openOnChangeModal();
       this.modifyTxt = 'Editar'
       this.isDisabled = true;
@@ -101,13 +97,10 @@ export class PerfilComponent implements OnInit {
   
 
   requestPhoneCode() {
-    console.log('entra en sendPhoneCode', this.userForm.baseFormPatchTelefono.value);
     this.userForm.tokenForm.value.resetToken = this.userForm.baseFormPatchTelefono.value;
     this.telefono = this.userForm.baseFormPatchTelefono.value.telefono;
     const formValue = this.userForm.tokenForm.value;
-    console.log('sendPhoneCode formValue = ',formValue);
     this.userSvc.sendPhoneCode(formValue).subscribe((res) => {
-      console.log('sendPhoneCode res', res);
       this.showPhoneCode();
     })
   }
@@ -117,12 +110,9 @@ export class PerfilComponent implements OnInit {
   }
 
   validateSmsCode() {
-    console.log('entra en sedSMSCode', this.userForm.validateCodeForm);
    this.userForm.validateCodeForm.value.msisdn = this.telefono;
     const formValue = this.userForm.validateCodeForm.value;
-    console.log(formValue);
     this.userSvc.validatePhoneCode(formValue).subscribe((res) => {
-      console.log('validatePhoneCode res', res['result'].verified);
       if(res['result'].verified) {
         this.onSavePhone();
       }
@@ -148,7 +138,6 @@ export class PerfilComponent implements OnInit {
   onSavePhone(){
     const formValue = this.userForm.baseFormPatchTelefono.value;
     this.userSvc.updateActUserPhone(formValue).subscribe((res) => {
-      console.log('Update', formValue);
       this.openOnChangeModal();
       this.modifyTxt = 'Editar'
       this.isDisabled = true;
@@ -161,7 +150,6 @@ export class PerfilComponent implements OnInit {
   }
   savePassword(): void {
     const formValue = this.userForm.passwordForm.value;
-    console.log('formValue', formValue);
     if(formValue.newPassword !== formValue.confirmNewPassword) {
       alert('la contraseña y la confirmación no coinciden');
     }
@@ -180,14 +168,10 @@ export class PerfilComponent implements OnInit {
 
   invitarAmigos(): void {
     const url = 'http://localhost:3000/invitar';
-
     const body = {
       coments: this.coments,
       friendIds: this.friendIds.slice(0, 5) // Limitar a 5 amigos
     };
-
-    console.log('body de friends invitations', body)
-
     this.userSvc.inviteFriends(body).subscribe((res) => {
       console.log('Update', body);
       console.log('res', res);
@@ -209,9 +193,7 @@ export class PerfilComponent implements OnInit {
 
 
   enableForm(): void {
-    console.log('isDisabled', this.isDisabled);
     this.isDisabled = !this.isDisabled;
-    console.log('isDisabled despues', this.isDisabled);
     this.isDisabled ? (this.modifyTxt = 'Editar', this.setFormData()) : this.modifyTxt = 'Cancelar'
   }
 
@@ -233,7 +215,6 @@ export class PerfilComponent implements OnInit {
       data: { title: this.overlayTitle, irPerfil:'Cerrar', method:'borrar', description: this.overlayDescription },
     });
     dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`, typeof result);
       if(result == 'borrar') {
         this.deleteUser();
       }
@@ -300,8 +281,6 @@ export class PerfilComponent implements OnInit {
     if (this.selectedFile) {
       const formData: FormData = new FormData();
       formData.append('file', this.selectedFile, this.selectedFile.name);
-      console.log('this.selectedFile', this.selectedFile);
-      console.log('formData', formData.getAll('file'));
       this.userSvc.uploadFile(formData).subscribe((res) => {
         console.log('Update', formData);
       });
@@ -311,7 +290,6 @@ export class PerfilComponent implements OnInit {
   onDownload(): void {
     const formData: FormData = new FormData();
       formData.append('filename', 'ExcelSheet.xlsx');
-      console.log('formData', formData.getAll('filename'));
       this.userSvc.downloadFile(formData).subscribe((res) => {
         console.log('Donwload', formData);
       });
@@ -324,11 +302,7 @@ export class PerfilComponent implements OnInit {
       month: ''
     };
 
-    console.log('body de pagos hechos', body)
-
     this.userSvc.getPaymentData(body).subscribe((res) => {
-      console.log('Update', body);
-      console.log('res', res);
       this.perfil.rewards = res;
 
       this.totalRewards = this.perfil.rewards.reduce((acumulador, actual) => acumulador + actual.Dinero, 0);
