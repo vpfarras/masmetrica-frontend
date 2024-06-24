@@ -1,7 +1,8 @@
 <div class="login-form">
-  <mat-card>
+  <mat-card class="login-card">
     <mat-card-content>
       <h1>LOGIN</h1>
+      <p class="font-13">Bienvenido al Área de usuario de MásMétrica, donde ganas dinero efectivo vía PayPal, Amazon, Bizum, etc. por dar tu opinión en divertidas encuestas.</p>
       <form [formGroup]="loginForm.baseFormLogin" (ngSubmit)="onLogin()">        
         <mat-form-field class="full-width-input">
           <label>Usuario:</label>
@@ -16,7 +17,7 @@
             Error en el campo username
           </mat-error>
         </mat-form-field>
-        <mat-form-field class="full-width-input separator">
+        <mat-form-field class="full-width-input">
           <label>Password:</label>
           <input
             [type]="hide ? 'password' : 'text'"
@@ -43,6 +44,6 @@
       </form>
     </mat-card-content>
     <p class="pointer" (click)="goToRecoverPassword()">¿Olvidaste tu contraseña?</p>
-        <p class="mt25 pointer">¿ Aún no tienes usuario ? <span (click)="goToRegister()">Regístrate</span></p>
+        <p class="mt25 pointer">¿Aún no tienes usuario? <span class="enlace" (click)="goToRegister()">Regístrate</span></p>
   </mat-card>
 </div>

@@ -1,18 +1,18 @@
 <div class="login-form" *ngIf="showForm">
   <mat-card>
     <mat-card-content>
-      <h1>Crea tu usuario</h1>
+      <h1>Crea tu usuario de MasMétrica y gana dinero efectivo vía PayPal, Amazon, Bizum, etc. por dar tu opinión en divertidas encuestas.</h1>
       <p>Regístrate y disfruta todas las ventajas que te ofrece <b>MásMétrica</b></p>
       <form [formGroup]="userForm.baseFormRegister" (ngSubmit)="onSave()" class="registration-form">
         <div class="form-row">
           <div class="form-column">
-            <label>Email</label>
+            <!--<label>Email</label>-->
             <mat-form-field class="full-width-input">
               <input
-                text="text"
+                
                 formControlName="username"
                 matInput
-                placeholder="Username"
+                placeholder="Email"
                 required
               />
               <mat-error *ngIf="checkField('username')">
@@ -21,7 +21,7 @@
             </mat-form-field>
           </div>
           <div class="form-column">
-            <label>Password</label>
+           <!-- <label>Password</label>-->
             <mat-form-field class="full-width-input separator">
               <input
                 [type]="hide ? 'password' : 'text'"
@@ -41,7 +41,7 @@
         </div>
         <div class="form-row">
           <div class="form-column">
-            <label>Nombre</label>
+            <!--<label>Nombre</label>-->
             <mat-form-field class="full-width-input">
               <input
                 formControlName="name"
@@ -55,7 +55,7 @@
             </mat-form-field>
           </div>
           <div class="form-column">
-            <label>Apellidos</label>
+           <!-- <label>Apellidos</label>-->
             <mat-form-field class="full-width-input">
               <input
                 formControlName="apellidos"
@@ -71,7 +71,7 @@
         </div>    
         <div class="form-row">   
           <div class="form-column">
-            <label>Fecha de nacimiento</label>
+            <!--<label>Fecha de nacimiento</label>-->
             <mat-form-field class="full-width-input">
               <input
                 appAutoFormatDate
@@ -87,7 +87,7 @@
             </mat-form-field>
           </div>
           <div class="form-column">
-            <label>Código postal</label>
+            <!--<label>Código postal</label>-->
             <mat-form-field class="full-width-input">
               <input type="text" placeholder="Código postal" matInput formControlName="codigo_postal" [formControl]="miControl" [matAutocomplete]="auto">
               <mat-autocomplete #auto="matAutocomplete">
@@ -104,7 +104,7 @@
         </div> 
         <div class="form-row">
           <div class="form-column">
-            <label>Sexo</label>
+            <!--<label>Sexo</label>-->
             <mat-form-field class="full-width-input">
               <mat-label>Sexo </mat-label>
               <mat-select formControlName="sexo">
@@ -117,7 +117,7 @@
             </mat-form-field>
           </div>
           <div class="form-column">
-            <label>Teléfono</label>
+            <!--<label>Teléfono</label>-->
             <mat-form-field class="full-width-input">
               <input
                 text="text"

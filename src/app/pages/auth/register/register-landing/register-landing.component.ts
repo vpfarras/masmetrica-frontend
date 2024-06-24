@@ -81,12 +81,14 @@ export class RegisterLandingComponent implements OnInit {
         this.userSvc.registerInvitation(formValue).subscribe((res) => {
           this.setPageContent()
           console.log('Update');
+          this.goToLogin();
         });
       }
       else {
         console.log('no hay parametros')
         this.setPageContent()
           console.log('Update', res); 
+          this.goToLogin();
       }
       
     });

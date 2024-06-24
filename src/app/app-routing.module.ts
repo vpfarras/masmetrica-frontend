@@ -45,6 +45,13 @@ const routes: Routes = [
       ),
   },
   {
+    path: 'recoveryPassword',
+    loadChildren: () =>
+      import('./pages/recoveryPass/recoveryPass.module').then(
+        (m) => m.RecoveryPassModule
+      ),
+  },
+  {
     path: 'register/register-landing/:token',
     loadChildren: () =>
       import('./pages/auth/register/register.module').then(

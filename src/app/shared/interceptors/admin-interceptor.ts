@@ -6,13 +6,17 @@ import {
   HttpRequest,
   HttpHandler,
 } from '@angular/common/http';
+
 @Injectable()
 export class AdminInterceptor implements HttpInterceptor {
   constructor(private authSvc: AuthService) {}
+
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<any> {
-    //console.log('intercetpt');
-    //console.log('not req', req.url);
-    //console.log('body', req.body.token);
+    // Ignorar rutas que no requieren autenticación
+    if (req.url.includes('/recoveryPassword') || req.url.includes('/actions/register') || req.url.includes('forgot-password') || req.url.includes('/actions/confirm-user') || req.url.includes('/actions/requestSmsCode') || req.url.includes('/actions/validateSmsCode')) {
+      return next.handle(req);
+    }
+
     if (req.url.includes('new-password')) {
       console.log('password');
       const authReq = req.clone({
@@ -22,25 +26,28 @@ export class AdminInterceptor implements HttpInterceptor {
       });
       console.log('authReq', authReq);
       return next.handle(authReq);
-      console.log('después del return');
     }
-    else if ( (req.url.includes('users') || req.url.includes('actions') )
-     && !req.url.includes('actions/register') && !req.url.includes('forgot-password') 
-     && !req.url.includes('/actions/confirm-user') && !req.url.includes('/actions/requestSmsCode')
-     && !req.url.includes('/actions/validateSmsCode')) {
+
+    if (req.url.includes('users') || req.url.includes('actions')) {
       console.log('intercept if');
       const userValue = this.authSvc.userValue;
-      console.log('userValue = ',userValue);
-      const authReq = req.clone({
-        setHeaders: {
-         // authorization: userValue.token,
-          'Content-Type': 'application/json',
-      'Authorization': `Bearer ${userValue.token}`,
-        },
-      });
-      console.log('authReq in admin interceptor', authReq);
-      return next.handle(authReq);
+      if (userValue) {
+        console.log('userValue = ', userValue);
+        const authReq = req.clone({
+          setHeaders: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${userValue.token}`,
+          },
+        });
+        console.log('authReq in admin interceptor', authReq);
+        return next.handle(authReq);
+      } else {
+        console.error('User is not authenticated');
+        // Maneja el caso cuando el usuario no está autenticado
+        return next.handle(req); // o redirigir, o lanzar un error, etc.
+      }
     }
+
     return next.handle(req);
   }
 }
