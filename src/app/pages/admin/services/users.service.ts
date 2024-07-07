@@ -53,34 +53,32 @@ export class UsersService {
       .pipe(catchError(this.handlerError));
   }
 
-  registerActiveUser(user: any): Observable<{}> {
+  registerActiveUser(user: any): Observable<{ token: string }> {
     return this.http
-    .put<User>(`${environment.API_URL}/actions/registerActive`, user)
-    .pipe(catchError(this.handlerError));
+      .put<{ token: string }>(`${environment.API_URL}/actions/registerActive`, user)
+      .pipe(catchError(this.handlerError));
   }
 
   sendPhoneCode(user: any): Observable<{}> {
     console.log('entra en sendPhoneCode de user.service');
     console.log('user en sendPhoneCode de user.service', user);
     return this.http
-    .post<any>(`${environment.API_URL}/actions/requestSmsCode`, user)
-    .pipe(catchError(this.handlerError));
-    console.log('fin sendPhoneCide de user.service')
+      .post<{}>(`${environment.API_URL}/actions/requestSmsCode`, user)
+      .pipe(catchError(this.handlerError));
   }
 
-  validatePhoneCode(user: any): Observable<{}> {
+  validatePhoneCode(user: any): Observable<{ result: { verified: boolean } }> {
     console.log('entra en sendPhoneCode de user.service');
     console.log('user en sendPhoneCode de user.service', user);
     return this.http
-    .post<any>(`${environment.API_URL}/actions/validateSmsCode`, user)
-    .pipe(catchError(this.handlerError));
-    console.log('fin sendPhoneCide de user.service')
+      .post<{ result: { verified: boolean } }>(`${environment.API_URL}/actions/validateSmsCode`, user)
+      .pipe(catchError(this.handlerError));
   }
 
   registerInvitation(user: any): Observable<{}> {
     return this.http
-    .put<User>(`${environment.API_URL}/actions/registerActive`, user)
-    .pipe(catchError(this.handlerError));
+      .put<{}>(`${environment.API_URL}/actions/registerActive`, user)
+      .pipe(catchError(this.handlerError));
   }
 
   update(userId: number, user: User): Observable<User> {
@@ -176,14 +174,14 @@ export class UsersService {
       .pipe(catchError(this.handlerError));
   }
 
-  handlerError(error): Observable<never> {
+  private handlerError(error: any): Observable<never> {
     let errorMessage = 'Error unknown';
-    console.log('handlerError', error)
+    console.log('handlerError', error);
     if (error) {
       errorMessage = `Error ${error.error.message}`;
     }
-    console.log('antes de alert', errorMessage)
-    alert(error.error.message);
+    console.log('antes de alert', errorMessage);
+    //alert(error.error.message);
     return throwError(errorMessage);
   }
 }

@@ -72,9 +72,9 @@
       </h2>
       <p *ngIf="isSaved">Datos guardados correctamente</p>
       <form [formGroup]="userForm.baseFormPatch" *ngIf="dataLoaded">
-        <div>
-          <label>Usuario: {{ userData.username }} <a>Cambiar email</a></label>
-          <label>Teléfono: {{ userData.telefono }} <a (click)="changePhone()">Cambiar teléfono</a></label>
+        <div style="margin-bottom:10px">
+          <label>Usuario: <strong>{{ userData.username }}</strong> <a class="enlace">Cambiar email</a></label>
+          <label>Teléfono: <strong>{{ userData.telefono }}</strong> <a class="enlace" (click)="changePhone()">Cambiar teléfono</a></label>
           <!--<mat-form-field class="full-width-input">
             <input
               formControlName="username"
@@ -130,35 +130,7 @@
             </mat-error>
           </mat-form-field>
         </div> -->
-        <div>
-          <mat-form-field class="full-width-input">
-            <input
-              formControlName="apellido1"
-              matInput
-              placeholder="Primer apellido"
-              required
-              [readonly]="isDisabled"
-            />
-            <mat-error *ngIf="checkField('apellido1')">
-              {{ userForm.errorMessage }}
-            </mat-error>
-          </mat-form-field>
-        </div>
-        <div>
-          <mat-form-field class="full-width-input">
-            <input
-              formControlName="apellido2"
-              matInput
-              placeholder="Segundo apellido"
-              [value]="userData.apellido2"
-              required
-              [readonly]="isDisabled"
-            />
-            <mat-error *ngIf="checkField('apellido2')">
-              {{ userForm.errorMessage }}
-            </mat-error>
-          </mat-form-field>
-        </div>
+       
         <div>
           <mat-form-field class="full-width-input">
             <input
@@ -189,6 +161,14 @@
         </div>
         <div>
           <mat-form-field class="full-width-input">
+            <input appAutoFormatDate formControlName="fecha_nacimiento" matInput placeholder="Fecha de nacimiento" required id="fecha_nacimiento" />
+            <mat-error *ngIf="checkField('fecha_nacimiento')">
+              {{ userForm.errorMessage }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field class="full-width-input">
             <input
               formControlName="codigo_postal"
               matInput
@@ -204,7 +184,7 @@
         <div>
           <mat-form-field class="full-width-input">
             <mat-label>Número de hijos </mat-label>
-            <mat-select formControlName="numero_hijos" [readonly]="isDisabled">
+            <mat-select formControlName="numero_hijos" [readonly]="isDisabled" (selectionChange)="onSelectionChange($event)">
               <mat-option value="0">0</mat-option>
               <mat-option value="1">1</mat-option>
               <mat-option value="2">2</mat-option>
@@ -224,6 +204,90 @@
             </mat-error>
           </mat-form-field>
         </div>
+        <div *ngIf="numeroHijos>0">
+          <mat-form-field class="full-width-input">
+            <input appAutoFormatDate formControlName="fecha_nacimiento_hijo1" matInput placeholder="Fecha de nacimiento hijo 1" required id="fecha_nacimiento" />
+            <mat-error *ngIf="checkField('fecha_nacimiento_hijo1')">
+              {{ userForm.errorMessage }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div *ngIf="numeroHijos>1">
+          <mat-form-field class="full-width-input">
+            <input appAutoFormatDate formControlName="fecha_nacimiento_hijo2" matInput placeholder="Fecha de nacimiento hijo 2" required id="fecha_nacimiento" />
+            <mat-error *ngIf="checkField('fecha_nacimiento_hijo2')">
+              {{ userForm.errorMessage }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div *ngIf="numeroHijos>2">
+          <mat-form-field class="full-width-input">
+            <input appAutoFormatDate formControlName="fecha_nacimiento_hijo3" matInput placeholder="Fecha de nacimiento hijo 3" required id="fecha_nacimiento" />
+            <mat-error *ngIf="checkField('fecha_nacimiento_hijo3')">
+              {{ userForm.errorMessage }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field class="full-width-input">
+            <mat-label>Ocupación </mat-label>
+            <mat-select formControlName="ocupacion" [readonly]="isDisabled">
+              <mat-option value="Trabajo por cuenta ajena">Trabajo por cuenta ajena</mat-option>
+              <mat-option value="Trabajo por cuenta propia (autónomo)">Trabajo por cuenta propia (autónomo)</mat-option>
+              <mat-option value="Estudio">Estudio</mat-option>
+              <mat-option value="Busco empleo">Busco empleo</mat-option>
+              <mat-option value="Labores domésticas">Labores domésticas</mat-option>
+              <mat-option value="Retirado/jubilado">Retirado/jubilado</mat-option>
+            </mat-select>
+            <mat-error *ngIf="checkField('ocupacion')">
+              {{ userForm.errorMessage }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field class="full-width-input">
+            <mat-label>Actualmente vives </mat-label>
+            <mat-select formControlName="vive_con" [readonly]="isDisabled">
+              <mat-option value="Sólo/a">Sólo/a</mat-option>
+              <mat-option value="Con mi pareja">Con mi pareja</mat-option>
+              <mat-option value="Con mi pareja y mis hijos">Con mi pareja y mis hijos</mat-option>
+              <mat-option value="Con mis hijos">Con mis hijos</mat-option>
+              <mat-option value="Con otros familiares">Con otros familiares</mat-option>
+              <mat-option value="Con otras personas">Con otras personas</mat-option>
+            </mat-select>
+            <mat-error *ngIf="checkField('vive_con')">
+              {{ userForm.errorMessage }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field class="full-width-input">
+            <mat-label>Nivel de estudios finalizados </mat-label>
+            <mat-select formControlName="nivel_estudios" [readonly]="isDisabled">
+              <mat-option value="Básicos (Primaria, EGB, etc.)">Básicos (Primaria, EGB, etc.)</mat-option>
+              <mat-option value="Medios (ESO, Bachillerato, FP, etc.)">Medios (ESO, Bachillerato, FP, etc.)</mat-option>
+              <mat-option value="Universitarios (Grado, Postgrado, Licenciado, Doctorado)">Universitarios (Grado, Postgrado, Licenciado, Doctorado)</mat-option>  
+            </mat-select>
+            <mat-error *ngIf="checkField('nivel_estudios')">
+              {{ userForm.errorMessage }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field class="full-width-input">
+            <mat-label>Te consideras de clase social </mat-label>
+            <mat-select formControlName="clase_social" [readonly]="isDisabled">
+              <mat-option value="Alta">Alta</mat-option>
+              <mat-option value="Media alta">Media alta</mat-option>
+              <mat-option value="Media media">Media media</mat-option>
+              <mat-option value="Media baja">Media baja</mat-option>  
+              <mat-option value="baja">baja</mat-option>
+            </mat-select>
+            <mat-error *ngIf="checkField('clase_social')">
+              {{ userForm.errorMessage }}
+            </mat-error>
+          </mat-form-field>
+        </div>
         <div>
           <mat-form-field class="full-width-input">
             <mat-label>Sexo </mat-label>
@@ -238,6 +302,20 @@
         </div>
         <div>
           <mat-form-field class="full-width-input">
+            <mat-label>Ingresos mensuales de tu hogar </mat-label>
+            <mat-select formControlName="ingresos_mensuales" [readonly]="isDisabled">
+              <mat-option value="Menos de 2.000 euros">Menos de 2.000 euros</mat-option>
+              <mat-option value="De 2.000 a 3.000 euros">De 2.000 a 3.000 euros</mat-option>
+              <mat-option value="De 3.001 a 4.000 euros">De 3.001 a 4.000 euros</mat-option>
+              <mat-option value="Más de 4.000 euros">Más de 4.000 euros</mat-option>
+            </mat-select>
+            <mat-error *ngIf="checkField('ingresos_mensuales')">
+              {{ userForm.errorMessage }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <!--<div>
+          <mat-form-field class="full-width-input">
             <input
               formControlName="ingresos_mensuales"
               matInput
@@ -249,7 +327,7 @@
               {{ userForm.errorMessage }}
             </mat-error>
           </mat-form-field>
-        </div>
+        </div>-->
         <button
           mat-raised-button
           [mat-dialog-close]="true"
@@ -405,12 +483,12 @@
           <label>Confirmar Contraseña</label>
           <mat-form-field class="full-width-input">
             <input
-              formControlName="userNewPassword"
+              formControlName="confirmNewPassword"
               matInput
               placeholder="Confirmar Contraseña"
               required 
             />
-            <mat-error *ngIf="checkFieldPassword('newPassword')">
+            <mat-error *ngIf="checkFieldPassword('confirmNewPassword')">
               {{ userForm.errorMessage }}
             </mat-error>
           </mat-form-field>
@@ -437,7 +515,7 @@
       <form (ngSubmit)="invitarAmigos()">
         <div class="form-group">
           <label for="userId">Tus comentarios:</label>
-          <input type="text" class="form-control txt-field" id="coments" [(ngModel)]="coments" name="coments" required>
+          <textarea class="form-control txt-field" id="coments" [(ngModel)]="coments" name="coments" required></textarea>
         </div>
       
         <div class="form-group">
@@ -507,5 +585,25 @@
   </div>
   <div mat-dialog-actions>
     <button mat-button (click)="closeDialog()">Cerrar</button>
+  </div>
+</ng-template>
+
+<ng-template #inviteDialogTemplate>
+  <h1 mat-dialog-title>Invitación Enviada</h1>
+  <div mat-dialog-content>
+    <p>Las invitaciones a tus amigos se han enviado correctamente.</p>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-button mat-dialog-close (click)="showPerfil()">Cerrar</button>
+  </div>
+</ng-template>
+
+<ng-template #changePassDialogTemplate>
+  <h1 mat-dialog-title>Contraseña modificada</h1>
+  <div mat-dialog-content>
+    <p>Las contraseña se ha modificado exitosamente.</p>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-button mat-dialog-close (click)="showPerfil()">Cerrar</button>
   </div>
 </ng-template>

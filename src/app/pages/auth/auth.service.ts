@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 import { environment } from '@env/environment';
 import { Observable, throwError, BehaviorSubject } from 'rxjs';
 
-import { UserResponse, User, Roles } from '@shared/models/user.interface';
+import { UserResponse, User } from '@shared/models/user.interface';
 import { catchError, map } from 'rxjs/operators';
 import { JwtHelperService } from '@auth0/angular-jwt';
 
@@ -19,6 +19,7 @@ export class AuthService {
   constructor(private http: HttpClient, private router: Router) {
     this.checkToken();
   }
+
   get user$(): Observable<UserResponse> {
     return this.user.asObservable();
   }
@@ -26,6 +27,7 @@ export class AuthService {
   get userValue(): UserResponse {
     return this.user.getValue();
   }
+
   login(authData: User): Observable<UserResponse | void> {
     return this.http
       .post<UserResponse>(`${environment.API_URL}/auth/login`, authData)
@@ -60,17 +62,23 @@ export class AuthService {
     }
   }
 
-  private saveLocalStorage(user: UserResponse): void {
+  saveLocalStorage(user: UserResponse): void {
     const { userId, message, ...rest } = user;
     localStorage.setItem('user', JSON.stringify(rest));
   }
 
   private handlerError(err): Observable<never> {
-    let errorMessage = 'An errror occured retrienving data';
+    let errorMessage = 'Se produjo un error al recuperar los datos';
     if (err) {
       errorMessage = `Error: code ${err.message}`;
     }
     window.alert(errorMessage);
     return throwError(errorMessage);
+  }
+
+  setToken(token: string): void {
+    const decodedUser = helper.decodeToken(token) as UserResponse;
+    this.saveLocalStorage({ ...decodedUser, token });
+    this.user.next({ ...decodedUser, token });
   }
 }

@@ -14,6 +14,8 @@ import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 })
 export class PerfilComponent implements OnInit {
   @ViewChild('dialogTemplate') dialogTemplate: TemplateRef<any>;
+  @ViewChild('inviteDialogTemplate') inviteDialogTemplate: TemplateRef<any>;
+  @ViewChild('changePassDialogTemplate') changePassDialogTemplate: TemplateRef<any>;
   dialogRef: MatDialogRef<any>;
   public userData;
   public dataLoaded: boolean = false;
@@ -33,6 +35,7 @@ export class PerfilComponent implements OnInit {
   rewards: any;
   totalRewards: number;
   telefono: number;
+  numeroHijos: number;
   constructor(
   public userForm: BaseFormUser,
   private dialog: MatDialog, 
@@ -48,6 +51,7 @@ export class PerfilComponent implements OnInit {
       this.isDisabled = true;
       this.perfil.userName = userData.username;
       this.setFormData();
+      this.numeroHijos = this.userData.numero_hijos;
     });
     if(this.perfil.showRewards) {
       this.perfil.getPaymentList();
@@ -60,6 +64,12 @@ export class PerfilComponent implements OnInit {
   }
 
   setFormData(): void {
+    const fechaHijo1 = this.userData.fecha_nacimiento_hijo1 ?  
+    this.formatearFecha(new Date(this.userData.fecha_nacimiento_hijo1)) : '';
+    const fechaHijo2 = this.userData.fecha_nacimiento_hijo2 ?  
+    this.formatearFecha(new Date(this.userData.fecha_nacimiento_hijo2)) : '';
+    const fechaHijo3 = this.userData.fecha_nacimiento_hijo3 ?  
+    this.formatearFecha(new Date(this.userData.fecha_nacimiento_hijo3)) : '';
     this.userForm.baseFormPatch.patchValue(
       {name: this.userData.name,
         apellido1: this.userData.apellido1,
@@ -72,9 +82,34 @@ export class PerfilComponent implements OnInit {
         numero_hijos: this.userData.numero_hijos,
         sexo: this.userData.sexo,
         ingresos_mensuales: this.userData.ingresos_mensuales,
+        ocupacion: this.userData.ocupacion,
+        vive_con: this.userData.vive_con,
+        nivel_estudios: this.userData.nivel_estudios,
+        clase_social: this.userData.clase_social,
+        fecha_nacimiento: this.formatearFecha(new Date(this.userData.fecha_nacimiento)),
+        fecha_nacimiento_hijo1: fechaHijo1,
+        fecha_nacimiento_hijo2: fechaHijo2,
+        fecha_nacimiento_hijo3: fechaHijo3
+
       }
     )
   }
+
+  formatearFecha(fecha): any {
+    let dia = fecha.getDate();
+    let mes = fecha.getMonth() + 1; // Los meses comienzan desde 0
+    let anio = fecha.getFullYear();
+
+    // Agregar cero delante del día y del mes si son menores de 10
+    if (dia < 10) {
+        dia = '0' + dia;
+    }
+    if (mes < 10) {
+        mes = '0' + mes;
+    }
+
+    return dia + '/' + mes + '/' + anio;
+}
 
   checkField(field: string): boolean {
     return this.userForm.isValidField(field);
@@ -87,6 +122,12 @@ export class PerfilComponent implements OnInit {
   onSave(): void {
     //document.getElementById('capaInfo').style.display = 'block';
     const formValue = this.userForm.baseFormPatch.value;
+    const edad = this.calculateAge(formValue.fecha_nacimiento);
+
+    if (edad < 14) {
+      alert('Debes tener más de 14 años.');
+      return;
+    }
     this.userSvc.updateActUser(formValue).subscribe((res) => {
       this.openOnChangeModal();
       this.modifyTxt = 'Editar'
@@ -94,7 +135,18 @@ export class PerfilComponent implements OnInit {
     });
   }
 
-  
+  calculateAge(fechaNacimiento: string): number {
+    const [day, month, year] = fechaNacimiento.split('/');
+    const birthDate = new Date(+year, +month - 1, +day);
+    const difference = Date.now() - birthDate.getTime();
+    const ageDate = new Date(difference);
+    return Math.abs(ageDate.getUTCFullYear() - 1970);
+  }
+
+  onSelectionChange(event: any): void {
+    this.numeroHijos = event.value;
+    console.log('Número de hijos seleccionados:', this.numeroHijos);
+  }
 
   requestPhoneCode() {
     this.userForm.tokenForm.value.resetToken = this.userForm.baseFormPatchTelefono.value;
@@ -156,6 +208,7 @@ export class PerfilComponent implements OnInit {
     else {
       this.userSvc.updatePassword(formValue).subscribe((res) => {
         console.log('Update', formValue);
+        this.dialog.open(this.changePassDialogTemplate);
       });
     }
     
@@ -175,6 +228,7 @@ export class PerfilComponent implements OnInit {
     this.userSvc.inviteFriends(body).subscribe((res) => {
       console.log('Update', body);
       console.log('res', res);
+      this.dialog.open(this.inviteDialogTemplate);
     }, (error) => {console.log('error', error)});
 
     /*this.http.post(url, body).subscribe(
