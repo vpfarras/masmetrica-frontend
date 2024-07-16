@@ -15,7 +15,7 @@ mat-sidenav-container {
 
 .contentBody{
   padding: 10px;
-  width:100%;
+  width:92%;
   max-width:850px;
   margin: 0 auto;
   height: 100%;
@@ -37,4 +37,30 @@ mat-sidenav-container {
 
 .enlace{
   color: #2493D4;
+}
+
+.mobile-menu {
+  display: none;
+}
+
+.desktop-menu {
+  display: none;
+}
+
+@media (max-width: 767px) {
+  .mobile-menu {
+    display: block;
+  }
+  .desktop-menu {
+    display: none;
+  }
+}
+
+@media (min-width: 768px) {
+  .mobile-menu {
+    display: none;
+  }
+  .desktop-menu {
+    display: block;
+  }
 }

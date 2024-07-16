@@ -33,6 +33,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
         this.isLogged = true;
         this.isAdmin = user?.role;
       });
+
+      this.authSvc.user$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((user: any) => {
+        this.isLogged = !!user; // Si user es null o undefined, isLogged será false
+      });
+
+      console.log('isLoged', this.isLogged)
   }
 
   ngOnDestroy(): void {

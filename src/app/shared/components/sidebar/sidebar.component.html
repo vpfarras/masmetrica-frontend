@@ -1,40 +1,34 @@
 <mat-nav-list>
-  <a mat-list-item routerLink="/" (click)="closeSidebar()">
-    <mat-icon>insert_chart_outlined</mat-icon>
-    <span class="nav-link">Home</span>
+  <a mat-list-item routerLinkActive="active-link" routerLink="/" (click)="closeSidebar()">
+    <mat-icon class="onlyMobile">insert_chart_outlined</mat-icon>
+    <span class="nav-link">Inicio</span>
   </a>
-
-  <a mat-list-item routerLink="/admin/users" (click)="closeSidebar()" *ngIf="isAdmin === 'admin'">
-    <mat-icon>people</mat-icon>
+  <a mat-list-item routerLinkActive="active-link" routerLink="/admin/users" (click)="closeSidebar()" *ngIf="isAdmin === 'admin'">
+    <mat-icon class="onlyMobile">people</mat-icon>
     <span class="nav-link">Usuarios</span>
   </a>
-
-  <a mat-list-item (click)="showPays()" *ngIf="isAdmin === 'admin'">
-    <mat-icon>attach_file</mat-icon>
+  <a mat-list-item routerLinkActive="active-link" (click)="showPays()" *ngIf="isAdmin === 'admin'">
+    <mat-icon class="onlyMobile">attach_file</mat-icon>
     <span class="nav-link">Actualizar archivos de pago</span>
   </a>
-  <a mat-list-item (click)="goToMiPerfil()">
-    <mat-icon>admin_panel_settings</mat-icon>
+  <a mat-list-item routerLinkActive="active-link" (click)="goToMiPerfil()">
+    <mat-icon class="onlyMobile">admin_panel_settings</mat-icon>
     <span class="nav-link">Mi perfil</span>
   </a>
-
-  <a mat-list-item (click)="showInvitations()">
-    <mat-icon>supervisor_account</mat-icon>
+  <a mat-list-item routerLinkActive="active-link" (click)="showInvitations()">
+    <mat-icon class="onlyMobile">supervisor_account</mat-icon>
     <span class="nav-link">Invitar amigos</span>
   </a>
-
-  <a mat-list-item (click)="showChangePass()">
-    <mat-icon>key</mat-icon>
+  <a mat-list-item routerLinkActive="active-link" (click)="showChangePass()">
+    <mat-icon class="onlyMobile">key</mat-icon>
     <span class="nav-link">Cambiar contraseña</span>
   </a>
-
-  <a mat-list-item (click)="showRewards()">
-    <mat-icon>payments</mat-icon>
+  <a mat-list-item routerLinkActive="active-link" (click)="showRewards()">
+    <mat-icon class="onlyMobile">payments</mat-icon>
     <span class="nav-link">Ver mis recompensas</span>
   </a>
-
-  <a mat-list-item (click)="onExit()">
-    <mat-icon>exit_to_app</mat-icon>
+  <a mat-list-item routerLinkActive="active-link" (click)="onExit()">
+    <mat-icon class="onlyMobile">exit_to_app</mat-icon>
     <span class="nav-link">Salir</span>
   </a>
 </mat-nav-list>

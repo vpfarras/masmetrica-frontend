@@ -9,6 +9,7 @@ import { FormControl, ValidatorFn, AbstractControl } from '@angular/forms';
 import { map, startWith } from 'rxjs/operators';
 import { RegisterService } from './register.service';
 import { PolicyModalComponent } from '@shared/components/policy-modal/policy-modal.component';
+import { ActivatedRoute } from '@angular/router';
 
 enum Action {
   EDIT = 'edit',
@@ -32,6 +33,7 @@ export class RegisterComponent implements OnInit {
   opciones: string[] = [];
   opcionesFiltradas: Observable<string[]>;
   public miControl: FormControl;
+  paramOrigin = null;
 
   constructor(
     public userForm: BaseFormUser,
@@ -39,18 +41,26 @@ export class RegisterComponent implements OnInit {
     private http: HttpClient,
     private dialog: MatDialog,
     private router: Router,
-    public registerService: RegisterService  
+    public registerService: RegisterService,
+    private route: ActivatedRoute  
   ) {}
 
   ngOnInit(): void {
     this.miControl = new FormControl('', [this.valorPermitidoValidator(this.opciones)]);
     const urlTree = this.router.parseUrl(this.router.url);
     this.params = urlTree.queryParams;
+    console.log('params', this.params);
 
     this.opcionesFiltradas = this.miControl.valueChanges.pipe(
       startWith(''),
       map(valor => this._filtrar(valor as string))
     );
+
+    this.route.queryParams.subscribe(queryParams => {
+      const page = queryParams['origin'];
+      if (page) {this.paramOrigin = page}
+    });
+    console.log('this.paramOrigin', this.paramOrigin)
   }
 
   private valorPermitidoValidator(opcionesPermitidas: string[]): ValidatorFn {
@@ -71,6 +81,7 @@ export class RegisterComponent implements OnInit {
     }
 
     const formValue = this.userForm.baseFormRegister.value;
+    formValue.params = this.params.origin;
     const edad = this.calculateAge(formValue.fecha_nacimiento);
 
     if (edad < 14) {

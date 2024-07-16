@@ -33,3 +33,18 @@ input.mat-input-element {
     text-align: left;
     width: 100%;
 }
+
+
+
+  
+  @media (min-width: 768px) {
+    .mat-icon-button {
+        display: none!important;
+      }
+  }
+
+@media (max-width: 769px) {
+  .onlyMobile {
+    display: none;
+  }
+}

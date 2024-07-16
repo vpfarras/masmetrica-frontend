@@ -1,5 +1,8 @@
 .spacer {
   flex: 1 1 auto;
+  @media (min-width: 768px) {
+    max-width: 55px;
+  }
 }
 
 a {
@@ -10,4 +13,37 @@ a {
 .logo {
   height: 3rem !important;
   width:100%;
+}
+
+.mobile-menu {
+  display: none;
+}
+
+.desktop-menu {
+  display: none;
+}
+
+@media (max-width: 767px) {
+  .mobile-menu {
+    display: block;
+  }
+  .desktop-menu {
+    display: none;
+  }
+  .onlyMobile {
+    display: block!important;
+  }
+}
+
+@media (min-width: 768px) {
+  .mobile-menu {
+    display: none;
+  }
+  .desktop-menu {
+    display: block;
+  }
+
+  .onlyMobile {
+    display: none!important;
+  }
 }
