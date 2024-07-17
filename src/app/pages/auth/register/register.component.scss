@@ -16,14 +16,17 @@ label {display: block}
 .registration-form .form-row {
     display: flex;
     flex-wrap: wrap;
-    margin-bottom: 20px;
   }
   
   .registration-form .form-column {
     flex: 0 0 100%; /* Ocupa todo el ancho en dispositivos móviles */
     max-width: 100%;
-    padding-right: 15px;
-    padding-left: 15px;
+    padding-right: 0px;
+    padding-left: 0px;
+    @media (min-width: 768px) {
+      padding-left: 15px;
+      padding-right: 15px;
+    }
   }
   
   /* Estilos para tablets y desktops */
@@ -48,4 +51,28 @@ label {display: block}
   .txtAzul{
     color:#2493D4
   }
+
   
+
+  .mat-checkbox-layout .mat-checkbox-label {
+    line-height: 17px;
+}
+
+.condiciones_legales{
+  *{
+    white-space: normal!important;
+  }
+  .condiciones_txt {
+    line-height: 18px;
+    text-align: left;
+    padding-top: 14px;
+  }
+}
+
+.ml-5{
+  margin-left: 5px;
+}
+  
+.condiciones{
+  margin-bottom:7px;
+}

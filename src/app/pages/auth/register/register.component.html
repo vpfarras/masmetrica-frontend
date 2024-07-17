@@ -83,12 +83,14 @@
             </mat-form-field>
           </div>
         </div>
-        <div class="form-row">
-          <mat-checkbox formControlName="condiciones_legales">
-            Acepto las
-            <a class="enlace" (click)="openPolicyModal('Política de Privacidad', 'privacidad')">políticas de privacidad</a>
-            y las
-            <a class="enlace" (click)="openPolicyModal('Condiciones Generales', 'generales')">condiciones generales</a>
+        <div class="form-row condiciones">
+          <mat-checkbox formControlName="condiciones_legales" class="condiciones_legales">
+            <div class="condiciones_txt">
+              Acepto las
+              <a class="enlace" (click)="openPolicyModal('Política de Privacidad', 'privacidad')">políticas de privacidad</a>
+              y las
+              <a class="enlace" (click)="openPolicyModal('Condiciones Generales', 'generales')">condiciones generales</a>
+            </div>
           </mat-checkbox>
           <mat-error *ngIf="checkField('condiciones_legales')">
             {{ userForm.errorMessage }}
@@ -96,6 +98,9 @@
         </div>
         <button [disabled]="userForm.baseFormRegister.invalid" type="submit" mat-raised-button color="primary">
           Registrarme
+        </button>
+        <button mat-raised-button color="primary" (click)="goToLogin()" class="ml-5">
+          Ir a login
         </button>
       </form>
     </mat-card-content>
