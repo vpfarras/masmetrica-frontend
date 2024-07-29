@@ -7,6 +7,7 @@ import { PerfilRoutingModule } from './perfil-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '@app/material.module';
 import { RewardsComponent } from './rewards/rewards.component';
+import { SharedModule } from '@shared/shared.module'; // Importa el SharedModule
 
 @NgModule({
   imports: [
@@ -14,7 +15,8 @@ import { RewardsComponent } from './rewards/rewards.component';
     PerfilRoutingModule,
     ReactiveFormsModule,
     FormsModule,
-    MaterialModule
+    MaterialModule,
+    SharedModule
   ],
   declarations: [PerfilComponent, RecoveryPasswordComponent, RewardsComponent, InviteFriendsComponent]
 })

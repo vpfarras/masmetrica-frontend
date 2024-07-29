@@ -9,12 +9,13 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatInputModule } from '@angular/material/input';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDialogModule } from '@angular/material/dialog'; // Importa MatDialogModule
-import { AutoFormatDateDirective } from '@shared/directives/auto-format-date.directive.ts.directive';
+//import { AutoFormatDateDirective } from '@shared/directives/auto-format-date.directive.ts.directive';
 import { RegisterService } from './register.service';
 import { PolicyModalComponent } from '@shared/components/policy-modal/policy-modal.component'; // Importa el componente
+import { SharedModule } from '@shared/shared.module'; // Importa el SharedModule
 
 @NgModule({
-  declarations: [RegisterComponent, RegisterLandingComponent, AutoFormatDateDirective, PolicyModalComponent],
+  declarations: [RegisterComponent, RegisterLandingComponent, PolicyModalComponent],
   imports: [
     CommonModule,
     RegisterRoutingModule,
@@ -23,7 +24,8 @@ import { PolicyModalComponent } from '@shared/components/policy-modal/policy-mod
     MatAutocompleteModule,
     MatInputModule,
     MatCheckboxModule,
-    MatDialogModule // Agrega MatDialogModule a los imports
+    MatDialogModule, // Agrega MatDialogModule a los imports
+    SharedModule
   ],
   entryComponents: [PolicyModalComponent] // Agrega PolicyModalComponent a entryComponents
 })

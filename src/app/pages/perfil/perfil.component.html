@@ -159,7 +159,7 @@
             </mat-error>
           </mat-form-field>
         </div>
-        <div>
+        <div class="form-column">
           <mat-form-field class="full-width-input">
             <input appAutoFormatDate formControlName="fecha_nacimiento" matInput placeholder="Fecha de nacimiento" required id="fecha_nacimiento" />
             <mat-error *ngIf="checkField('fecha_nacimiento')">
@@ -204,7 +204,7 @@
             </mat-error>
           </mat-form-field>
         </div>
-        <div *ngIf="numeroHijos>0">
+        <div class="form-column" *ngIf="numeroHijos>0">
           <mat-form-field class="full-width-input">
             <input appAutoFormatDate formControlName="fecha_nacimiento_hijo1" matInput placeholder="Fecha de nacimiento hijo 1" required id="fecha_nacimiento" />
             <mat-error *ngIf="checkField('fecha_nacimiento_hijo1')">
@@ -212,7 +212,7 @@
             </mat-error>
           </mat-form-field>
         </div>
-        <div *ngIf="numeroHijos>1">
+        <div class="form-column" *ngIf="numeroHijos>1">
           <mat-form-field class="full-width-input">
             <input appAutoFormatDate formControlName="fecha_nacimiento_hijo2" matInput placeholder="Fecha de nacimiento hijo 2" required id="fecha_nacimiento" />
             <mat-error *ngIf="checkField('fecha_nacimiento_hijo2')">
@@ -220,7 +220,7 @@
             </mat-error>
           </mat-form-field>
         </div>
-        <div *ngIf="numeroHijos>2">
+        <div class="form-column" *ngIf="numeroHijos>2">
           <mat-form-field class="full-width-input">
             <input appAutoFormatDate formControlName="fecha_nacimiento_hijo3" matInput placeholder="Fecha de nacimiento hijo 3" required id="fecha_nacimiento" />
             <mat-error *ngIf="checkField('fecha_nacimiento_hijo3')">
@@ -264,8 +264,8 @@
           <mat-form-field class="full-width-input">
             <mat-label>Nivel de estudios finalizados </mat-label>
             <mat-select formControlName="nivel_estudios" [readonly]="isDisabled">
-              <mat-option value="Básicos (Primaria, EGB, etc.)">Básicos (Primaria, EGB, etc.)</mat-option>
-              <mat-option value="Medios (ESO, Bachillerato, FP, etc.)">Medios (ESO, Bachillerato, FP, etc.)</mat-option>
+              <mat-option value="Básicos (Primaria, EGB, etc.)">Básicos (Primaria, EGB, ESO, etc.)</mat-option>
+              <mat-option value="Medios (ESO, Bachillerato, FP, etc.)">Medios (Bachillerato, FP, etc.)</mat-option>
               <mat-option value="Universitarios (Grado, Postgrado, Licenciado, Doctorado)">Universitarios (Grado, Postgrado, Licenciado, Doctorado)</mat-option>  
             </mat-select>
             <mat-error *ngIf="checkField('nivel_estudios')">
