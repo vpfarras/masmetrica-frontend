@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UsersService } from './../admin/services/users.service';
 import { BaseFormUser } from '../../shared/utils/base-form-user';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-recoveryPass',
@@ -10,8 +11,10 @@ import { BaseFormUser } from '../../shared/utils/base-form-user';
 export class RecoveryPassComponent implements OnInit {
 
   public dataLoaded: boolean = true;
+  isSending = false;
   constructor(public userForm: BaseFormUser,  
-    private userSvc: UsersService) { }
+    private userSvc: UsersService,
+  private router: Router,) { }
 
   ngOnInit() {
     this.dataLoaded = true;
@@ -24,8 +27,13 @@ export class RecoveryPassComponent implements OnInit {
   sendEmail(){
     const formValue = this.userForm.recoveryPasswordForm.value;
     this.userSvc.sendEmailRecoveryPassword(formValue).subscribe((res) => {
+      this.isSending = true;
       console.log('delete', res);
     });
+  }
+
+  goToLogin() {
+    this.router.navigate(['/login']);
   }
 
 }

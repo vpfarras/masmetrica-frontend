@@ -16,10 +16,13 @@ mat-sidenav-container {
 .contentBody{
   padding: 10px;
   width:92%;
-  max-width:850px;
+  max-width:1850px;
   margin: 0 auto;
   height: 100%;
   display: table;
+  @media (max-width: 600px) {
+    padding: 0px;
+  }
 }
 
 .disp-flex {

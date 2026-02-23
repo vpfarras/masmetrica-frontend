@@ -1,18 +1,27 @@
-<h1 *ngIf="(authSvc.user$ | async) as user" class="saludo">
-  Bienvenido, <strong>{{ user?.name || 'User' }}.</strong>
-</h1>
+<section class="mm-hero">
+  <div class="mm-container mm-split">
+    <div class="mm-split__media"></div>
 
-<div class="grid-cols">
-  <div class="containerGrid">
-    <mat-card (click)="goToPerfil()" class="disp-flex">
-      <mat-icon>person</mat-icon>
-      <p class="txt-icon">ir a mi perfil</p>
-    </mat-card>
+    <div class="mm-split__content">
+      <p class="mm-title">
+        Bienvenido al panel de <strong><span style="color: black;">Más</span><span style="color: #2563eb;">Métrica</span>
+</strong>, empresa de investigación de mercados con la que ganas dinero vía PayPal, Amazon, Bizzum, etc... sólo por dar tu opinión a través de breves encuestas de actualidad que recibes en tu email.
+      </p>
+
+      <ol class="mm-list">
+        <li>La inscripción es completamente gratuita y solo para residentes en España.</li>
+        <li>Por cada encuesta que rellenes recibirás de 0,5 € a 10 €, de manera clara y directa, en función de la duración de la encuesta, sin sorteos ni acumulación de puntos.</li>
+        <li>Solo te invitamos a las encuestas que se ajusten a tu perfil e interés.</li>
+        <li>Podrás responder desde tu PC, Móvil, Tablet, etc.</li>
+        <li>Te ingresamos el dinero por encuesta de forma rápida y directa, todo con claridad, transparencia y profesionalidad.</li>
+        <li>En MásMétrica nunca compartimos tus datos personales con ninguna otra compañía.</li>
+        <li>Registrarse tan solo te llevará un minuto y entre todos los suscritos o panelistas sortearemos 3 cheques regalo de Amazon o PayPal de 60 euros cada uno.</li>
+      </ol>
+
+      <div class="mm-actions">
+        <button class="mm-btn mm-btn--primary" routerLink="/login">Iniciar sesión</button>
+        <button class="mm-btn mm-btn--ghost" routerLink="/register">Registrarse</button>
+      </div>
+    </div>
   </div>
-  <div class="containerGrid" *ngIf="userData?.role === 'admin'">
-    <mat-card routerLink="/admin/users" class="disp-flex">
-      <mat-icon>people</mat-icon>
-    <span class="nav-link">Usuarios</span>
-    </mat-card>
-  </div>  
-</div>
+</section>

@@ -33,11 +33,16 @@ export class AdminInterceptor implements HttpInterceptor {
       const userValue = this.authSvc.userValue;
       if (userValue) {
         console.log('userValue = ', userValue);
+        // Condición para no modificar el Content-Type si es una subida de archivos
+        const isFileUpload = req.body instanceof FormData;
+        const headersConfig = {
+          'Authorization': `Bearer ${userValue.token}`,
+          // Solo agregamos el Content-Type si NO es una subida de archivos
+          ...(isFileUpload ? {} : { 'Content-Type': 'application/json' })
+        };
+        
         const authReq = req.clone({
-          setHeaders: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${userValue.token}`,
-          },
+          setHeaders: headersConfig,
         });
         console.log('authReq in admin interceptor', authReq);
         return next.handle(authReq);

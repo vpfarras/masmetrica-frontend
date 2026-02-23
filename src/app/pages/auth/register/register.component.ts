@@ -1,5 +1,5 @@
 import { UsersService } from './../../admin/services/users.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BaseFormUser } from '@shared/utils/base-form-user';
 import { Observable, throwError } from 'rxjs';
@@ -10,6 +10,8 @@ import { map, startWith } from 'rxjs/operators';
 import { RegisterService } from './register.service';
 import { PolicyModalComponent } from '@shared/components/policy-modal/policy-modal.component';
 import { ActivatedRoute } from '@angular/router';
+import { HttpErrorResponse } from '@angular/common/http';
+import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 
 enum Action {
   EDIT = 'edit',
@@ -34,6 +36,10 @@ export class RegisterComponent implements OnInit {
   opcionesFiltradas: Observable<string[]>;
   public miControl: FormControl;
   paramOrigin = null;
+  mensajeError: string = '';
+  @ViewChild('errorRegister') errorRegister: TemplateRef<any>;
+  
+  dialogRef: MatDialogRef<any>;
 
   constructor(
     public userForm: BaseFormUser,
@@ -81,7 +87,9 @@ export class RegisterComponent implements OnInit {
     }
 
     const formValue = this.userForm.baseFormRegister.value;
-    formValue.params = this.params.origin;
+    console.log('params', this.params);
+    formValue.params = this.params;
+    console.log('formValue', formValue);
     const edad = this.calculateAge(formValue.fecha_nacimiento);
 
     if (edad < 14) {
@@ -91,10 +99,35 @@ export class RegisterComponent implements OnInit {
     
     this.userSvc.register(formValue).subscribe(
       data => {
-        this.sendEmail();
-      }, error => {
-        console.log('se ha producido un error');
-      });
+        this.sendEmail(); // Lógica cuando el registro es exitoso
+      }, 
+      error => {
+        // Verifica si el error es una instancia de Error (por errores de red u otros)
+        if (error instanceof Error) {
+          console.error('Error capturado:', error.message);
+        } 
+    
+        // Si el error es un `HttpErrorResponse` de Angular
+        else if (error instanceof HttpErrorResponse) {
+          if (error.error) {
+            // Imprimir todo el error y su contenido para una revisión completa
+            console.log('Error HTTP capturado:', error);
+            
+            const errorMessage = error.error.message || 'Se ha producido un error desconocido';
+            console.log('Se ha producido un error:', errorMessage);
+          } else {
+            console.log(`Se ha producido un error con el estado ${error.status}: ${error.statusText}`);
+          }
+        } else {
+          // Si el error no es un `HttpErrorResponse` ni una instancia de Error
+          console.log('Error inesperado (no HTTP y no Error):', error);
+          this.mensajeError = error;
+          this.dialog.open(this.errorRegister);
+        }
+      }
+    );
+    
+    
   }
 
   checkField(field: string): boolean {
@@ -107,6 +140,7 @@ export class RegisterComponent implements OnInit {
 
   handlerError(error): Observable<never> {
     let errorMessage = 'Error unknown';
+    console.log('etra en hadleerError')
     if (error) {
       errorMessage = `Error ${error.message}`;
     }
@@ -148,5 +182,11 @@ export class RegisterComponent implements OnInit {
 
   goToLogin() {
     this.router.navigate(['/login']);
+  }
+
+  closeDialog(): void {
+    if (this.dialogRef) {
+      this.dialogRef.close();
+    }
   }
 }

@@ -1,22 +1,44 @@
-<div class="login-form" *ngIf="showForm">
-  <mat-card>
-    <mat-card-content>
-      <p class="txtAzul">Crea tu usuario de MasMétrica y gana dinero efectivo vía PayPal, Amazon, Bizum, etc. por dar tu opinión en divertidas encuestas.</p>
-      <p>Regístrate y disfruta todas las ventajas que te ofrece <b>MásMétrica</b></p>
-      <form [formGroup]="userForm.baseFormRegister" (ngSubmit)="onSave()" class="registration-form">
-        <div class="form-row">
-          <div class="form-column">
-            <mat-form-field class="full-width-input">
-              <input formControlName="username" matInput placeholder="Email" required />
+<!-- ================= FORMULARIO ================= -->
+<div class="mm-auth" *ngIf="showForm">
+
+  <!-- Imagen izquierda -->
+  <div class="mm-auth__media"></div>
+
+  <!-- Panel derecho -->
+  <div class="mm-auth__panel">
+    <mat-card class="mm-auth__card">
+      <mat-card-content>
+
+        <h1 class="mm-auth__title">Crear cuenta</h1>
+        <p class="mm-auth__subtitle">
+          Regístrate para empezar a ganar dinero con tus opiniones en MásMétrica.
+        </p>
+
+        <form
+          [formGroup]="userForm.baseFormRegister"
+          (ngSubmit)="onSave()"
+          class="mm-register-form"
+        >
+
+          <!-- FILA 1 -->
+          <div class="mm-row">
+            <mat-form-field appearance="fill" class="mm-field">
+              <mat-label>Email *</mat-label>
+              <input formControlName="username" matInput required />
               <mat-error *ngIf="checkField('username')">
                 {{ userForm.errorMessage }}
               </mat-error>
             </mat-form-field>
-          </div>
-          <div class="form-column">
-            <mat-form-field class="full-width-input separator">
-              <input [type]="hide ? 'password' : 'text'" formControlName="password" matInput placeholder="Password" required />
-              <button mat-icon-button matSuffix (click)="hide = !hide">
+
+            <mat-form-field appearance="fill" class="mm-field">
+              <mat-label>Contraseña *</mat-label>
+              <input
+                [type]="hide ? 'password' : 'text'"
+                formControlName="password"
+                matInput
+                required
+              />
+              <button mat-icon-button matSuffix type="button" (click)="hide = !hide">
                 <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
               </button>
               <mat-error *ngIf="checkField('password')">
@@ -24,46 +46,54 @@
               </mat-error>
             </mat-form-field>
           </div>
-        </div>
-        <div class="form-row">
-          <div class="form-column">
-            <mat-form-field class="full-width-input">
-              <input formControlName="name" matInput placeholder="Nombre" required />
+
+          <!-- FILA 2 -->
+          <div class="mm-row">
+            <mat-form-field appearance="fill" class="mm-field">
+              <mat-label>Nombre *</mat-label>
+              <input formControlName="name" matInput required />
               <mat-error *ngIf="checkField('name')">
                 {{ userForm.errorMessage }}
               </mat-error>
             </mat-form-field>
-          </div>
-          <div class="form-column">
-            <mat-form-field class="full-width-input">
-              <input formControlName="apellidos" matInput placeholder="Apellidos" required />
+
+            <mat-form-field appearance="fill" class="mm-field">
+              <mat-label>Apellidos *</mat-label>
+              <input formControlName="apellidos" matInput required />
               <mat-error *ngIf="checkField('apellidos')">
                 {{ userForm.errorMessage }}
               </mat-error>
             </mat-form-field>
           </div>
-        </div>
-        <div class="form-row">
-          <div class="form-column">
-            <mat-form-field class="full-width-input">
-              <input appAutoFormatDate formControlName="fecha_nacimiento" matInput placeholder="Fecha de nacimiento" required id="fecha_nacimiento" />
+
+          <!-- FILA 3 -->
+          <div class="mm-row">
+            <mat-form-field appearance="fill" class="mm-field">
+              <mat-label>Fecha de nacimiento *</mat-label>
+              <input
+                appAutoFormatDate
+                formControlName="fecha_nacimiento"
+                matInput
+                required
+                id="fecha_nacimiento"
+              />
               <mat-error *ngIf="checkField('fecha_nacimiento')">
                 {{ userForm.errorMessage }}
               </mat-error>
             </mat-form-field>
-          </div>
-          <div class="form-column">
-            <mat-form-field class="full-width-input">
-              <input type="text" placeholder="Código postal" matInput formControlName="codigo_postal">
+
+            <mat-form-field appearance="fill" class="mm-field">
+              <mat-label>Código postal</mat-label>
+              <input formControlName="codigo_postal" matInput />
               <mat-error *ngIf="checkField('codigo_postal')">
                 El código postal no es válido.
               </mat-error>
             </mat-form-field>
           </div>
-        </div>
-        <div class="form-row">
-          <div class="form-column">
-            <mat-form-field class="full-width-input">
+
+          <!-- FILA 4 -->
+          <div class="mm-row">
+            <mat-form-field appearance="fill" class="mm-field">
               <mat-label>Sexo</mat-label>
               <mat-select formControlName="sexo">
                 <mat-option value="Hombre">Hombre</mat-option>
@@ -73,47 +103,107 @@
                 {{ userForm.errorMessage }}
               </mat-error>
             </mat-form-field>
-          </div>
-          <div class="form-column">
-            <mat-form-field class="full-width-input">
-              <input text="text" formControlName="phone" matInput placeholder="Teléfono" required />
+
+            <mat-form-field appearance="fill" class="mm-field">
+              <mat-label>Teléfono móvil *</mat-label>
+              <input formControlName="phone" matInput required />
               <mat-error *ngIf="checkField('phone')">
                 {{ userForm.errorMessage }}
               </mat-error>
             </mat-form-field>
           </div>
-        </div>
-        <div class="form-row condiciones">
-          <mat-checkbox formControlName="condiciones_legales" class="condiciones_legales">
-            <div class="condiciones_txt">
-              Acepto las
-              <a class="enlace" (click)="openPolicyModal('Política de Privacidad', 'privacidad')">políticas de privacidad</a>
-              y las
-              <a class="enlace" (click)="openPolicyModal('Condiciones Generales', 'generales')">condiciones generales</a>
-            </div>
-          </mat-checkbox>
-          <mat-error *ngIf="checkField('condiciones_legales')">
-            {{ userForm.errorMessage }}
-          </mat-error>
-        </div>
-        <button [disabled]="userForm.baseFormRegister.invalid" type="submit" mat-raised-button color="primary">
-          Registrarme
-        </button>
-        <button mat-raised-button color="primary" (click)="goToLogin()" class="ml-5">
-          Ir a login
-        </button>
-      </form>
-    </mat-card-content>
-  </mat-card>
+
+          <!-- CONDICIONES -->
+          <div class="mm-conditions">
+            <mat-checkbox formControlName="condiciones_legales">
+              <span class="mm-conditions__text">
+                Acepto las
+                <span class="mm-link"
+                  (click)="openPolicyModal('Política de Privacidad', 'privacidad')">
+                  políticas de privacidad
+                </span>
+                y las
+                <span class="mm-link"
+                  (click)="openPolicyModal('Condiciones Generales', 'generales')">
+                  condiciones generales
+                </span>
+              </span>
+            </mat-checkbox>
+
+            <mat-error *ngIf="checkField('condiciones_legales')">
+              {{ userForm.errorMessage }}
+            </mat-error>
+          </div>
+
+          <!-- BOTONES -->
+          <div class="mm-actions">
+            <button
+              type="button"
+              mat-raised-button
+              class="mm-btn mm-btn--ghost"
+              (click)="goToLogin()"
+            >
+              Ir a login
+            </button>
+
+            <button
+              type="submit"
+              mat-raised-button
+              color="primary"
+              class="mm-btn mm-btn--primary"
+              [disabled]="userForm.baseFormRegister.invalid"
+            >
+              Registrarme
+            </button>
+          </div>
+
+          <p class="mm-auth__bottom">
+            ¿Ya tienes cuenta?
+            <span class="mm-link mm-link--strong" (click)="goToLogin()">
+              Inicia sesión
+            </span>
+          </p>
+
+        </form>
+      </mat-card-content>
+    </mat-card>
+  </div>
 </div>
 
-<div class="login-form" *ngIf="showOkMessage">
-  <h2>Confirmación</h2>
-  <p>Hemos enviado un email de confirmación a tu correo electrónico con las instrucciones necesarias para completar tu proceso de alta.
-    Por favor, sigue las instrucciones y pasarás a formar parte de nuestros usuarios</p>
+
+<!-- ================= CONFIRMACIÓN ================= -->
+<div class="mm-auth single" *ngIf="showOkMessage">
+  <div class="mm-auth__panel">
+    <mat-card class="mm-auth__card">
+      <mat-card-content>
+        <h2 class="mm-auth__title">Confirmación</h2>
+        <p>Te hemos enviado un email para validar tu cuenta.</p>
+
+        <div class="mm-actions">
+          <button mat-raised-button class="mm-btn mm-btn--primary" (click)="goToLogin()">
+            Ir a login
+          </button>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
 </div>
 
-<div class="login-form" *ngIf="showErrorMessage">
-  <h2>Error</h2>
-  <p>Se ha producido un error en el proceso de alta, por favor vuelve a intentarlo pasados unos minutos</p>
+
+<!-- ================= ERROR ================= -->
+<div class="mm-auth single" *ngIf="showErrorMessage">
+  <div class="mm-auth__panel">
+    <mat-card class="mm-auth__card">
+      <mat-card-content>
+        <h2 class="mm-auth__title">Error</h2>
+        <p>Se ha producido un error en el proceso de alta.</p>
+
+        <div class="mm-actions">
+          <button mat-raised-button class="mm-btn mm-btn--primary" (click)="goToLogin()">
+            Ir a login
+          </button>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
 </div>

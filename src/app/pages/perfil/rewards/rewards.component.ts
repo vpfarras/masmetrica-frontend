@@ -31,11 +31,11 @@ export class RewardsComponent implements OnInit {
 
     this.userSvc.getPaymentData(body).subscribe((res) => {
       console.log('Update', body);
-      console.log('res', res);
+      console.log('resss', res);
       this.rewards = res;
 
-      this.totalRewards = this.rewards.reduce((acumulador, actual) => acumulador + actual.Dinero, 0);
-
+      this.totalRewards = this.rewards.reduce((acumulador, actual) => acumulador + (Number(actual.cantidad) || 0), 0);
+      console.log('this.totalRewards', this.totalRewards);
       
     }, (error) => {console.log('error', error)});
   }

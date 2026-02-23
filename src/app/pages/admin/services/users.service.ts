@@ -5,6 +5,7 @@ import { Injectable } from '@angular/core';
 import { environment } from '@env/environment';
 import { User, newPassword, newQuery } from '@app/shared/models/user.interface';
 import { saveAs } from 'file-saver';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
@@ -18,12 +19,14 @@ export class UsersService {
       .pipe(catchError(this.handlerError));
   }
 
-  getQuery(user): Observable<User[]> {
-    console.log('user', user.formQuery)
+  getQuery(query: { formQuery: string }): Observable<User[]> {
     return this.http
-      .get<any>(`${environment.API_URL}/actions/query/${user.formQuery}`)
+      .post<User[]>(`${environment.API_URL}/actions/query`, query) // Enviar directamente
       .pipe(catchError(this.handlerError));
   }
+  
+  
+  
 
   getById(userId: number): Observable<User> {
     return this.http
@@ -49,7 +52,7 @@ export class UsersService {
   register(user: User): Observable<any> {
     console.log('register user', user);
     const options = null;
-      return this.http.post<User>(`${environment.API_URL}/actions/register`,user, { ...options, responseType: 'text' }  )
+      return this.http.post<User>(`${environment.API_URL}/actions/register`,user)
       .pipe(catchError(this.handlerError));
   }
 
@@ -105,6 +108,13 @@ export class UsersService {
       console.log('user password', user)
       return this.http
       .post<newPassword>(`${environment.API_URL}/actions/changepassword`, user)
+      .pipe(catchError(this.handlerError));
+  }
+
+  checkPassword(user: newPassword){
+    console.log('password', user.password);
+    return this.http
+      .post<newPassword>(`${environment.API_URL}/actions/checkPassword`, user)
       .pipe(catchError(this.handlerError));
   }
 
@@ -175,13 +185,40 @@ export class UsersService {
   }
 
   private handlerError(error: any): Observable<never> {
-    let errorMessage = 'Error unknown';
-    console.log('handlerError', error);
-    if (error) {
-      errorMessage = `Error ${error.error.message}`;
+    let errorMessage = 'Error desconocido'; // Mensaje de error por defecto
+    console.log('handlerError, objeto de error recibido:', error);
+  
+    // Verificamos si es un HttpErrorResponse y manejamos el error de manera segura
+    if (error instanceof HttpErrorResponse) {
+      if (error.error instanceof ErrorEvent) {
+        // Error del lado del cliente
+        errorMessage = `Error del cliente: ${error.error.message}`;
+      } else {
+        // Error del lado del servidor
+        errorMessage = `Error del servidor: ${error.status} - ${error.message}`;
+        
+        // Si el servidor envía un objeto con más detalles
+        if (error.error && typeof error.error === 'object') {
+          errorMessage = error.error.message || errorMessage; // Accede al mensaje de error si existe
+        }
+      }
+    } else {
+      // Manejar cualquier otro tipo de error (posiblemente no HTTP)
+      errorMessage = `Error inesperado: ${error.message || 'Desconocido'}`;
     }
-    console.log('antes de alert', errorMessage);
-    //alert(error.error.message);
-    return throwError(errorMessage);
+  
+    console.log('Mensaje de error generado:', errorMessage);
+    return throwError(errorMessage); // Retornamos el mensaje de error para que sea manejado
   }
+
+  // Solicitar el cambio de email
+  requestEmailChange(data: { newEmail: string }) {
+    return this.http.post(`${environment.API_URL}/actions/request-email-change`, data);
+  }
+
+  // Verificar el código y cambiar el email
+  verifyEmailCode(data: { newEmail: string, verificationCode: string }) {
+    return this.http.post(`${environment.API_URL}/actions/verify-email-code`, data);
+  }
+  
 }

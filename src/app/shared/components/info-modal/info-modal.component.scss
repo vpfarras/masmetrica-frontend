@@ -26,3 +26,32 @@
   ::ng-deep .icon-outside .mat-dialog-container {
    overflow: unset
   }
+
+  .botonEmergente{
+    margin-right: 10px;
+    margin-bottom: 5px;
+    box-sizing: border-box;
+    position: relative;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    cursor: pointer;
+    outline: none;
+    border: none;
+    -webkit-tap-highlight-color: transparent;
+    display: inline-block;
+    white-space: nowrap;
+    text-decoration: none;
+    vertical-align: baseline;
+    text-align: center;
+    min-width: 64px;
+    line-height: 36px;
+    padding: 0 16px;
+    border-radius: 4px;
+    overflow: visible;
+  }
+
+  .botonEmergente:hover {
+    background-color: white;
+  }

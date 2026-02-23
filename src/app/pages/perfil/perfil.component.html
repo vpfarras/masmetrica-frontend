@@ -73,8 +73,11 @@
       <p *ngIf="isSaved">Datos guardados correctamente</p>
       <form [formGroup]="userForm.baseFormPatch" *ngIf="dataLoaded">
         <div style="margin-bottom:10px">
-          <label>Usuario: <strong>{{ userData.username }}</strong> <a class="enlace">Cambiar email</a></label>
+          <label>Usuario: <strong>{{ userData.username }}</strong> <a class="enlace" (click)="showChangeEmail()">Cambiar email</a></label>
           <label>Teléfono: <strong>{{ userData.telefono }}</strong> <a class="enlace" (click)="changePhone()">Cambiar teléfono</a></label>
+          <p class="textLeft"><a class="enlace bold" (click)="openBajaUsuario()">Dar de baja mi usuario</a></p>
+          
+          
           <!--<mat-form-field class="full-width-input">
             <input
               formControlName="username"
@@ -85,7 +88,7 @@
             <mat-error *ngIf="checkField('username')">
               {{ userForm.errorMessage }}
             </mat-error>
-          </mat-form-field> -->
+          </mat-form-field>-->
         </div>
         <div>
           <mat-form-field class="full-width-input">
@@ -116,6 +119,18 @@
             </mat-error>
           </mat-form-field>
         </div>
+        <div>
+          <mat-form-field class="full-width-input">
+            <mat-label>Sexo </mat-label>
+            <mat-select formControlName="sexo" [readonly]="isDisabled">
+              <mat-option value="Hombre">Hombre</mat-option>
+              <mat-option value="Mujer">Mujer</mat-option>
+            </mat-select>
+            <mat-error *ngIf="checkField('sexo')">
+              {{ userForm.errorMessage }}
+            </mat-error>
+          </mat-form-field>
+        </div>
         <!--<div>
           <mat-form-field class="full-width-input">
             <input
@@ -131,7 +146,7 @@
           </mat-form-field>
         </div> -->
        
-        <div>
+        <div style="display: none">
           <mat-form-field class="full-width-input">
             <input
               formControlName="municipio"
@@ -145,7 +160,7 @@
             </mat-error>
           </mat-form-field>
         </div>
-        <div>
+        <div style="display:none">
           <mat-form-field class="full-width-input">
             <input
               formControlName="provincia"
@@ -287,19 +302,7 @@
               {{ userForm.errorMessage }}
             </mat-error>
           </mat-form-field>
-        </div>
-        <div>
-          <mat-form-field class="full-width-input">
-            <mat-label>Sexo </mat-label>
-            <mat-select formControlName="sexo" [readonly]="isDisabled">
-              <mat-option value="Hombre">Hombre</mat-option>
-              <mat-option value="Mujer">Mujer</mat-option>
-            </mat-select>
-            <mat-error *ngIf="checkField('sexo')">
-              {{ userForm.errorMessage }}
-            </mat-error>
-          </mat-form-field>
-        </div>
+        </div>        
         <div>
           <mat-form-field class="full-width-input">
             <mat-label>Ingresos mensuales de tu hogar </mat-label>
@@ -332,6 +335,16 @@
           mat-raised-button
           [mat-dialog-close]="true"
           color="primary"
+          (click)="enableForm()"
+          ckdFocusInitial
+          class="pdl-5"
+        >
+          {{modifyTxt}}
+        </button>
+        <button
+          mat-raised-button
+          [mat-dialog-close]="true"
+          color="primary"
           (click)="onSave()"
           ckdFocusInitial
           [disabled]="userForm.baseFormPatch.valid"
@@ -341,16 +354,7 @@
           Guardar
         </button>
 
-        <button
-          mat-raised-button
-          [mat-dialog-close]="true"
-          color="primary"
-          (click)="enableForm()"
-          ckdFocusInitial
-          class="pdl-5"
-        >
-          {{modifyTxt}}
-        </button>
+        
       </form>
     </mat-card-content>
     <mat-card-content *ngIf="isChangePhone">
@@ -366,7 +370,7 @@
                 text="text"
                 formControlName="pin"
                 matInput
-                placeholder="1234"
+                placeholder=""
                 required
               />
               <!--<mat-error *ngIf="checkField('username')">
@@ -402,22 +406,24 @@
           mat-raised-button
           [mat-dialog-close]="true"
           color="primary"
+          (click)="changePhone()"
+          ckdFocusInitial
+        >
+        
+          Cancelar
+        </button>
+        &nbsp;
+        <button
+          mat-raised-button
+          [mat-dialog-close]="true"
+          color="primary"
           (click)="requestPhoneCode()"
           ckdFocusInitial
         >
         
           Cambiar Teléfono
         </button>
-        <button
-          mat-raised-button
-          [mat-dialog-close]="true"
-          color="primary"
-          (click)="isChangePhone()"
-          ckdFocusInitial
-        >
         
-          Cancelar
-        </button>
       </form>
     </mat-card-content>
   </mat-card>
@@ -452,9 +458,10 @@
       <h2>Cambiar contraseña</h2>
       <form [formGroup]="userForm.passwordForm" *ngIf="dataLoaded">
         <div>
-          <label>Contraseña</label>
+          <label>Contraseña Actual</label>
           <mat-form-field class="full-width-input">
             <input
+              type="password"
               formControlName="password"
               matInput
               placeholder="Contraseña"
@@ -469,6 +476,7 @@
           <label>Nueva Contraseña</label>
           <mat-form-field class="full-width-input">
             <input
+              type="password"
               formControlName="newPassword"
               matInput
               placeholder="Nueva Contraseña"
@@ -483,6 +491,7 @@
           <label>Confirmar Contraseña</label>
           <mat-form-field class="full-width-input">
             <input
+              type="password"
               formControlName="confirmNewPassword"
               matInput
               placeholder="Confirmar Contraseña"
@@ -507,11 +516,10 @@
     </mat-card-content>
   </mat-card>
 </div>
-
 <div *ngIf="perfil.isInviteFriends" class="spaceContent login-form">
   <mat-card>
     <mat-card-content>
-      <h2>Invitar amigos</h2>
+      <h2>Invitar amigos a través de email</h2>
       <form (ngSubmit)="invitarAmigos()">
         <div class="form-group">
           <label for="userId">Tus comentarios:</label>
@@ -530,33 +538,46 @@
         <button type="submit"  mat-raised-button
         color="primary" class="btn btn-primary">Invitar</button>
       </form>
+      
     </mat-card-content>
   </mat-card>
+  <div class="grid-cols mt-2">
+
+    <div class="containerGrid">
+      <mat-card class="disp-flex">
+        <a class="contentWhatsapp"
+        href="https://wa.me/?text=Te%20env%C3%ADo%20esta%20invitaci%C3%B3n%20para%20unirte%20a%20MasM%C3%A9trica%2C%20empresa%20de%20estudios%20de%20mercado%20que%20te%20pagar%C3%A1%20por%20las%20encuestas%20que%20rellenes.%20%C3%9Anete%20en%20el%20siguiente%20enlace%3A%20https%3A%2F%2Fmasmetrica.es%2Flogin%2Fregister%3Fsource%3DWhatsApp%26user%3D{{userData.id}}"
+          target="_blank">
+          <img class="imgLogo" src="../../../assets/images/WhatsApp_icon.png"> Envía un WhatsApp a tus amigos invitándoles a darse de alta en MásMétrica
+        </a>
+      </mat-card>
+    </div>
+  </div>
 </div>
 <div *ngIf="perfil.isReward">
-  <h2>Mis recompensas</h2>
+  <h2>Recompensas</h2>
   <table class="rewards-table">
 
     <thead>
       <tr>
-        <th>#</th>
         <th>Fecha de pago</th>
         <th>Nombre Encuesta</th>
+        <th>Se pagó vía</th>
         <th>Incentivo pagado</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let reward of perfil.rewards">
-        <td>{{this.reward.IdPago}}</td>
-        <td>{{this.reward.FechaPago}}</td>
+        <td>{{this.reward.FechaPago | date:'dd/MM/yyyy'}}</td>
         <td>{{this.reward.NombreEncuesta}}</td>
-        <td>{{this.reward.Dinero}}</td>
+        <td>{{this.reward.metodoPago}}</td>
+        <td class="text-right">{{this.reward.cantidad | number:'1.2-2'}}</td>
       </tr>
       <tr class="total">
         <td></td>
         <td></td>
         <td></td>
-        <td>{{perfil.totalRewards}}</td>
+        <td class="text-right">Total: {{perfil.totalRewards}}</td>
       </tr>
     </tbody>
   </table>
@@ -566,6 +587,28 @@
 <button (click)="onUpload()">Subir archivo</button>
 <button (click)="onDownload()">descargar archivo</button>
 <!--<button (click)="onDownload()">Descargar archivo</button>-->
+</div>
+
+<div *ngIf="isChangeEmail" class="spaceContent login-form">
+  <form [formGroup]="emailForm" (ngSubmit)="requestEmailChange()">
+    <mat-form-field>
+      <input matInput placeholder="Nuevo email" formControlName="newEmail" required>
+    </mat-form-field>
+    <button mat-raised-button color="secondary" type="button" (click)="showPerfil()">cancelar</button>
+    &nbsp;<button mat-raised-button color="primary" type="submit">Cambiar email</button>
+  </form>
+</div>
+
+<div *ngIf="isCodeSent" class="spaceContent login-form">
+  <form [formGroup]="verificationForm" (ngSubmit)="verifyEmailCode()">
+    <p>Hemos enviado un código de verificación a tu nuevo email, por favor introduce el código para finalizar el cambio de email</p>
+    <mat-form-field>
+      <label>Código de verificación</label>
+      <input matInput placeholder="Código de verificación" formControlName="verificationCode" required>
+    </mat-form-field>
+    <button mat-raised-button color="secondary" type="button" (click)="showPerfil()">cancelar</button>
+    &nbsp;<button mat-raised-button color="primary" type="submit">Verificar y cambiar email</button>
+  </form>
 </div>
 
 <ng-template #dialogTemplate>
@@ -605,5 +648,103 @@
   </div>
   <div mat-dialog-actions>
     <button mat-button mat-dialog-close (click)="showPerfil()">Cerrar</button>
+  </div>
+</ng-template>
+
+<ng-template #confirmBajaDialogTemplate>
+  <h1 mat-dialog-title>Baja de usuario</h1>
+  <div mat-dialog-content>
+    <p>Tu usuario ha sido dado de baja correctamente, esperamos volverte a ver de nuevo por aquí.</p>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-button mat-dialog-close (click)="goToLogin()">Cerrar</button>
+  </div>
+</ng-template>
+
+<ng-template #errorEmail>
+  <h1 mat-dialog-title>Error al introducir el email</h1>
+  <div mat-dialog-content>
+    <p>Se ha producido un error:</p>
+    <p>Es posible que el email introducido ya esté en uso</p>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-button mat-dialog-close>Cerrar</button>
+  </div>
+</ng-template>
+
+<ng-template #emailGuardado>
+  <h1 mat-dialog-title>Email modificado</h1>
+  <div mat-dialog-content>
+    <p>Su email ha sido modificado correctamente</p>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-button mat-dialog-close (click)="showPerfil()">Cerrar</button>
+  </div>
+</ng-template>
+
+<ng-template #errorGenerico>
+  <h1 mat-dialog-title>Error</h1>
+  <div mat-dialog-content>
+    <p>{{errorGenericoTxt}}</p>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-button mat-dialog-close (click)="showPerfil()">Cerrar</button>
+  </div>
+</ng-template>
+
+<ng-template #successGenerico>
+  <h1 mat-dialog-title>OK</h1>
+  <div mat-dialog-content>
+    <p>{{successGenericoTxt}}</p>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-button mat-dialog-close (click)="showPerfil()">Cerrar</button>
+  </div>
+</ng-template>
+
+<ng-template #bajaUsuario>
+  <h1 mat-dialog-title>Baja de usuario</h1>
+  <div mat-dialog-content>
+    <p>Para finalizar el proceso de baja de usuario introduzca su contraseña</p>
+  </div>
+  <div mat-dialog-actions>
+    <form [formGroup]="userForm.passwordForm" *ngIf="dataLoaded">
+      <div>
+        <label>Introduzca contraseña</label>
+        <mat-form-field class="full-width-input">
+          <input
+            type="password"
+            formControlName="password"
+            matInput
+            placeholder="Contraseña"
+            required 
+          />
+          <mat-error *ngIf="checkFieldPassword('password')">
+            {{ userForm.errorMessage }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <button
+        mat-raised-button
+        [mat-dialog-close]="true"
+        color="secundary"
+        (click)="showPerfil()"
+        ckdFocusInitial
+      >
+      
+        Cancelar
+      </button>
+      <button
+        mat-raised-button
+        [mat-dialog-close]="true"
+        color="primary"
+        (click)="deleteUser()"
+        ckdFocusInitial
+      >
+      
+        Dar de baja mi usuario
+      </button>
+      
+    </form>
   </div>
 </ng-template>

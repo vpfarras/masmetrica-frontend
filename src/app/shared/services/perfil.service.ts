@@ -13,15 +13,17 @@ export class PerfilService {
   public isPay: boolean = false;
   public showRewards: boolean = false;
   public userName: string;
+  public userId: number;
   rewards: any;
   totalRewards: number;
 
   constructor(private userSvc: UsersService,) { }
 
   getPaymentList(): void {
-
+console.log('getPaymentList this.userName', this.userName)
     const body = {
       email: this.userName,
+      userId: this.userId,
       month: ''
     };
 
@@ -29,11 +31,11 @@ export class PerfilService {
 
     this.userSvc.getPaymentData(body).subscribe((res) => {
       console.log('Update', body);
-      console.log('res', res);
+      console.log('res2', res);
       this.rewards = res;
 
-      this.totalRewards = this.rewards.reduce((acumulador, actual) => acumulador + actual.Dinero, 0);
-
+      this.totalRewards = this.rewards.reduce((acumulador, actual) => acumulador + (Number(actual.cantidad) || 0), 0);
+      console.log('this.totalRewards', this.totalRewards)
       
     }, (error) => {console.log('error', error)});
   }

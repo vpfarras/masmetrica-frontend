@@ -4,11 +4,11 @@ html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .mat-toolbar.mat-primary {
     background: #fff;
-    color: #2493D4;
+    color: #1f2937;
 }
 
 .mat-flat-button.mat-primary, .mat-raised-button.mat-primary, .mat-fab.mat-primary, .mat-mini-fab.mat-primary {
-    background-color: #2493D4;
+    background-color: #1f2937;
 }
 
 .logo{
@@ -17,21 +17,33 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 }
 
 .mat-icon-button{
-    color: #2493D4;
+    color: #1f2937;
 }
 
 input.mat-input-element {
     padding: 4px;
     margin-top: -0.0625em;
     line-height: 1.8em;
-    background-color: lavender;
+    background-color: white;
 }  
+
+.mat-select {
+  padding: 4px;
+  margin-top: -0.0625em;
+  border: 1px solid #38b6ff;
+  border-radius: 3px;
+  line-height: 1.8em;
+}
 
 .mat-form-field {
     display: inline-block;
     position: relative;
     text-align: left;
     width: 100%;
+}
+
+.mat-form-field-type-mat-select .mat-form-field-label {
+    width: auto;
 }
 
 
@@ -51,4 +63,37 @@ input.mat-input-element {
 
 .mat-form-field-appearance-legacy .mat-form-field-infix {
     font-size: 18px;
+}
+
+.mm-btn--primary {
+  background: #1f2937; /* elegante */
+  color: #fff;
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.18);
+}
+
+.mm-btn--primary:hover {
+  background: #111827;
+  box-shadow: 0 14px 34px rgba(15, 23, 42, 0.22);
+}
+
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0px 1000px white inset;   
+  -webkit-text-fill-color: black;
+  border:  1px solid #38b6ff;
+  border-radius: 3px;
+}
+
+.mat-form-field.mat-warn .mat-input-element, .mat-form-field-invalid .mat-input-element, input.mat-input-element {
+    border:  1px solid #38b6ff;
+    border-radius: 3px;
+}
+
+.mat-form-field-label {
+  font-size: 12.5px !important;
+  background-color: white;
+  width: auto !important;
+}
+
+.mat-form-field-empty.mat-form-field-label{
+    width: auto;
 }

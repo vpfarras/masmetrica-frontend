@@ -1,12 +1,24 @@
-<div class="login-form">
-  <mat-card>
-    <mat-card-content>
-      <h1>RECUPERAR CONTRASEÑA</h1>
-      <p class="text-aling-lft">Introduce tu email y te enviaremos las instrucciones para recuperar tu contraseña</p>
-      <form [formGroup]="userForm.recoveryPasswordForm">
-        <div>
-          <label>Usuario:</label>
-          <mat-form-field class="full-width-input">
+<div class="mm-auth">
+
+  <!-- Imagen izquierda -->
+  <div class="mm-auth__media"></div>
+
+  <!-- Panel derecho -->
+  <div class="mm-auth__panel">
+    <mat-card class="mm-auth__card">
+
+      <!-- ===== Estado: formulario ===== -->
+      <mat-card-content *ngIf="!isSending">
+
+        <h1 class="mm-auth__title">Recuperar contraseña</h1>
+        <p class="mm-auth__subtitle">
+          Introduce tu email y te enviaremos las instrucciones para recuperar tu contraseña.
+        </p>
+
+        <form [formGroup]="userForm.recoveryPasswordForm" (ngSubmit)="sendEmail()">
+
+          <mat-form-field appearance="fill" class="mm-field">
+            <mat-label>Email *</mat-label>
             <input
               formControlName="username"
               matInput
@@ -17,18 +29,45 @@
               {{ userForm.errorMessage }}
             </mat-error>
           </mat-form-field>
+
           <button
+            type="submit"
+            mat-raised-button
+            color="primary"
+            class="mm-btn mm-btn--primary"
+            [disabled]="userForm.recoveryPasswordForm.invalid"
+          >
+            Enviar instrucciones
+          </button>
+
+          <p class="mm-auth__bottom">
+            ¿Te acordaste?
+            <span class="mm-link mm-link--strong" (click)="goToLogin()">
+              Volver al login
+            </span>
+          </p>
+
+        </form>
+      </mat-card-content>
+
+      <!-- ===== Estado: enviado ===== -->
+      <mat-card-content *ngIf="isSending">
+        <h1 class="mm-auth__title">Email enviado</h1>
+        <p class="mm-auth__subtitle">
+          Te hemos enviado un email con las instrucciones para recuperar tu contraseña.
+        </p>
+
+        <button
+          type="button"
           mat-raised-button
-          [mat-dialog-close]="true"
           color="primary"
-          (click)="sendEmail()"
-          ckdFocusInitial
+          class="mm-btn mm-btn--primary"
+          (click)="goToLogin()"
         >
-        
-          Recuperar Contraseña
+          Volver al login
         </button>
-        </div>
-      </form>
-    </mat-card-content>
-  </mat-card>
+      </mat-card-content>
+
+    </mat-card>
   </div>
+</div>

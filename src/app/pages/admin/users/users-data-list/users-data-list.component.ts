@@ -20,12 +20,12 @@ import * as XLSX from 'xlsx';
   styleUrls: ['./users-data-list.component.scss']
 })
 export class UsersDataListComponent implements OnInit {
-  displayedColumns: string[] = ['id', 'role', 'username', 'name', 'apellido1', 'apellido2', 'actions'];
+  displayedColumns: string[] = ['id', 'role', 'username', 'name', 'apellidos', 'sexo', 'provincia', 'municipio', 'codigo_postal', 'numero_hijos', 'ingresos_mensuales', 'condiciones_legales', 'resetToken', 'created_at', 'updated_at', 'telefono', 'is_valid', 'verifyToken', 'fecha_nacimiento', 'ccaa', 'ocupacion', 'vive_con', 'nivel_estudios', 'clase_social', 'fecha_nacimiento_hijo1', 'fecha_nacimiento_hijo2', 'fecha_nacimiento_hijo3', 'source', 'region', 'areas_nielsen', 'poblacion_2021', 'hombres', 'mujeres', 'user_invite', 'friend_register'];
   dataSource = new MatTableDataSource();
   name: string = 'listadoUsuarios.xlsx';
   newValue: string;
   private destroy$ = new Subject<any>();
-
+  queryAll: any;
 
   @ViewChild(MatSort) sort: MatSort;
   constructor(private userSvc: UsersService,
@@ -56,17 +56,46 @@ export class UsersDataListComponent implements OnInit {
     const book: XLSX.WorkBook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(book, worksheet, 'Sheet1');
 
+    console.log('book', book);
+
     XLSX.writeFile(book, this.name);
   }
 
-  createQuery(): void {
-    const formValue = this.userForm.baseFormQuery.value;
-    console.log('formValue = ',formValue)
-    this.userSvc.getQuery(formValue).subscribe((users) => {
+  createQuery(all?: boolean): void {
+  if (all) {
+    const queryAll = {
+      formQuery: "SELECT * FROM users"
+    };
+    this.userSvc.getQuery(queryAll).subscribe((users) => {
+      this.queryAll = users;
+      console.log('Resultados para "all":', this.queryAll);
+      this.exportAllToExcel(this.queryAll);
+    });
+  } else {
+    // Accede correctamente al control `formQuery` y obtén su valor
+    const formValue = this.userForm.baseFormQuery.get('formQuery')?.value.trim();
+
+    if (!formValue) {
+      console.error("El campo de consulta está vacío.");
+      return;
+    }
+
+    const query = {
+      formQuery: formValue
+    };
+
+    console.log('Consulta enviada:', query);
+
+    this.userSvc.getQuery(query).subscribe((users) => {
       this.dataSource.data = users;
-      console.log('this.dataSource in query => ', this.dataSource);
+      console.log('Resultados:', this.dataSource.data);
     });
   }
+}
+
+  
+  
+  
 
   onDelete(userId: number): void {
     if (window.confirm('Do you really want remove this user')) {
@@ -74,7 +103,7 @@ export class UsersDataListComponent implements OnInit {
         .delete(userId)
         .pipe(takeUntil(this.destroy$))
         .subscribe((res) => {
-          window.alert(res);
+          
           // Update result after deleting the user.
           this.userSvc.getAll().subscribe((users) => {
             this.dataSource.data = users;
@@ -99,5 +128,26 @@ export class UsersDataListComponent implements OnInit {
       });
     });
   }
+
+  // Método para exportar los datos a un archivo Excel
+exportAllToExcel(usersData: any[]): void {
+  // Preparar los datos para el archivo Excel
+  const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(usersData);
+  const workbook: XLSX.WorkBook = { Sheets: { 'Usuarios': worksheet }, SheetNames: ['Usuarios'] };
+
+  // Generar archivo Excel
+  const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+
+  // Crear un objeto Blob con los datos del archivo Excel
+  const blob: Blob = new Blob([excelBuffer], { type: 'application/octet-stream' });
+
+  // Descargar el archivo Excel
+  const link = document.createElement('a');
+  const url = window.URL.createObjectURL(blob);
+  link.href = url;
+  link.download = 'usuarios.xlsx'; // Nombre del archivo
+  link.click();
+  window.URL.revokeObjectURL(url); // Limpiar la URL creada
+}
 
 }

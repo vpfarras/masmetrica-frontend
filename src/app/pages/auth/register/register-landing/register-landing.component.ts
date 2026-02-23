@@ -13,9 +13,9 @@ import { AuthService } from '@auth/auth.service';
 export class RegisterLandingComponent implements OnInit {
   token: string;
   dataLoaded: boolean = false;
-  title: string = 'Creando usuario';
-  firstP: string = 'Estamos generando tu usuario';
-  secondP: string = '';
+  title: string = 'SMS de confirmación.';
+  firstP: string = 'Y ya, por último, te hemos enviado un SMS de confirmación con un código de 6 dígitos a tu teléfono móvil. Por favor, introduce a continuación este código y finaliza tu alta en MásMétrica.';
+  secondP: string = 'Una vez hayas validado este código, te llevaremos a tu área de usuario para que completes algunas variables sociodemográficas más como si tienes hijos, tu nivel de estudios, etc. y tengas así más posibilidades de recibir más encuestas al tener actualizado tu perfil con mayor información tuya.';
   friend: string = '';
   user: string = '';
   telefono: number = null;

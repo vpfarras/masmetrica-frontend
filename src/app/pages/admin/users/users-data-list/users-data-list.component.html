@@ -18,8 +18,9 @@
     color="primary"
     class="btn-new"
   >
-    mandar query
+    Obtener selección
   </button>
+  
 </div>
 <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8" id="tabla-listado-usuarios">
   <!-- ID Column -->
@@ -47,15 +48,9 @@
   </ng-container>
 
   <!-- apellido1 Column -->
-  <ng-container matColumnDef="apellido1">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header>Apellido 1</th>
-    <td mat-cell *matCellDef="let element">{{ element.apellido1 }}</td>
-  </ng-container>
-
-  <!-- apellido2 Column -->
-  <ng-container matColumnDef="apellido2">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header>Apellido 2</th>
-    <td mat-cell *matCellDef="let element">{{ element.apellido2 }}</td>
+  <ng-container matColumnDef="apellidos">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Apellidos</th>
+    <td mat-cell *matCellDef="let element">{{ element.apellidos }}</td>
   </ng-container>
 
   <!-- sexo Column -->
@@ -94,6 +89,150 @@
     <td mat-cell *matCellDef="let element">{{ element.ingresos_mensuales }}</td>
   </ng-container>
 
+  <!-- Condiciones legales -->
+  <ng-container matColumnDef="condiciones_legales">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Condiciones legales</th>
+    <td mat-cell *matCellDef="let element">{{ element.condiciones_legales }}</td>
+  </ng-container>
+
+  <!-- Reset Token -->
+  <ng-container matColumnDef="resetToken">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>ResetToken</th>
+    <td mat-cell *matCellDef="let element">{{ element.resetToken }}</td>
+  </ng-container>
+
+  <!-- created_at -->
+  <ng-container matColumnDef="created_at">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>created_at</th>
+    <td mat-cell *matCellDef="let element">{{ element.created_at }}</td>
+  </ng-container>
+
+  <!-- updated_at -->
+  <ng-container matColumnDef="updated_at">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>updated_at</th>
+    <td mat-cell *matCellDef="let element">{{ element.updated_at }}</td>
+  </ng-container>
+
+  <!-- telefono -->
+  <ng-container matColumnDef="telefono">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>telefono</th>
+    <td mat-cell *matCellDef="let element">{{ element.telefono }}</td>
+  </ng-container>
+
+  <!-- is_valid -->
+  <ng-container matColumnDef="is_valid">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>is_valid</th>
+    <td mat-cell *matCellDef="let element">{{ element.is_valid }}</td>
+  </ng-container>
+
+  <!-- verifyToken -->
+  <ng-container matColumnDef="verifyToken">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>verifyToken</th>
+    <td mat-cell *matCellDef="let element">{{ element.verifyToken }}</td>
+  </ng-container>
+
+  <!-- fecha_nacimiento -->
+  <ng-container matColumnDef="fecha_nacimiento">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>fecha_nacimiento</th>
+    <td mat-cell *matCellDef="let element">{{ element.fecha_nacimiento }}</td>
+  </ng-container>
+
+  <!-- ccaa -->
+  <ng-container matColumnDef="ccaa">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>ccaa</th>
+    <td mat-cell *matCellDef="let element">{{ element.ccaa }}</td>
+  </ng-container>
+
+  <!-- ocupacion -->
+  <ng-container matColumnDef="ocupacion">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>ocupacion</th>
+    <td mat-cell *matCellDef="let element">{{ element.ocupacion }}</td>
+  </ng-container>
+
+  <!-- nivel_estudios -->
+  <ng-container matColumnDef="nivel_estudios">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>nivel_estudios</th>
+    <td mat-cell *matCellDef="let element">{{ element.nivel_estudios }}</td>
+  </ng-container>
+
+  <!-- clase_social -->
+  <ng-container matColumnDef="clase_social">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>clase_social</th>
+    <td mat-cell *matCellDef="let element">{{ element.clase_social }}</td>
+  </ng-container>
+
+  <!-- vive_con -->
+  <ng-container matColumnDef="vive_con">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>vive_con</th>
+    <td mat-cell *matCellDef="let element">{{ element.vive_con }}</td>
+  </ng-container>
+
+  <!-- fecha_nacimiento_hijo1 -->
+  <ng-container matColumnDef="fecha_nacimiento_hijo1">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>fecha_nacimiento_hijo1</th>
+    <td mat-cell *matCellDef="let element">{{ element.fecha_nacimiento_hijo1 }}</td>
+  </ng-container>
+
+  <!-- fecha_nacimiento_hijo2 -->
+  <ng-container matColumnDef="fecha_nacimiento_hijo2">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>fecha_nacimiento_hijo2</th>
+    <td mat-cell *matCellDef="let element">{{ element.fecha_nacimiento_hijo2 }}</td>
+  </ng-container>
+
+  <!-- fecha_nacimiento_hijo3 -->
+  <ng-container matColumnDef="fecha_nacimiento_hijo3">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>fecha_nacimiento_hijo3</th>
+    <td mat-cell *matCellDef="let element">{{ element.fecha_nacimiento_hijo3 }}</td>
+  </ng-container>
+
+  <!-- source -->
+  <ng-container matColumnDef="source">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>source</th>
+    <td mat-cell *matCellDef="let element">{{ element.source }}</td>
+  </ng-container>
+
+  <!-- region -->
+  <ng-container matColumnDef="region">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>region</th>
+    <td mat-cell *matCellDef="let element">{{ element.region }}</td>
+  </ng-container>
+
+  <!-- areas_nielsen -->
+  <ng-container matColumnDef="areas_nielsen">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>areas_nielsen</th>
+    <td mat-cell *matCellDef="let element">{{ element.areas_nielsen }}</td>
+  </ng-container>
+
+  <!-- poblacion_2021 -->
+  <ng-container matColumnDef="poblacion_2021">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>poblacion_2021</th>
+    <td mat-cell *matCellDef="let element">{{ element.poblacion_2021 }}</td>
+  </ng-container>
+
+  <!-- hombres -->
+  <ng-container matColumnDef="hombres">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>hombres</th>
+    <td mat-cell *matCellDef="let element">{{ element.hombres }}</td>
+  </ng-container>
+
+  <!-- mujeres -->
+  <ng-container matColumnDef="mujeres">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>mujeres</th>
+    <td mat-cell *matCellDef="let element">{{ element.mujeres }}</td>
+  </ng-container>
+
+  <!-- user_invite -->
+  <ng-container matColumnDef="user_invite">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>user_invite</th>
+    <td mat-cell *matCellDef="let element">{{ element.user_invite }}</td>
+  </ng-container>
+
+  <!-- friend_register -->
+  <ng-container matColumnDef="friend_register">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>friend_register</th>
+    <td mat-cell *matCellDef="let element">{{ element.friend_register }}</td>
+  </ng-container>
+
   <ng-container matColumnDef="actions">
     <th mat-header-cell *matHeaderCellDef mat-sort-header>Actions</th>
     <td mat-cell *matCellDef="let element">
@@ -118,5 +257,13 @@
     color="primary"
     class="btn-new"
   >
-    Exportar a excel
+    Exportar selección a excel
+  </button>&nbsp;
+  <button
+    (click)="createQuery(true)"
+    mat-flat-button
+    color="primary"
+    class="btn-new"
+  >
+    Exportar a excel toda la tabla users
   </button>

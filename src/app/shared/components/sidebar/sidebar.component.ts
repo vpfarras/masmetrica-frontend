@@ -15,9 +15,11 @@ import { Router } from '@angular/router';
 export class SidebarComponent implements OnInit {
   isAdmin = null;
   isLogged = false;
+  isInit: boolean = false;
+  isUser: boolean = false;
   private destroy$ = new Subject<any>();
   constructor(private authSvc: AuthService, 
-    private utilsSvc: UtilsService, private perfil: PerfilService, private router: Router) {}
+    private utilsSvc: UtilsService, public perfil: PerfilService, private router: Router) {}
 
   ngOnInit(): void {
     this.authSvc.user$
@@ -37,12 +39,34 @@ export class SidebarComponent implements OnInit {
     this.utilsSvc.openSidebar(false);
   }
 
+  setUsers(){
+    this.isUser = true;
+    this.isInit = false;
+    this.perfil.isPerfil = false;
+    this.perfil.isChangePass = false;
+    this.perfil.isInviteFriends = false;
+    this.perfil.isReward = false;
+    this.perfil.isPay = false;
+  }
+
+  setInit(){
+    this.isInit = true;
+    this.perfil.isPerfil = false;
+    this.perfil.isChangePass = false;
+    this.perfil.isInviteFriends = false;
+    this.perfil.isReward = false;
+    this.perfil.isPay = false;
+    this.isUser = false;
+  }
+
   goToMiPerfil(): void {
     this.perfil.isPerfil = true;
     this.perfil.isChangePass = false;
     this.perfil.isInviteFriends = false;
     this.perfil.isReward = false;
     this.perfil.isPay = false;
+    this.isInit = false;
+    this.isUser = false;
     this.closeSidebar();
     this.router.navigate(['/perfil']);
   }
@@ -53,6 +77,8 @@ export class SidebarComponent implements OnInit {
     this.perfil.isChangePass = false;
     this.perfil.isReward = false;
     this.perfil.isPay = false;
+    this.isInit = false;
+    this.isUser = false;
     this.closeSidebar();
     this.router.navigate(['/perfil']);
   }
@@ -63,6 +89,8 @@ export class SidebarComponent implements OnInit {
     this.perfil.isInviteFriends = false;
     this.perfil.isReward = false;
     this.perfil.isPay = false;
+    this.isInit = false;
+    this.isUser = false;
     this.closeSidebar();
     this.router.navigate(['/perfil']);
   }
@@ -74,6 +102,8 @@ export class SidebarComponent implements OnInit {
     this.perfil.isChangePass = false;
     this.perfil.isReward = true;
     this.perfil.isPay = false; 
+    this.isInit = false;
+    this.isUser = false;
     this.closeSidebar();
     this.router.navigate(['/perfil']);
   }
@@ -85,6 +115,8 @@ export class SidebarComponent implements OnInit {
     this.perfil.isChangePass = false;
     this.perfil.isReward = false;
     this.perfil.isPay = true;
+    this.isInit = false;
+    this.isUser = false;
     this.closeSidebar();
     this.router.navigate(['/perfil']);
   }

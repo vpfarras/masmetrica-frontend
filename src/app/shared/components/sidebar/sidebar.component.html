@@ -1,31 +1,31 @@
 <mat-nav-list>
-  <a mat-list-item routerLinkActive="active-link" routerLink="/" (click)="closeSidebar()">
+  <a mat-list-item routerLinkActive="active-link" routerLink="/" [ngClass]="{menuActivo: isInit}" (click)="closeSidebar();setInit()">
     <mat-icon class="onlyMobile">insert_chart_outlined</mat-icon>
     <span class="nav-link">Inicio</span>
   </a>
-  <a mat-list-item routerLinkActive="active-link" routerLink="/admin/users" (click)="closeSidebar()" *ngIf="isAdmin === 'admin'">
+  <a mat-list-item routerLinkActive="active-link" routerLink="/admin/users" [ngClass]="{menuActivo: isUser}" (click)="closeSidebar();setUsers()" *ngIf="isAdmin === 'admin'">
     <mat-icon class="onlyMobile">people</mat-icon>
     <span class="nav-link">Usuarios</span>
   </a>
-  <a mat-list-item routerLinkActive="active-link" (click)="showPays()" *ngIf="isAdmin === 'admin'">
+  <a mat-list-item routerLinkActive="active-link" [ngClass]="{menuActivo: perfil.isPay}" (click)="showPays()" *ngIf="isAdmin === 'admin'">
     <mat-icon class="onlyMobile">attach_file</mat-icon>
-    <span class="nav-link">Actualizar archivos de pago</span>
+    <span class="nav-link">Actualizar pagos</span>
   </a>
-  <a mat-list-item routerLinkActive="active-link" (click)="goToMiPerfil()">
+  <a mat-list-item routerLinkActive="active-link" [ngClass]="{menuActivo: perfil.isPerfil}" (click)="goToMiPerfil()">
     <mat-icon class="onlyMobile">admin_panel_settings</mat-icon>
     <span class="nav-link">Mi perfil</span>
   </a>
-  <a mat-list-item routerLinkActive="active-link" (click)="showInvitations()">
+  <a mat-list-item routerLinkActive="active-link" [ngClass]="{menuActivo: perfil.isInviteFriends }" (click)="showInvitations()">
     <mat-icon class="onlyMobile">supervisor_account</mat-icon>
     <span class="nav-link">Invitar amigos</span>
   </a>
-  <a mat-list-item routerLinkActive="active-link" (click)="showChangePass()">
+  <a mat-list-item routerLinkActive="active-link" [ngClass]="{menuActivo: perfil.isChangePass}" (click)="showChangePass()">
     <mat-icon class="onlyMobile">key</mat-icon>
     <span class="nav-link">Cambiar contraseña</span>
   </a>
-  <a mat-list-item routerLinkActive="active-link" (click)="showRewards()">
+  <a mat-list-item routerLinkActive="active-link" [ngClass]="{menuActivo: perfil.isReward} " (click)="showRewards()">
     <mat-icon class="onlyMobile">payments</mat-icon>
-    <span class="nav-link">Ver mis recompensas</span>
+    <span class="nav-link">Recompensas</span>
   </a>
   <a mat-list-item routerLinkActive="active-link" title="Salir" (click)="onExit()">
     <mat-icon class="">exit_to_app</mat-icon>

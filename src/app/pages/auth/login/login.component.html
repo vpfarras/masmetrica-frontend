@@ -1,48 +1,87 @@
-<div class="login-form">
-  <mat-card class="login-card">
-    <mat-card-content>
-      <p class="font-13 txtAzul">Bienvenido al Área de usuario de MásMétrica, donde ganas dinero efectivo vía PayPal, Amazon, Bizum, etc. por dar tu opinión en divertidas encuestas.</p>
-      <form [formGroup]="loginForm.baseFormLogin" (ngSubmit)="onLogin()">        
-        <mat-form-field class="full-width-input">
-          <label>Usuario:</label>
-          <input
-            text="text"
-            formControlName="username"
-            matInput
-            placeholder="Usuario"
-            required
-          />
-          <mat-error *ngIf="checkField('username')">
-            Error en el campo username
-          </mat-error>
-        </mat-form-field>
-        <mat-form-field class="full-width-input">
-          <label>Password:</label>
-          <input
-            [type]="hide ? 'password' : 'text'"
-            formControlName="password"
-            matInput
-            placeholder="Password"
-            required
-          />
-          <button mat-icon-button matSuffix (click)="hide = !hide">
-            <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+<div class="mm-auth">
+  <!-- Columna izquierda: imagen -->
+  <div class="mm-auth__media" aria-hidden="true"></div>
+
+  <!-- Columna derecha: formulario -->
+  <div class="mm-auth__panel">
+    <mat-card class="mm-auth__card">
+      <mat-card-content>
+        <h1 class="mm-auth__title">Iniciar sesión</h1>
+        <p class="mm-auth__subtitle">Inicia sesión para acceder a MásMétrica</p>
+
+        <form [formGroup]="loginForm.baseFormLogin" (ngSubmit)="onLogin()">
+          <mat-form-field class="mm-field" appearance="fill">
+            <mat-label>Email</mat-label>
+            <input
+              matInput
+              type="text"
+              formControlName="username"
+              placeholder="Introduce tu email"
+              autocomplete="username"
+              required
+            />
+            <mat-error *ngIf="checkField('username')">
+              Error en el campo username
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="mm-field" appearance="fill">
+            <mat-label>Contraseña</mat-label>
+            <input
+              matInput
+              [type]="hide ? 'password' : 'text'"
+              formControlName="password"
+              placeholder="Introduce tu contraseña"
+              autocomplete="current-password"
+              required
+            />
+            <button
+              type="button"
+              mat-icon-button
+              matSuffix
+              (click)="hide = !hide"
+              aria-label="Mostrar/Ocultar contraseña"
+            >
+              <mat-icon>{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
+            </button>
+
+            <mat-error *ngIf="checkField('password')">
+              {{ loginForm.errorMessage }}
+            </mat-error>
+          </mat-form-field>
+
+          <div class="mm-auth__links">
+            <a class="mm-link" (click)="goToRecoverPassword()">¿Olvidaste tu contraseña?</a>
+          </div>
+
+          <button
+            class="mm-auth__btn"
+            [disabled]="loginForm.baseFormLogin.invalid"
+            type="submit"
+            mat-raised-button
+            color="primary"
+          >
+            Iniciar sesión
           </button>
-          <mat-error *ngIf="checkField('password')">
-            {{ loginForm.errorMessage }}
-          </mat-error>
-        </mat-form-field>.
-        <button
-          [disabled]="loginForm.baseFormLogin.invalid"
-          type="submit"
-          mat-raised-button
-          color="primary"
-        >
-          Login
-        </button>
-      </form>
-    </mat-card-content>
-    <p class="pointer" (click)="goToRecoverPassword()">¿Olvidaste tu contraseña?</p>
-        <p class="mt25 pointer">¿Aún no tienes usuario? <span class="enlace" (click)="goToRegister()">Regístrate</span></p>
-  </mat-card>
+
+          <p class="mm-auth__bottom">
+            ¿No tienes cuenta?
+            <a class="mm-link" (click)="goToRegister()">Regístrate</a>
+          </p>
+        </form>
+      </mat-card-content>
+    </mat-card>
+  </div>
 </div>
+
+<ng-template #errorLogin>
+  <h1 mat-dialog-title>Error de logado</h1>
+  <div mat-dialog-content>
+    <p>
+      Ha habido un error al intentar acceder, por favor, comprueba que tu usuario y tu contraseña sean correctos
+    </p>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-button mat-dialog-close (click)="closeDialog()">Cerrar</button>
+  </div>
+</ng-template>

@@ -1,39 +1,282 @@
+/* =========================
+   Look elegante & moderno
+   + casi full width
+   ========================= */
 
-.txt-icon{
-    padding-top: 3px;
-    padding-left: 8px;
+:host {
+  display: block;
 }
 
-.mat-icon {
-    color: #2493D4;
+/* 1) Contenedor ancho (casi toda la pantalla) */
+.mm-container {
+  width: min(1500px, calc(100vw - 64px)); /* deja “aire” a los lados */
+  margin: 0 auto;
 }
 
-.flexbox-container {
-    display: flex;
-    flex-direction: row;
-    margin-top    : 1rem;
+@media (max-width: 900px) {
+  .mm-container {
+    width: calc(100vw - 32px);
+  }
 }
 
-.flexbox-container > div {
-    display: grid;
-    grid-template-columns: auto auto;
+/* 2) Nitidez global SIN aumentar tamaños */
+.mm-hero,
+.mm-hero * {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
-.grid-cols {
-    display: grid;
-    grid-template-columns: auto auto;
-}
-.text-content {
-    margin: 1rem auto;
-    width : 80%;
-}
-
-mat-card.mat-card.mat-focus-indicator.disp-flex {
-    width: 75%;
-    margin-bottom: 15px;
-    display: flex
+/* 3) Hero a 100% alto */
+.mm-hero {
+  min-height: calc(100vh - 64px); /* ajusta si tu toolbar mide distinto */
+  display: flex;
+  align-items: stretch;
+  background: transparent;
 }
 
-.saludo{
-    font-size: 14px;
+/* 4) Split elegante (imagen + texto) */
+.mm-split {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 28px;
+  align-items: stretch;
+  width: 100%;
+  padding: 24px 0;
+}
+
+@media (max-width: 980px) {
+  .mm-split {
+    grid-template-columns: 1fr;
+    gap: 18px;
+    padding: 16px 0 22px;
+  }
+}
+
+/* 5) Imagen tipo “card” grande */
+.mm-split__media {
+  border-radius: 18px;
+  overflow: hidden;
+  position: relative;
+  box-shadow:
+    0 18px 50px rgba(15, 23, 42, 0.10),
+    0 2px 10px rgba(15, 23, 42, 0.06);
+  background: #eaf2ff;
+}
+
+/* Fondo: pexels-olly-3767397 */
+.mm-split__media::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("../../../assets/images/pexels-olly-3767397.jpg");
+  background-size: cover;
+  background-position: center;
+  transform: scale(1.02);
+}
+
+/* Overlay suave (no lava) */
+.mm-split__media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(15, 23, 42, 0.05),
+    rgba(15, 23, 42, 0.02)
+  );
+}
+
+/* 6) Columna de contenido */
+.mm-split__content {
+  border-radius: 18px;
+  background: #ffffff;
+  box-shadow:
+    0 18px 50px rgba(15, 23, 42, 0.06),
+    0 2px 10px rgba(15, 23, 42, 0.04);
+  padding: 26px 26px 22px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border: 1px solid rgba(15, 23, 42, 0.06);
+}
+
+/* Titular: más nítido sin hacerlo grande */
+.mm-title {
+  margin: 0 0 10px;
+  color: #0f172a;
+  font-weight: 750;
+  letter-spacing: -0.2px;
+  line-height: 1.55;
+  font-size: 15px; /* no subimos tamaño */
+}
+
+.mm-title strong {
+  color: #2563eb; /* azul elegante */
+}
+
+/* Texto cuerpo */
+.mm-subtitle {
+  margin: 0 0 14px;
+  color: #334155;
+  font-weight: 550;
+  line-height: 1.6;
+  font-size: 13px;
+}
+
+/* Lista más “premium” */
+.mm-list {
+  margin: 0;
+  padding-left: 18px;
+  color: #1f2937;
+  font-weight: 520;
+  font-size: 13px;
+  line-height: 1.65;
+  display: grid;
+  gap: 10px;
+}
+
+.mm-list li {
+  opacity: 0.96;
+}
+
+/* 7) Botonera */
+.mm-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 18px;
+}
+
+@media (max-width: 520px) {
+  .mm-actions {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Botones nítidos, modernos */
+.mm-btn {
+  height: 42px;
+  border-radius: 12px;
+  font-weight: 700;
+  letter-spacing: -0.15px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+  user-select: none;
+  font-size: 13px; /* mismo tamaño */
+}
+
+.mm-btn:active {
+  transform: translateY(1px);
+}
+
+.mm-btn--primary {
+  background: #1f2937; /* elegante */
+  color: #fff;
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.18);
+}
+
+.mm-btn--primary:hover {
+  background: #111827;
+  box-shadow: 0 14px 34px rgba(15, 23, 42, 0.22);
+}
+
+.mm-btn--ghost {
+  background: #f8fafc;
+  color: #0f172a;
+  border-color: rgba(15, 23, 42, 0.12);
+  box-shadow: 0 8px 18px rgba(15, 23, 42, 0.06);
+}
+
+.mm-btn--ghost:hover {
+  background: #f1f5f9;
+  box-shadow: 0 12px 26px rgba(15, 23, 42, 0.10);
+}
+
+/* 8) Grid de acciones (Mi perfil, Invitar amigos...) con estilo “cards” */
+.options-section {
+  padding: 34px 0 48px;
+  background: linear-gradient(180deg, #ffffff, #f8fafc);
+}
+
+.options-section .mm-container {
+  /* reuse del ancho */
+}
+
+.options-section h2 {
+  margin: 0 0 18px;
+  color: #0f172a;
+  font-weight: 800;
+  letter-spacing: -0.25px;
+  font-size: 16px;
+}
+
+.options-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(180px, 1fr));
+  gap: 14px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+@media (max-width: 1100px) {
+  .options-grid {
+    grid-template-columns: repeat(3, minmax(180px, 1fr));
+  }
+}
+@media (max-width: 820px) {
+  .options-grid {
+    grid-template-columns: repeat(2, minmax(180px, 1fr));
+  }
+}
+@media (max-width: 520px) {
+  .options-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.options-grid li {
+  background: rgba(255,255,255,0.9);
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-radius: 16px;
+  padding: 16px 14px;
+  display: grid;
+  grid-template-columns: 38px 1fr;
+  gap: 12px;
+  align-items: center;
+  cursor: pointer;
+  box-shadow:
+    0 10px 26px rgba(15, 23, 42, 0.06);
+  transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+}
+
+.options-grid li:hover {
+  transform: translateY(-2px);
+  border-color: rgba(37, 99, 235, 0.28);
+  box-shadow:
+    0 16px 38px rgba(15, 23, 42, 0.10);
+}
+
+.options-grid mat-icon {
+  color: #2563eb;
+  font-size: 26px;
+  width: 26px;
+  height: 26px;
+}
+
+.options-grid p {
+  margin: 0;
+  color: #0f172a;
+  font-weight: 650;
+  line-height: 1.25;
+  font-size: 13px;
+}
+
+/* Logo item especial */
+.options-grid li .logo {
+  width: 34px;
+  height: 34px;
+  object-fit: contain;
 }

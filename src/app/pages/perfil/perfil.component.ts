@@ -7,6 +7,10 @@ import { MatDialog } from '@angular/material/dialog'
 import { newPassword } from '../../shared/models/user.interface';
 import { PerfilService } from '../../shared/services/perfil.service';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { Router } from '@angular/router';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
+
 @Component({
   selector: 'app-perfil',
   templateUrl: './perfil.component.html',
@@ -16,6 +20,14 @@ export class PerfilComponent implements OnInit {
   @ViewChild('dialogTemplate') dialogTemplate: TemplateRef<any>;
   @ViewChild('inviteDialogTemplate') inviteDialogTemplate: TemplateRef<any>;
   @ViewChild('changePassDialogTemplate') changePassDialogTemplate: TemplateRef<any>;
+  @ViewChild('confirmBajaDialogTemplate') confirmBajaDialogTemplate: TemplateRef<any>;
+  @ViewChild('errorEmail') errorEmail: TemplateRef<any>;  
+  @ViewChild('emailGuardado') emailGuardado: TemplateRef<any>;
+  @ViewChild('errorGenerico') errorGenerico: TemplateRef<any>;
+  @ViewChild('successGenerico') successGenerico: TemplateRef<any>;
+  @ViewChild('bajaUsuario') bajaUsuario: TemplateRef<any>;
+  
+  
   dialogRef: MatDialogRef<any>;
   public userData;
   public dataLoaded: boolean = false;
@@ -26,9 +38,11 @@ export class PerfilComponent implements OnInit {
   public isReward: boolean = false;
   public isPay: boolean = false;
   public modifyTxt = 'Editar';
+  public errorGenericoTxt: 'Error';
+  public successGenericoTxt = 'Operación realizada con éxito';
   showPhoneCodeLab: boolean = false;
-  public overlayTitle = 'Usuario modificado';
-  public overlayDescription = 'Sus datos se han modificado correctamente';
+  public overlayTitle = 'Dar de baja mi usuario';
+  public overlayDescription = '¿Deseas dar de baja tu usuario y perder las ventajas que te ofrece MásMétrica?';
   public titleTxt: string = 'Mi Perfil';
   public isChangePhone: boolean = false;
   userName: string;
@@ -36,20 +50,30 @@ export class PerfilComponent implements OnInit {
   totalRewards: number;
   telefono: number;
   numeroHijos: number;
+  emailForm: FormGroup;
+  verificationForm: FormGroup;
+  isCodeSent: boolean = false;
+  token: string | null = null; // Declarar la propiedad 'token'
+  isChangeEmail = false;
   constructor(
   public userForm: BaseFormUser,
   private dialog: MatDialog, 
   private userSvc: UsersService,  
-  public perfil: PerfilService) { }
+  public perfil: PerfilService,
+  public router: Router,
+  private route: ActivatedRoute,
+  private fb: FormBuilder) { }
 
 
   
   ngOnInit() {
     this.userSvc.getActUser().subscribe((userData: any) => {
+      console.log('onInit userData', userData)
       this.userData = userData;
       this.dataLoaded = true;
       this.isDisabled = true;
       this.perfil.userName = userData.username;
+      this.perfil.userId = userData.id;
       this.setFormData();
       this.numeroHijos = this.userData.numero_hijos;
     });
@@ -61,6 +85,13 @@ export class PerfilComponent implements OnInit {
       this.perfil.isReward = true;
       this.perfil.isPay = false;
     }
+    this.emailForm = this.fb.group({
+      newEmail: ['', [Validators.required, Validators.email]]
+    });
+
+    this.verificationForm = this.fb.group({
+      verificationCode: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(4)]]
+    });
   }
 
   setFormData(): void {
@@ -152,9 +183,9 @@ export class PerfilComponent implements OnInit {
     this.userForm.tokenForm.value.resetToken = this.userForm.baseFormPatchTelefono.value;
     this.telefono = this.userForm.baseFormPatchTelefono.value.telefono;
     const formValue = this.userForm.tokenForm.value;
-    this.userSvc.sendPhoneCode(formValue).subscribe((res) => {
+    this.userSvc.sendPhoneCode(formValue).subscribe((res) => {      
       this.showPhoneCode();
-    })
+    }, (error) => {this.errorGenericoTxt = error; this.dialog.open(this.errorGenerico);} );
   }
 
   showPhoneCode(): void {
@@ -214,6 +245,7 @@ export class PerfilComponent implements OnInit {
     
   }
 
+
  
 
   coments: string;
@@ -252,9 +284,16 @@ export class PerfilComponent implements OnInit {
   }
 
   deleteUser(): void {
-    this.userSvc.deleteUser().subscribe((res) => {
-      console.log('delete', res);
-    });
+    const formValue = this.userForm.passwordForm.value;
+    this.userSvc.checkPassword(formValue).subscribe(
+      (res) => {
+        console.log('delete uno', formValue);
+        this.userSvc.deleteUser().subscribe((res) => {
+          console.log('delete', res);
+          this.dialog.open(this.confirmBajaDialogTemplate);
+        });
+    }, (error) => {this.errorGenericoTxt = error; this.dialog.open(this.errorGenerico);});
+    
   }
 
   openOnChangeModal() {
@@ -262,11 +301,12 @@ export class PerfilComponent implements OnInit {
   }
 
   onOpenModal(): void {
+    console.log('entra modal');
     let dialogRef = this.dialog.open(InfoModalComponent, {
       height: '400px',
       width: '600px',
       hasBackdrop: true,
-      data: { title: this.overlayTitle, irPerfil:'Cerrar', method:'borrar', description: this.overlayDescription },
+      data: { title: this.overlayTitle, irPerfil:'Sí, deseo darme de baja', method:'borrar', description: this.overlayDescription },
     });
     dialogRef.afterClosed().subscribe(result => {
       if(result == 'borrar') {
@@ -281,6 +321,8 @@ export class PerfilComponent implements OnInit {
     this.perfil.isInviteFriends = false;
     this.perfil.isReward = false;
     this.perfil.isPay = false;
+    this.isChangeEmail = false;
+    this.isCodeSent = false;
     this.titleTxt = 'Cambiar contraseña'
   }
 
@@ -290,7 +332,20 @@ export class PerfilComponent implements OnInit {
     this.perfil.isInviteFriends = false;
     this.perfil.isReward = false;
     this.perfil.isPay = false;
+    this.isChangeEmail = false;
+    this.isCodeSent = false;
     this.titleTxt = 'Mi perfil'
+  }
+
+  showChangeEmail() {
+    this.perfil.isPerfil = false;
+    this.perfil.isChangePass = false;
+    this.perfil.isInviteFriends = false;
+    this.perfil.isReward = false;
+    this.perfil.isPay = false;
+    this.isChangeEmail = true;
+    this.isCodeSent = false;
+    this.titleTxt = 'Cambiar email'
   }
 
   showInvitations() {
@@ -299,6 +354,8 @@ export class PerfilComponent implements OnInit {
     this.perfil.isChangePass = false;
     this.perfil.isReward = false;
     this.perfil.isPay = false;
+    this.isChangeEmail = false;
+    this.isCodeSent = false;
     this.titleTxt = 'Invitar a amigos'
   }
 
@@ -309,7 +366,9 @@ export class PerfilComponent implements OnInit {
     this.perfil.isChangePass = false;
     this.perfil.isReward = true;
     this.perfil.isPay = false;
-    this.titleTxt = 'Mis recompensas'
+    this.isChangeEmail = false;
+    this.isCodeSent = false;
+    this.titleTxt = 'Recompensas'
   }
 
   showPays() {
@@ -319,6 +378,8 @@ export class PerfilComponent implements OnInit {
     this.perfil.isChangePass = false;
     this.perfil.isReward = false;
     this.perfil.isPay = true;
+    this.isChangeEmail = false;
+    this.isCodeSent = false;
     this.titleTxt = 'Actualizar pagos'
   }
 
@@ -330,16 +391,30 @@ export class PerfilComponent implements OnInit {
     this.selectedFile = event.target.files[0];
   }
 
-  onUpload(): void {    
-
+  onUpload(): void {
     if (this.selectedFile) {
       const formData: FormData = new FormData();
       formData.append('file', this.selectedFile, this.selectedFile.name);
-      this.userSvc.uploadFile(formData).subscribe((res) => {
-        console.log('Update', formData);
-      });
+      console.log('Selected file:', this.selectedFile);
+  
+      this.userSvc.uploadFile(formData).subscribe(
+        (res) => {
+          console.log('File uploaded successfully', res);
+          this.dialog.open(this.successGenerico);
+        },
+        (error) => {
+          console.error('Error uploading file', error);
+          this.errorGenericoTxt = error; this.dialog.open(this.errorGenerico);
+        }
+      );
+    } else {
+      console.error('No file selected');
     }
   }
+  
+  
+
+  
 
   onDownload(): void {
     const formData: FormData = new FormData();
@@ -350,19 +425,55 @@ export class PerfilComponent implements OnInit {
   }
 
   getPaymentList(): void {
-
+    console.log('getPaymentList');
     const body = {
       email: this.perfil.userName,
       month: ''
     };
 
     this.userSvc.getPaymentData(body).subscribe((res) => {
+      console.log('respuesta rewards', res);
       this.perfil.rewards = res;
-
-      this.totalRewards = this.perfil.rewards.reduce((acumulador, actual) => acumulador + actual.Dinero, 0);
-
+      this.totalRewards = this.perfil.rewards.reduce((acumulador, actual) => acumulador + (Number(actual.cantidad) || 0), 0);
+      console.log('this.totalRewards = ',this.totalRewards)
       
     }, (error) => {console.log('error', error)});
+  }
+
+  // Solicitar el cambio de email
+   // Solicitar el cambio de email
+   requestEmailChange() {
+    const newEmail = this.emailForm.value.newEmail;
+    this.userSvc.requestEmailChange({ newEmail }).subscribe(
+      () => {
+        this.isCodeSent = true;
+        this.isChangeEmail = false;
+        console.log('Código de verificación enviado');
+      },
+      error => {
+        console.error('Error al solicitar el cambio de email', error);
+        this.dialog.open(this.errorEmail);
+      }
+    );
+  }
+
+   // Verificar el código y cambiar el email
+   verifyEmailCode() {
+    const verificationCode = this.verificationForm.value.verificationCode;
+    const newEmail = this.emailForm.value.newEmail;
+    this.userSvc.verifyEmailCode({ newEmail, verificationCode }).subscribe(
+      () => {
+        console.log('Email actualizado correctamente');
+        this.dialog.open(this.emailGuardado);
+      },
+      error => {
+        console.error('Error al verificar el código de verificación', error);
+      }
+    );
+  }
+
+  openBajaUsuario(): void {
+    this.dialog.open(this.bajaUsuario);
   }
 
   openDialog(): void {
@@ -380,6 +491,10 @@ export class PerfilComponent implements OnInit {
     if (this.dialogRef) {
       this.dialogRef.close();
     }
+  }
+
+  goToLogin() {
+    this.router.navigate(['/login']);
   }
  
 }

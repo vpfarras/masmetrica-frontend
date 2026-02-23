@@ -1,44 +1,246 @@
-.login-form {
-  padding: 0rem 1rem;
+/* ===== Layout pantalla completa tipo mock ===== */
 
-  mat-card {
-    max-width: 300px;
-    margin: 2rem auto;
-    text-align: center;
-    height: 350px;
-  }
+.mm-auth {
+  min-height: calc(100vh - 134px); /* ajusta si tu toolbar no mide 64 */
+  display: grid;
+  grid-template-columns: 1.25fr 0.75fr;
+  background: transparent;
 
-  .full-width-input,
-  button {
-    width: 100%;
-  }
-
-  .separator {
-    margin-bottom: 2rem;
-  }
-
-.mt25{
-  margin-top: 25px;
+  /* nitidez sin agrandar */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
-.pointer {
+
+@media (max-width: 980px) {
+  .mm-auth {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ===== Imagen izquierda ===== */
+.mm-auth__media {
+  position: relative;
+  background-image: url("/assets/images/pexels-olly-920387.jpg");
+  background-size: cover;
+  background-position: center;
+  overflow: hidden;
+  border-radius: 18px;
+}
+
+/* opcional: suaviza un pelín para que se vea “premium” */
+.mm-auth__media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(15, 23, 42, 0.05),
+    rgba(15, 23, 42, 0.00)
+  );
+}
+
+@media (max-width: 980px) {
+  .mm-auth__media {
+    min-height: 34vh;
+  }
+}
+
+/* ===== Panel derecho ===== */
+.mm-auth__panel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 28px;
+  @media (max-width: 600px) {
+    padding: 10px 0px;
+  }
+}
+
+.mm-auth__card {
+  width: min(420px, 92vw);
+  box-shadow: none !important;
+  border: 1px solid rgba(15, 23, 42, 0.10);
+  border-radius: 16px;
+  padding: 18px 18px 14px;
+}
+
+/* ===== Tipografía (nítida, no más grande) ===== */
+.mm-auth__title {
+  margin: 0 0 6px;
+  font-size: 16px; /* pequeño y nítido */
+  font-weight: 800;
+  letter-spacing: -0.2px;
+  color: #0f172a;
+}
+
+.mm-auth__subtitle {
+  margin: 0 0 18px;
+  font-size: 12px;
+  font-weight: 550;
+  color: #64748b;
+}
+
+/* ===== Campos ===== */
+.mm-field {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+/* Angular Material “fill” más suave */
+:host ::ng-deep .mat-form-field-appearance-fill .mat-form-field-flex {
+  background: #fff;
+  border-radius: 10px;
+  padding: 0.35rem 0.75rem;
+}
+
+/* quita borde duro y deja línea fina */
+:host ::ng-deep .mat-form-field-appearance-fill .mat-form-field-underline::before {
+  background-color: rgba(15, 23, 42, 0.10);
+}
+
+:host ::ng-deep .mat-form-field-appearance-fill.mat-focused .mat-form-field-flex {
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+}
+
+/* ===== Links ===== */
+.mm-auth__links {
+  display: flex;
+  justify-content: flex-end;
+  margin: 2px 0 12px;
+}
+
+.mm-link {
   cursor: pointer;
+  color: #1f2937;
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: 400;
 }
 
-.font-13{
-  font-size: 13px;
+.mm-link:hover {
+  text-decoration: underline;
 }
 
+.mm-link--strong {
+  font-weight: 800;
 }
 
-.enlace{
+/* ===== Botón ===== */
+.mm-auth__btn {
+  width: 100%;
+  height: 40px; /* no más grande, pero “recto” y nítido */
+  border-radius: 10px !important;
+  font-weight: 400;
+  letter-spacing: 0.2px;
+}
+
+/* “Elegante” sin cambiar tu theme: ajusta el raised */
+:host ::ng-deep .mat-raised-button.mat-primary {
+  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.18);
+}
+
+/* ===== Footer texto ===== */
+.mm-auth__bottom {
+  margin: 14px 0 0;
+  text-align: center;
+  font-size: 12px;
+  color: #334155;
+}
+
+/* Contenedor general */
+.login-form {
+  /* en móvil, que no “encojan” los laterales */
+  padding: clamp(12px, 3vw, 24px);
+}
+
+/* Layout (si tienes wrapper tipo .login-layout / .login-right etc., ignora esta parte)
+   Si NO tienes layout, esto sigue ayudando por el mat-card. */
+.login-card {
+  width: min(520px, 100%);
+  max-width: 100%;
+  margin: 0 auto;
+  border-radius: 16px;
+}
+
+/* Asegura que el mat-card no tenga padding raro y aproveche el ancho */
+mat-card.login-card {
+  box-sizing: border-box;
+}
+
+/* IMPORTANTE: en móvil, ocupar casi todo el ancho de pantalla */
+@media (max-width: 600px) {
+  .login-form {
+    padding: 12px; /* menos aire lateral */
+  }
+
+  mat-card.login-card {
+    width: 100%;
+    margin: 0;              /* quita el “auto” que a veces deja huecos */
+    border-radius: 14px;
+  }
+
+  /* si algún contenedor padre limita el ancho */
+  .login-form,
+  .login-form > mat-card {
+    max-width: 100%;
+  }
+}
+
+/* Inputs y botón al 100% */
+.full-width-input,
+button {
+  width: 100%;
+}
+
+/* ========= NITIDEZ / LEGIBILIDAD (sin subir font-size) ========= */
+
+/* Antialiasing y renderizado de texto (mejora claridad) */
+.login-form,
+.login-form * {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: geometricPrecision;
+}
+
+/* Botón: texto más “crisp”, un pelín de tracking y peso */
+.login-form button.mat-raised-button,
+.login-form button.mat-mdc-raised-button,
+.login-form button.mat-button-base {
+  font-weight: 600;
+  letter-spacing: .2px;
+}
+
+/* Links: “Olvidaste…” y “Regístrate” más nítidos */
+.login-form .pointer,
+.login-form .enlace {
+  font-weight: 600;
+  letter-spacing: .15px;
+}
+
+/* Además: mejor contraste y subrayado fino al hover (más elegante) */
+.login-form .pointer {
+  color: rgba(0,0,0,.72);
+}
+
+.login-form .enlace {
   color: #2493D4;
 }
 
-.login-card{
-  min-height: 350px;
-  height: auto !important;
+.login-form .enlace:hover,
+.login-form .pointer:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
-.txtAzul{
-  color: #2493D4;
+/* Evita que el “click” seleccione texto accidentalmente */
+.login-form .pointer,
+.login-form .enlace {
+  user-select: none;
 }
+
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0px 1000px white inset;
+  -webkit-text-fill-color: black;
+}
+
