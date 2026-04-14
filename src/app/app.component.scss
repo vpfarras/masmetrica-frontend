@@ -13,13 +13,13 @@ mat-sidenav-container {
   height: 100%;
 }
 
-.contentBody{
-  padding: 10px;
-  width:92%;
-  max-width:1850px;
+.contentBody {
+  width: 100%;
+  max-width: 1850px;
   margin: 0 auto;
   height: 100%;
   display: table;
+
   @media (max-width: 600px) {
     padding: 0px;
   }
@@ -31,14 +31,14 @@ mat-sidenav-container {
 
 .txt-field {
   padding: 4px;
-    margin-top: -0.0625em;
-    line-height: 1.8em;
-    background-color: lavender;
-    border: 0px;
-    width: 100%;
+  margin-top: -0.0625em;
+  line-height: 1.8em;
+  background-color: lavender;
+  border: 0px;
+  width: 100%;
 }
 
-.enlace{
+.enlace {
   color: #2493D4;
 }
 
@@ -54,6 +54,7 @@ mat-sidenav-container {
   .mobile-menu {
     display: block;
   }
+
   .desktop-menu {
     display: none;
   }
@@ -63,6 +64,7 @@ mat-sidenav-container {
   .mobile-menu {
     display: none;
   }
+
   .desktop-menu {
     display: block;
   }

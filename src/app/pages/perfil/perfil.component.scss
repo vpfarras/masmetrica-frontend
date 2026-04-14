@@ -1,92 +1,443 @@
-label {display:block};
-.spaceContent {margin: 20px}
-button {
-    margin-right: 10px;
-    margin-bottom: 5px;
-}
-.txt-field {
-    padding: 4px;
-      margin-top: -0.0625em;
-      line-height: 1.8em;
-      background-color: transparent;
-      border: 0px;
-      width: 100%;
-      margin-bottom:10px;
-      border: 1px solid #38b6ff;
-        border-radius: 3px;
-  }
+/* =========================================
+   Nuevos estilos para Cambiar Contraseña 
+   (Image 5 - Rediseño)
+   ========================================= */
 
-  .rewards-table {
-    width:100%
+.mm-profile-view {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 20px;
+    background-color: #f8f9fa;
+    min-height: calc(100vh - 140px);
+    font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
-thead {
-    background-color: #2493D4;
+.mm-profile-card {
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.05);
+    width: 100%;
+    max-width: 840px;
+    padding: 32px;
 }
-thead th {
-    font-weight: normal;
+
+.mm-profile-header {
+    text-align: center;
+    margin-bottom: 32px;
+}
+
+.mm-profile-header h2 {
+    font-size: 26px;
+    font-weight: 800;
+    color: #111827;
+    margin: 0 0 8px;
+    letter-spacing: -0.5px;
+}
+
+.mm-profile-header p {
+    font-size: 14px;
+    color: #6b7280;
+    margin: 0;
+}
+
+/* Campos de Formulario */
+.mm-field-group {
+    margin-bottom: 24px;
+}
+
+.mm-field-group label {
+    display: block;
+    font-size: 13.5px;
+    font-weight: 500;
+    color: #374151;
+    text-align: left;
+    margin-bottom: 8px;
+}
+
+.text-danger {
+    color: #ef4444;
+}
+
+.mm-input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    background: #ffffff;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    padding: 0 12px;
+    height: 46px;
+    transition: all 0.2s ease;
+}
+
+.mm-input-wrapper:focus-within {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.mm-input-wrapper mat-icon {
+    color: #9ca3af;
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+}
+
+.prefix-icon {
+    margin-right: 8px;
+}
+
+.suffix-icon {
+    margin-left: 8px;
+}
+
+.mm-input-wrapper input {
+    flex: 1;
+    border: none;
+    background: transparent;
+    outline: none;
+    font-size: 14px;
+    color: #1f2937;
+    width: 100%;
+    height: 100%;
+}
+
+.mm-input-wrapper input::placeholder {
+    color: #9ca3af;
+}
+
+.custom-select {
+    flex: 1;
+    width: 100%;
+    height: 100%;
+    border: none;
+    background: transparent;
+    outline: none;
+    font-size: 14px;
+    color: #1f2937;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 4px center;
+    background-size: 16px;
+    padding-right: 20px;
+}
+
+.mm-field-hint {
+    font-size: 12px;
+    color: #6b7280;
+    margin-top: 6px;
+    text-align: left;
+}
+
+.mm-error {
+    font-size: 12px;
+    color: #ef4444;
+    margin-top: 6px;
+    display: block;
+    text-align: left;
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+/* Botón Cambiar Contraseña */
+.mm-btn {
+    height: 48px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 14.5px;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-top: 8px;
+}
+
+.mm-btn--primary {
+    background: #0ea5e9;
+    /* Azul claro estilo Image 5 */
     color: white;
 }
-tbody tr {
-    border-bottom: 1px solid #673ab7;
-    text-align: center;
-}
-tbody td {
-    border-bottom:1px solid #673ab7;
-}
-.total td {
-    border-bottom: 0px;
-    font-weight: bold;
+
+.mm-btn--primary:hover {
+    background: #0284c7;
 }
 
-.login-form{
-    max-width: 650px;
-    margin: 0 auto;
-    text-align: center;
-    button {
-        margin: 0 auto;
-    }
-    label {
-        display: block;
-        text-align: left;
-    }
-    .pdl-5 {
-        margin-left: 5px;
-    }
-} 
-
-.enlace{
-    color: #2493D4;
-    cursor: pointer;
-    padding-left:5px;
-  }
-
-.bold {
-    font-weight: bold;
+.mm-btn--primary:disabled {
+    background: #7dd3fc;
+    cursor: not-allowed;
 }
 
-.textLeft {
-    text-align: left;
-} 
+/* =========================================
+   Nuevos estilos para Historial de Recompensas 
+   (Image 3 - Rediseño)
+   ========================================= */
 
-.contentWhatsapp{
+.mm-rewards-view {
+    padding: 40px 20px;
+    background-color: #f8f9fa;
+    min-height: calc(100vh - 140px);
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+    color: #111827;
+}
+
+.mm-rewards-header {
+    max-width: 900px;
+    margin: 0 auto 24px;
+}
+
+.mm-rewards-title {
+    font-size: 24px;
+    font-weight: 800;
+    color: #111827;
+    letter-spacing: -0.5px;
+}
+
+/* Tarjeta de Resumen */
+.mm-summary-card {
+    max-width: 900px;
+    margin: 0 auto 32px;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.03);
     display: flex;
-    text-decoration: none;
-    color: #333;
-    text-align: left;
-  }
-
-  .imgLogo {
-    width: 28px;
-    height: 28px;
-    max-width: 28px;
-    max-height: 28px;
-  }
-
-.mt-2 {
-    margin-top: 20px;
+    align-items: center;
+    padding: 24px 32px;
+    border: 1px solid rgba(15, 23, 42, 0.05);
 }
 
-.text-right {
-    text-align: right;
+@media (max-width: 640px) {
+    .mm-summary-card {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 24px;
+    }
+}
+
+.mm-summary-total {
+    flex: 1.5;
+    display: flex;
+    flex-direction: column;
+}
+
+.mm-summary-label,
+.mm-stat-label {
+    font-size: 11px;
+    font-weight: 600;
+    color: #6b7280;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 4px;
+}
+
+.mm-summary-amount {
+    font-size: 32px;
+    font-weight: 800;
+    color: #111827;
+    letter-spacing: -1px;
+}
+
+.mm-summary-divider {
+    width: 1px;
+    height: 60px;
+    background-color: #e5e7eb;
+    margin: 0 32px;
+}
+
+@media (max-width: 640px) {
+    .mm-summary-divider {
+        width: 100%;
+        height: 1px;
+        margin: 16px 0;
+    }
+}
+
+.mm-summary-stats {
+    flex: 2;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.mm-stat {
+    display: flex;
+    flex-direction: column;
+}
+
+.mm-stat-value {
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.text-orange {
+    color: #f59e0b;
+}
+
+.text-green {
+    color: #10b981;
+}
+
+.mm-stat-divider {
+    width: 1px;
+    height: 40px;
+    background-color: #e5e7eb;
+}
+
+/* Tabla */
+.mm-table-container {
+    max-width: 900px;
+    margin: 0 auto;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.03);
+    border: 1px solid rgba(15, 23, 42, 0.05);
+    overflow: hidden;
+}
+
+.mm-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.mm-table thead {
+    background-color: #ffffff;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.mm-table th {
+    text-align: left;
+    padding: 16px 24px;
+    font-size: 11px;
+    font-weight: 600;
+    color: #6b7280;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.mm-table tbody tr {
+    border-bottom: 1px solid #f3f4f6;
+    transition: background-color 0.15s ease;
+}
+
+.mm-table tbody tr:hover {
+    background-color: #f9fafb;
+}
+
+.mm-table tbody tr:last-child {
+    border-bottom: none;
+}
+
+.mm-table td {
+    padding: 16px 24px;
+    font-size: 14px;
+    color: #374151;
+    vertical-align: middle;
+}
+
+.font-medium {
+    font-weight: 500;
+}
+
+/* Tipos de pago */
+.mm-pago-via {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 500;
+}
+
+.pay-icon {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+}
+
+.color-paypal {
+    color: #003087;
+}
+
+.color-amazon {
+    color: #f90;
+}
+
+/* Badges */
+.mm-badge {
+    display: inline-flex;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1;
+}
+
+.mm-badge--success {
+    background-color: #dcfce7;
+    color: #166534;
+}
+
+.mm-badge--warning {
+    background-color: #fef3c7;
+    color: #92400e;
+}
+
+/* Paginación */
+.mm-pagination {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 24px;
+    border-top: 1px solid #e5e7eb;
+}
+
+.mm-pagination-info {
+    font-size: 13px;
+    color: #6b7280;
+}
+
+.mm-pagination-controls {
+    display: flex;
+    gap: 4px;
+}
+
+.mm-page-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 32px;
+    height: 32px;
+    padding: 0 4px;
+    border: 1px solid #d1d5db;
+    background-color: #ffffff;
+    color: #374151;
+    font-size: 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.mm-page-btn:hover:not(:disabled):not(.active) {
+    background-color: #f3f4f6;
+}
+
+.mm-page-btn.active {
+    background-color: #e0f2fe;
+    color: #0284c7;
+    border-color: #7dd3fc;
+    font-weight: 600;
+}
+
+.mm-page-btn:disabled,
+.mm-page-btn.disabled {
+    color: #9ca3af;
+    background-color: #f9fafb;
+    cursor: not-allowed;
+    border-color: #e5e7eb;
 }

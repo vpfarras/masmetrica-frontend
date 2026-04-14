@@ -5,10 +5,10 @@
 
   <!-- Panel derecho -->
   <div class="mm-auth__panel">
-    <mat-card class="mm-auth__card">
+    <div class="mm-auth__card">
 
       <!-- ===== Estado: formulario ===== -->
-      <mat-card-content *ngIf="!isSending">
+      <ng-container *ngIf="!isSending">
 
         <h1 class="mm-auth__title">Recuperar contraseña</h1>
         <p class="mm-auth__subtitle">
@@ -17,57 +17,44 @@
 
         <form [formGroup]="userForm.recoveryPasswordForm" (ngSubmit)="sendEmail()">
 
-          <mat-form-field appearance="fill" class="mm-field">
-            <mat-label>Email *</mat-label>
-            <input
-              formControlName="username"
-              matInput
-              placeholder="usuario@email.com"
-              required
-            />
-            <mat-error *ngIf="checkFieldEmail('username')">
+          <div class="mm-field-group">
+            <label>Email *</label>
+            <div class="mm-input-wrapper">
+              <mat-icon class="prefix-icon">mail_outline</mat-icon>
+              <input type="email" formControlName="username" placeholder="usuario@email.com" required />
+            </div>
+            <mat-error *ngIf="checkFieldEmail('username')" class="mm-error">
               {{ userForm.errorMessage }}
             </mat-error>
-          </mat-form-field>
+          </div>
 
-          <button
-            type="submit"
-            mat-raised-button
-            color="primary"
-            class="mm-btn mm-btn--primary"
-            [disabled]="userForm.recoveryPasswordForm.invalid"
-          >
+          <button type="submit" class="mm-btn mm-btn--primary mm-btn--full"
+            [disabled]="userForm.recoveryPasswordForm.invalid">
             Enviar instrucciones
           </button>
 
-          <p class="mm-auth__bottom">
+          <div class="mm-auth__bottom">
             ¿Te acordaste?
-            <span class="mm-link mm-link--strong" (click)="goToLogin()">
+            <a class="mm-link mm-link-blue" (click)="goToLogin()">
               Volver al login
-            </span>
-          </p>
+            </a>
+          </div>
 
         </form>
-      </mat-card-content>
+      </ng-container>
 
       <!-- ===== Estado: enviado ===== -->
-      <mat-card-content *ngIf="isSending">
+      <ng-container *ngIf="isSending">
         <h1 class="mm-auth__title">Email enviado</h1>
         <p class="mm-auth__subtitle">
           Te hemos enviado un email con las instrucciones para recuperar tu contraseña.
         </p>
 
-        <button
-          type="button"
-          mat-raised-button
-          color="primary"
-          class="mm-btn mm-btn--primary"
-          (click)="goToLogin()"
-        >
+        <button type="button" class="mm-btn mm-btn--primary mm-btn--full" (click)="goToLogin()">
           Volver al login
         </button>
-      </mat-card-content>
+      </ng-container>
 
-    </mat-card>
+    </div>
   </div>
 </div>

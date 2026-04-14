@@ -1,5 +1,6 @@
 .spacer {
   flex: 1 1 auto;
+
   @media (min-width: 768px) {
     max-width: 55px;
   }
@@ -12,7 +13,7 @@ a {
 
 .logo {
   height: 3rem !important;
-  width:100%;
+  width: 100%;
 }
 
 .mobile-menu {
@@ -27,11 +28,13 @@ a {
   .mobile-menu {
     display: block;
   }
+
   .desktop-menu {
     display: none;
   }
+
   .onlyMobile {
-    display: block!important;
+    display: block !important;
   }
 }
 
@@ -39,17 +42,18 @@ a {
   .mobile-menu {
     display: none;
   }
+
   .desktop-menu {
     display: block;
   }
 
   .onlyMobile {
-    display: none!important;
+    display: none !important;
   }
 }
 
-.enlaceNoLogado{
-  color:#333;
+.enlaceNoLogado {
+  color: #333;
 }
 
 .flRight {
@@ -59,4 +63,18 @@ a {
 
 .spaceArround {
   justify-content: space-between;
+}
+
+.header-btn-join {
+  background-color: #0ea5e9 !important;
+  color: #fff !important;
+  border-radius: 8px;
+  font-weight: 600;
+  padding: 0 20px;
+}
+
+@media (max-width: 900px) {
+  .hidden-mobile {
+    display: none !important;
+  }
 }

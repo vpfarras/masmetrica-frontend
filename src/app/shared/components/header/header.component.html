@@ -1,28 +1,36 @@
 <mat-toolbar color="primary" class="spaceArround">
-  
+
   <span style="font-family: sans-serif; font-weight: bold;font-size:24px; min-width: 171px;">
     <span><a href="https://www.masmetrica.es/">
-      <img class="logo" src="../assets/images/LogoMasMetrica2.png"></a></span> 
+        <img class="logo" src="../assets/images/LogoMasMetrica2.png"></a></span>
     <!--<span>
       <span style="color:#000;">MÁS</span> MÉTRICA</span>-->
-    </span>
-    
+  </span>
+
   <span class="spacer" *ngIf="isLogged"></span>
 
   <app-sidebar *ngIf="isLogged" class="desktop-menu"></app-sidebar>
-  
+
   <!--<a *ngIf="isAdmin === 'admin'" mat-button routerLink="/admin">Admin</a>-->
-  <ng-container >
+  <ng-container>
     <button mat-icon-button (click)="onToggleSidenav()" *ngIf="isLogged">
       <mat-icon>menu</mat-icon>
     </button>
   </ng-container>
-  <div class="flRight" *ngIf="!isLogged">
-    <a class="enlaceNoLogado" *ngIf="!isLogged; else viewLogout" mat-button routerLink="/login">Acceder</a>
-    <a class="enlaceNoLogado" *ngIf="!isLogged; else viewLogout" mat-button routerLink="/register">Registrarse</a>
+  <div class="flRight" *ngIf="!isLogged" style="display: flex; align-items: center; gap: 16px;">
+    <!--<a class="enlaceNoLogado hidden-mobile" mat-button routerLink="/">Servicios</a>
+    <a class="enlaceNoLogado hidden-mobile" mat-button routerLink="/">Nosotros</a>
+    <a class="enlaceNoLogado hidden-mobile" mat-button routerLink="/">Contacto</a>
+    <button mat-icon-button class="enlaceNoLogado" aria-label="Toggle light/dark mode">
+      <mat-icon>light_mode</mat-icon>
+    </button>-->
+    <a *ngIf="router.url !== '/register'" mat-flat-button color="primary" routerLink="/register"
+      class="header-btn-join">Únete al panel</a>
+    <a *ngIf="router.url === '/register'" mat-flat-button color="primary" routerLink="/login"
+      class="header-btn-join">Iniciar sesión</a>
   </div>
 </mat-toolbar>
 
 <ng-template #viewLogout>
-  
+
 </ng-template>

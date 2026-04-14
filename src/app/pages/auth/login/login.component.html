@@ -1,85 +1,80 @@
 <div class="mm-auth">
-  <!-- Columna izquierda: imagen -->
-  <div class="mm-auth__media" aria-hidden="true"></div>
+  <!-- Columna izquierda: imagen con texto superpuesto -->
+  <div class="mm-auth__media">
+    <div class="mm-auth__media-content">
+      <h2>Tu opinión tiene un <span class="text-blue">gran valor.</span></h2>
+      <p>Participa en estudios de mercado, comparte tus experiencias y sé recompensado por tu tiempo.</p>
+    </div>
+  </div>
 
   <!-- Columna derecha: formulario -->
   <div class="mm-auth__panel">
-    <mat-card class="mm-auth__card">
-      <mat-card-content>
-        <h1 class="mm-auth__title">Iniciar sesión</h1>
-        <p class="mm-auth__subtitle">Inicia sesión para acceder a MásMétrica</p>
+    <div class="mm-auth__card">
+      <h1 class="mm-auth__title">¡Bienvenido de nuevo!</h1>
+      <p class="mm-auth__subtitle">Inicia sesión para continuar participando.</p>
 
-        <form [formGroup]="loginForm.baseFormLogin" (ngSubmit)="onLogin()">
-          <mat-form-field class="mm-field" appearance="fill">
-            <mat-label>Email</mat-label>
-            <input
-              matInput
-              type="text"
-              formControlName="username"
-              placeholder="Introduce tu email"
-              autocomplete="username"
-              required
-            />
-            <mat-error *ngIf="checkField('username')">
-              Error en el campo username
-            </mat-error>
-          </mat-form-field>
+      <form [formGroup]="loginForm.baseFormLogin" (ngSubmit)="onLogin()">
 
-          <mat-form-field class="mm-field" appearance="fill">
-            <mat-label>Contraseña</mat-label>
-            <input
-              matInput
-              [type]="hide ? 'password' : 'text'"
-              formControlName="password"
-              placeholder="Introduce tu contraseña"
-              autocomplete="current-password"
-              required
-            />
-            <button
-              type="button"
-              mat-icon-button
-              matSuffix
-              (click)="hide = !hide"
-              aria-label="Mostrar/Ocultar contraseña"
-            >
-              <mat-icon>{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
-            </button>
-
-            <mat-error *ngIf="checkField('password')">
-              {{ loginForm.errorMessage }}
-            </mat-error>
-          </mat-form-field>
-
-          <div class="mm-auth__links">
-            <a class="mm-link" (click)="goToRecoverPassword()">¿Olvidaste tu contraseña?</a>
+        <div class="mm-field-group">
+          <label>Correo electrónico</label>
+          <div class="mm-input-wrapper">
+            <mat-icon class="prefix-icon">mail_outline</mat-icon>
+            <input type="email" formControlName="username" placeholder="tu@correo.com" autocomplete="username"
+              required />
           </div>
+          <mat-error *ngIf="checkField('username')" class="mm-error">Error en el campo email</mat-error>
+        </div>
 
-          <button
-            class="mm-auth__btn"
-            [disabled]="loginForm.baseFormLogin.invalid"
-            type="submit"
-            mat-raised-button
-            color="primary"
-          >
-            Iniciar sesión
+        <div class="mm-field-group">
+          <div class="label-row">
+            <label>Contraseña</label>
+            <a class="mm-link mm-link-blue" (click)="goToRecoverPassword()">¿La olvidaste?</a>
+          </div>
+          <div class="mm-input-wrapper">
+            <mat-icon class="prefix-icon">lock_outline</mat-icon>
+            <input [type]="hide ? 'password' : 'text'" formControlName="password" placeholder="••••••••"
+              autocomplete="current-password" required />
+            <mat-icon class="suffix-icon pointer" (click)="hide = !hide">{{ hide ? 'visibility_off' : 'visibility'
+              }}</mat-icon>
+          </div>
+          <mat-error *ngIf="checkField('password')" class="mm-error">{{ loginForm.errorMessage }}</mat-error>
+        </div>
+
+        <div class="mm-remember">
+          <input type="checkbox" id="rememberMe">
+          <label for="rememberMe">Recordarme en este dispositivo</label>
+        </div>
+
+        <button class="mm-btn mm-btn--primary mm-btn--full" [disabled]="loginForm.baseFormLogin.invalid" type="submit">
+          Iniciar sesión
+        </button>
+
+        <div class="mm-divider">
+          <span>o ingresa con</span>
+        </div>
+
+        <!--<div class="mm-social-actions">
+          <button type="button" class="mm-btn mm-btn--outline">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="Google"
+              width="18"> Google
           </button>
+          <button type="button" class="mm-btn mm-btn--outline">
+            <mat-icon style="color: #1877F2;">facebook</mat-icon> Facebook
+          </button>
+        </div>-->
 
-          <p class="mm-auth__bottom">
-            ¿No tienes cuenta?
-            <a class="mm-link" (click)="goToRegister()">Regístrate</a>
-          </p>
-        </form>
-      </mat-card-content>
-    </mat-card>
+        <div class="mm-auth__bottom">
+          ¿Aún no tienes cuenta? <a class="mm-link mm-link-blue" (click)="goToRegister()">Regístrate gratis</a>
+        </div>
+      </form>
+    </div>
   </div>
 </div>
 
 <ng-template #errorLogin>
   <h1 mat-dialog-title>Error de logado</h1>
   <div mat-dialog-content>
-    <p>
-      Ha habido un error al intentar acceder, por favor, comprueba que tu usuario y tu contraseña sean correctos
-    </p>
+    <p>Ha habido un error al intentar acceder, por favor, comprueba que tu usuario y tu contraseña sean correctos</p>
   </div>
   <div mat-dialog-actions>
     <button mat-button mat-dialog-close (click)="closeDialog()">Cerrar</button>
