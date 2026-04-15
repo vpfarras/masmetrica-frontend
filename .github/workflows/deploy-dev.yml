@@ -1,0 +1,39 @@
+name: Deploy Frontend to DEV (Staging)
+
+on:
+  push:
+    branches:
+      - develop
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '22'
+
+    - name: Install dependencies
+      run: npm install --legacy-peer-deps # <--- Cambio clave aquí
+
+    - name: Build Angular
+      run: npm run build -- --prod --base-href ./
+      env:
+        NODE_OPTIONS: "--openssl-legacy-provider"
+
+    - name: Authenticate to Google Cloud
+      uses: google-github-actions/auth@v2
+      with:
+        credentials_json: ${{ secrets.GCP_SA_KEY }}
+
+    - name: Upload to Cloud Storage
+      uses: google-github-actions/upload-cloud-storage@v2
+      with:
+        path: dist/login 
+        destination: masmetrica-frontend-dev
+        parent: false
