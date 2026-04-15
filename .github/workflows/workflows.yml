@@ -3,7 +3,7 @@ name: Deploy Frontend to Google Cloud Storage
 on:
   push:
     branches:
-      - main  # Esto hace que se ejecute al subir a la rama main
+      - main
 
 jobs:
   build-and-deploy:
@@ -11,12 +11,12 @@ jobs:
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4 # Actualizado a v4
 
     - name: Set up Node.js
-      uses: actions/setup-node@v3
+      uses: actions/setup-node@v4 # Actualizado a v4
       with:
-        node-version: '20'
+        node-version: '22' # Usamos la 22 como en tu PC
 
     - name: Install dependencies
       run: npm install
@@ -27,13 +27,13 @@ jobs:
         NODE_OPTIONS: "--openssl-legacy-provider"
 
     - name: Authenticate to Google Cloud
-      uses: google-github-actions/auth@v1
+      uses: google-github-actions/auth@v2 # Actualizado a v2
       with:
         credentials_json: ${{ secrets.GCP_SA_KEY }}
 
     - name: Upload to Cloud Storage
-      uses: google-github-actions/upload-cloud-storage@v1
+      uses: google-github-actions/upload-cloud-storage@v2 # Actualizado a v2
       with:
-        path: dist/login  # Asegúrate de que este sea el nombre de tu carpeta de salida
+        path: dist/login 
         destination: masmetrica-frontend
         parent: false
