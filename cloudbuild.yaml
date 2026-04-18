@@ -1,0 +1,17 @@
+steps:
+  # 1. Instalar dependencias
+  - name: 'gcr.io/cloud-builders/npm'
+    args: ['install']
+
+  # 2. Construir la versión de producción del Front
+  # Usamos el comando de compatibilidad para evitar errores de OpenSSL
+  - name: 'gcr.io/cloud-builders/npm'
+    env:
+      - 'NODE_OPTIONS=--openssl-legacy-provider'
+    args: ['run', 'build', '--', '--prod']
+
+  # 3. Subir los archivos al Bucket de Google Cloud Storage
+  - name: 'gcr.io/cloud-builders/gsutil'
+    args: ['-m', 'rsync', '-r', '-d', 'dist/login/', 'gs://masmetrica-frontend-dev']
+
+# El nombre del bucket 'masmetrica-frontend-dev' debe existir en tu Google Cloud
