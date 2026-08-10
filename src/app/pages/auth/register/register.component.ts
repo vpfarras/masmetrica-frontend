@@ -53,9 +53,18 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit(): void {
     this.miControl = new FormControl('', [this.valorPermitidoValidator(this.opciones)]);
+
+    // 1. Intentamos leer los params directamente del Router de Angular
     const urlTree = this.router.parseUrl(this.router.url);
-    this.params = urlTree.queryParams;
-    console.log('params', this.params);
+    let currentParams = urlTree.queryParams;
+    console.log('params', currentParams);
+
+    // 2. Recuperamos los parámetros respaldados en LocalStorage (guardados por index.html)
+    const savedParams = JSON.parse(localStorage.getItem('url_params') || '{}');
+
+    // 3. Fusionamos: si Angular perdió la URL, prevalecen los datos de LocalStorage
+    this.params = { ...savedParams, ...currentParams };
+    console.log('Params finales capturados para el registro:', this.params);
 
     this.opcionesFiltradas = this.miControl.valueChanges.pipe(
       startWith(''),
@@ -82,53 +91,57 @@ export class RegisterComponent implements OnInit {
   }
   
   onSave(): any {
-    if (this.params.user && this.params.friend) {
-      this.setFormParams();
-    }
+  // 1. Leemos el origen guardado en LocalStorage por el script del index.html
+  const savedSource = localStorage.getItem('user_source');
 
-    const formValue = this.userForm.baseFormRegister.value;
-    console.log('params', this.params);
-    formValue.params = this.params;
-    console.log('formValue', formValue);
-    const edad = this.calculateAge(formValue.fecha_nacimiento);
-
-    if (edad < 14) {
-      alert('Debes tener más de 14 años.');
-      return;
-    }
-    
-    this.userSvc.register(formValue).subscribe(
-      data => {
-        this.sendEmail(); // Lógica cuando el registro es exitoso
-      }, 
-      error => {
-        // Verifica si el error es una instancia de Error (por errores de red u otros)
-        if (error instanceof Error) {
-          console.error('Error capturado:', error.message);
-        } 
-    
-        // Si el error es un `HttpErrorResponse` de Angular
-        else if (error instanceof HttpErrorResponse) {
-          if (error.error) {
-            // Imprimir todo el error y su contenido para una revisión completa
-            console.log('Error HTTP capturado:', error);
-            
-            const errorMessage = error.error.message || 'Se ha producido un error desconocido';
-            console.log('Se ha producido un error:', errorMessage);
-          } else {
-            console.log(`Se ha producido un error con el estado ${error.status}: ${error.statusText}`);
-          }
-        } else {
-          // Si el error no es un `HttpErrorResponse` ni una instancia de Error
-          console.log('Error inesperado (no HTTP y no Error):', error);
-          this.mensajeError = error;
-          this.dialog.open(this.errorRegister);
-        }
-      }
-    );
-    
-    
+  // 2. Si existe un source guardado, lo metemos en this.params de forma explícita
+  if (savedSource) {
+    this.params = {
+      ...this.params,
+      source: savedSource
+    };
   }
+
+  // Si había parámetros de usuario/amigo, mantenemos tu lógica
+  if (this.params.user && this.params.friend) {
+    this.setFormParams();
+  }
+
+  // 3. Extraemos el formulario y le asignamos this.params ya rellenado
+  const formValue = this.userForm.baseFormRegister.value;
+  formValue.params = this.params;
+
+  console.log('Payload final enviado al backend:', formValue);
+
+  const edad = this.calculateAge(formValue.fecha_nacimiento);
+
+  if (edad < 14) {
+    alert('Debes tener más de 14 años.');
+    return;
+  }
+  
+  // 4. Enviamos el registro
+  this.userSvc.register(formValue).subscribe(
+    data => {
+      this.sendEmail();
+    }, 
+    error => {
+      if (error instanceof Error) {
+        console.error('Error capturado:', error.message);
+      } else if (error instanceof HttpErrorResponse) {
+        if (error.error) {
+          console.log('Error HTTP capturado:', error);
+        } else {
+          console.log(`Error estado ${error.status}: ${error.statusText}`);
+        }
+      } else {
+        console.log('Error inesperado:', error);
+        this.mensajeError = error;
+        this.dialog.open(this.errorRegister);
+      }
+    }
+  );
+}
 
   checkField(field: string): boolean {
     return this.userForm.isValidRegister(field);

@@ -8,6 +8,23 @@
   <link rel="icon" type="image/x-icon" href="favicon.ico">
   <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <script>
+  (function() {
+    try {
+      var fullUrl = window.location.href;
+      if (fullUrl && fullUrl.indexOf('source=') !== -1) {
+        var searchStr = window.location.search || (fullUrl.split('?')[1] ? '?' + fullUrl.split('?')[1] : '');
+        var urlParams = new URLSearchParams(searchStr);
+        var sourceVal = urlParams.get('source');
+        if (sourceVal) {
+          localStorage.setItem('user_source', sourceVal);
+        }
+      }
+    } catch (e) {
+      console.warn('Error capturando fuente:', e);
+    }
+  })();
+</script>
 </head>
 <body class="mat-typography">
   <app-root></app-root>
